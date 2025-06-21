@@ -1,0 +1,34 @@
+import { Injectable } from "@angular/core";
+import { environment } from "../../environments/environment";
+
+@Injectable({
+ providedIn: 'root',
+})
+export class Constants {
+ static readonly NODE_URL = environment.NODE_URL
+ static readonly API_URL = Constants.NODE_URL + 'api/'
+
+ static readonly LS_TOKEN_KEY = 'token'
+ static readonly LS_USER_DATA_KEY = 'login_user_data'
+ static readonly LS_FIREBASE_TOKEN_KEY = 'firebase_token_key'
+ static readonly LS_DEVICE_TOKEN_ID = 'device_token_id'
+ static FIREBASE_TOKEN = ''
+
+ // assets
+ static readonly APP_ICON = 'assets/images/app-icon.png'
+
+ // regex values
+ static readonly EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+ static readonly MOBILE_REGEX = /^\d{10}$/
+ static readonly PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,12}$/
+ static readonly ALPHANUMERIC_REGEX = /^[a-zA-Z0-9]+$/
+ static readonly ALPHABET_REGEX = /^[a-zA-Z]+$/
+ static readonly NUMBER_REGEX = /^\d+$/
+ static readonly POSITIVE_NUMBER_REGEX = /^\d+$/
+ static readonly POSITIVE_INT_REGEX = /^\d+$/
+ static readonly DATE_REGEX = /^(0?[1-9]|1[012])[\/](0?[1-9]|[12][0-9]|3[01])[\/]\d{4}$/
+ static readonly DATE_DMY_REGEX = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/
+ static readonly TIME_REGEX = /^(0?[1-9]|1[012])[\/](0?[1-9]|[12][0-9]|3[01])[\/]\d{4}(0?[0-9]|1[012]):(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|1[0-9]|2[0-9])$/
+ static readonly DATE_TIME_REGEX = /^(0?[1-9]|1[012])[\/](0?[1-9]|[12][0-9]|3[01])[\/]\d{4}(0?[0-9]|1[012]):(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|1[0-9]|2[0-9])$/
+ static readonly IP_REGEX = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+}
