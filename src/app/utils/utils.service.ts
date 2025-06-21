@@ -16,4 +16,8 @@ export class Utils {
   await LSService.removeItem(Constants.LS_USER_DATA_KEY)
   await LSService.removeItem(Constants.LS_DEVICE_TOKEN_ID)
  }
+
+ static isValidEmail(email: string) {
+  return Constants.EMAIL_REGEX.test(email)
+ }
 }

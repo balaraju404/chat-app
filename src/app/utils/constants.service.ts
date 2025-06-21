@@ -6,7 +6,14 @@ import { environment } from "../../environments/environment";
 })
 export class Constants {
  static readonly NODE_URL = environment.NODE_URL
- static readonly API_URL = Constants.NODE_URL + 'api/'
+ static readonly API_URL = Constants.NODE_URL
+
+ static getApiUrl(path: string) {
+  return Constants.API_URL + path
+ }
+ // api urls
+ static readonly LOGIN_URL = "login"
+ static readonly SIGNUP_URL = Constants.LOGIN_URL + "/sign-up"
 
  static readonly LS_TOKEN_KEY = 'token'
  static readonly LS_USER_DATA_KEY = 'login_user_data'
