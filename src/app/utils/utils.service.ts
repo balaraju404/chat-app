@@ -17,6 +17,10 @@ export class Utils {
   await LSService.removeItem(Constants.LS_DEVICE_TOKEN_ID)
  }
 
+ static getErrorMessage(err: any): string {
+  return err?.error?.errors?.[0]?.msg || err?.error?.msg || err?.message || 'An unexpected error occurred'
+ }
+
  static isValidEmail(email: string) {
   return Constants.EMAIL_REGEX.test(email)
  }

@@ -37,16 +37,15 @@ export class LoginPage {
   password: ""
  }
 
- async ngOnInit() {
+ ngOnInit() {
   this.checkUserData()
  }
-
  ionViewWillEnter() {
   this.clearForm()
  }
  async checkUserData() {
   const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
-  if (userData) this.navigateToPage("/layout/home")
+  if (Object.keys(userData || {}).length) this.navigateToPage("/layout/home")
  }
  doLogin() {
   let msg = ""
@@ -56,9 +55,10 @@ export class LoginPage {
    msg = "Please enter user email"
   } else if (!Utils.isValidEmail(userMail)) {
    msg = "Please enter valid email"
-  } else if (userPwd.length < 5) {
-   msg = "Password must be min 6 characters"
   }
+  // else if (userPwd.length < 6) {
+  //  msg = "Password must be min 6 characters"
+  // }
 
   if (msg.length) {
    this.toastService.showToastWithCloseButton(msg, "danger")
@@ -75,9 +75,11 @@ export class LoginPage {
    next: async (res: any) => {
     this.isLoading = false
     if (res["status"]) {
-     const data = JSON.parse(JSON.stringify(res["data"]))
-     await LSService.setItem(data, Constants.LS_USER_DATA_KEY)
-     await LSService.setItem(data.device_token_id, Constants.LS_DEVICE_TOKEN_ID)
+     const data = JSON.parse(JSON.stringify(res["data"] || {}))
+     const token = res["token"] || ""
+     await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
+     await LSService.setItem(Constants.LS_TOKEN_KEY, token)
+     // await LSService.setItem(data.device_token_id, Constants.LS_DEVICE_TOKEN_ID)
      this.toastService.showToastWithCloseButton(res["msg"], "success")
      this.clearForm()
      this.router.navigate(["/layout/home"])
@@ -87,7 +89,7 @@ export class LoginPage {
     }
    }, error: err => {
     this.isLoading = false
-    const msg = err?.error?.msg || err?.message || JSON.stringify(err)
+    const msg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(msg, "danger")
    }
   })

@@ -7,7 +7,6 @@ import {
 } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/utils/api.service';
 import { Router } from '@angular/router';
-import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { Utils } from 'src/app/utils/utils.service';
@@ -48,13 +47,13 @@ export class SignupPage {
   const username = this.formPostdata["username"] || ""
   const userMail = this.formPostdata["email"] || ""
   const userPwd = this.formPostdata["password"] || ""
-  if (username.length < 7) {
+  if (username.length < 6) {
    msg = "Username must be min 6 characters"
   } else if (userMail.length == 0) {
    msg = "Please enter user email"
   } else if (!Utils.isValidEmail(userMail)) {
    msg = "Please enter valid email"
-  } else if (userPwd.length < 5) {
+  } else if (userPwd.length < 6) {
    msg = "Password must be min 6 characters"
   } else if (userPwd != this.confirmPwd) {
    msg = "Confirm Password must be same as password"
@@ -84,7 +83,7 @@ export class SignupPage {
     }
    }, error: err => {
     this.isLoading = false
-    const msg = err?.error?.msg || err?.message || JSON.stringify(err)
+    const msg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(msg, "danger")
    }
   })
