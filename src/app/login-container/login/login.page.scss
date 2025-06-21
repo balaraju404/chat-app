@@ -14,9 +14,15 @@
   border-radius: 0.5rem;
 
   .login-header {
-   font-size: 1.5rem;
-   font-weight: bold;
-   margin-bottom: 1rem;
+   border-bottom: 1px solid aliceblue;
+   padding-bottom: 0.5rem;
+
+   p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+   }
   }
 
   ion-button {
@@ -37,8 +43,4 @@
    --color: black;
   }
  }
-}
-
-a {
- text-decoration: none;
 }

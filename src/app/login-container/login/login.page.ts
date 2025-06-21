@@ -38,10 +38,16 @@ export class LoginPage {
  }
 
  async ngOnInit() {
-  const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
-  if (userData) this.router.navigate(["/layout/home"])
+  this.checkUserData()
  }
 
+ ionViewWillEnter() {
+  this.clearForm()
+ }
+ async checkUserData() {
+  const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
+  if (userData) this.navigateToPage("/layout/home")
+ }
  doLogin() {
   let msg = ""
   const userMail = this.formPostdata["email"] || ""
@@ -53,7 +59,6 @@ export class LoginPage {
   } else if (userPwd.length < 5) {
    msg = "Password must be min 6 characters"
   }
-  console.log(msg);
 
   if (msg.length) {
    this.toastService.showToastWithCloseButton(msg, "danger")
@@ -74,6 +79,7 @@ export class LoginPage {
      await LSService.setItem(data, Constants.LS_USER_DATA_KEY)
      await LSService.setItem(data.device_token_id, Constants.LS_DEVICE_TOKEN_ID)
      this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.clearForm()
      this.router.navigate(["/layout/home"])
     } else {
      const msg = res["msg"] || JSON.stringify(res)
@@ -85,5 +91,14 @@ export class LoginPage {
     this.toastService.showToastWithCloseButton(msg, "danger")
    }
   })
+ }
+ navigateToPage(path: string) {
+  this.router.navigate([path])
+ }
+ clearForm() {
+  this.formPostdata = {
+   email: "",
+   password: ""
+  }
  }
 }

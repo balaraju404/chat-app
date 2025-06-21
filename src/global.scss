@@ -72,3 +72,12 @@ ion-content {
  text-transform: uppercase;
  margin: 0;
 }
+
+.link {
+ color: #0539b5;
+ cursor: pointer;
+
+ &:hover {
+  text-decoration: underline;
+ }
+}
