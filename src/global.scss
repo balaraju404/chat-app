@@ -53,11 +53,11 @@ ion-footer {
  }
 }
 
-ion-content {
- &::part(background) {
-  --background: #f2f0f0; //#eeffff;
- }
-}
+// ion-content {
+//  &::part(background) {
+//   --background: #f2f0f0; //#eeffff;
+//  }
+// }
 
 .page-title-span {
  font-family: 'Arial', sans-serif;

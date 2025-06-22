@@ -9,13 +9,28 @@ import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 
 import { addIcons } from 'ionicons';
-import { person, logIn, close } from 'ionicons/icons';
+import {
+ person,
+ logIn,
+ close,
+ chatbubblesOutline,
+ peopleOutline,
+ albumsOutline,
+ menuOutline,
+ personCircleOutline
+} from 'ionicons/icons';
 
 addIcons({
  'person': person,
  'log-in': logIn,
- 'close': close
+ 'close': close,
+ 'chatbubbles-outline': chatbubblesOutline,
+ 'people-outline': peopleOutline,
+ 'albums-outline': albumsOutline,
+ 'menu-outline': menuOutline,
+ 'person-circle-outline': personCircleOutline
 });
+
 
 bootstrapApplication(AppComponent, {
  providers: [
