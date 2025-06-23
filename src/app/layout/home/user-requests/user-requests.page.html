@@ -1,0 +1,49 @@
+<ion-header translucent>
+ <ion-toolbar>
+  <ion-title>User Requests</ion-title>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <ion-segment [(ngModel)]="selectedTab" value="received">
+  <ion-segment-button value="received">
+   <ion-label>Received ({{ receivedRequests.length }})</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="sent">
+   <ion-label>Sent ({{ sentRequests.length }})</ion-label>
+  </ion-segment-button>
+ </ion-segment>
+
+ <div *ngIf="selectedTab === 'received'">
+  <ion-list *ngFor="let req of receivedRequests">
+   <ion-item>
+    <ion-avatar slot="start">
+     <ion-icon [name]="getGenderIcon(req.gender_id)" size="large"></ion-icon>
+    </ion-avatar>
+    <ion-label>{{ req.username }}</ion-label>
+    <ion-buttons slot="end">
+     <ion-button color="success" (click)="acceptRequest(req)">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+     </ion-button>
+     <ion-button color="danger" (click)="rejectRequest(req)">
+      <ion-icon name="close-circle-outline"></ion-icon>
+     </ion-button>
+    </ion-buttons>
+   </ion-item>
+  </ion-list>
+ </div>
+
+ <div *ngIf="selectedTab === 'sent'">
+  <ion-list *ngFor="let req of sentRequests">
+   <ion-item>
+    <ion-avatar slot="start">
+     <ion-icon [name]="getGenderIcon(req.gender_id)" size="large"></ion-icon>
+    </ion-avatar>
+    <ion-label>{{ req.username }}</ion-label>
+    <ion-button slot="end" color="medium" (click)="withdrawRequest(req)">
+     <ion-icon name="remove-circle-outline"></ion-icon>
+    </ion-button>
+   </ion-item>
+  </ion-list>
+ </div>
+</ion-content>
