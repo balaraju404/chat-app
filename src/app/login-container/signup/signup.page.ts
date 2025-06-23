@@ -17,12 +17,8 @@ import { Utils } from 'src/app/utils/utils.service';
  styleUrls: ['./signup.page.scss'],
  standalone: true,
  imports: [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
-  IonContent, IonHeader, IonTitle, IonToolbar,
-  IonRow, IonCol, IonIcon, IonButton,
-  IonSpinner, IonInput, IonInputPasswordToggle, IonToast
+  CommonModule, FormsModule, ReactiveFormsModule, IonContent, IonHeader, IonTitle, IonToolbar,
+  IonRow, IonCol, IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonToast
  ]
 })
 export class SignupPage {
@@ -47,17 +43,12 @@ export class SignupPage {
   const username = this.formPostdata["username"] || ""
   const userMail = this.formPostdata["email"] || ""
   const userPwd = this.formPostdata["password"] || ""
-  if (username.length < 6) {
-   msg = "Username must be min 6 characters"
-  } else if (userMail.length == 0) {
-   msg = "Please enter user email"
-  } else if (!Utils.isValidEmail(userMail)) {
-   msg = "Please enter valid email"
-  } else if (userPwd.length < 6) {
-   msg = "Password must be min 6 characters"
-  } else if (userPwd != this.confirmPwd) {
-   msg = "Confirm Password must be same as password"
-  }
+
+  if (username.length < 6) msg = "Username must be min 6 characters"
+  else if (userMail.length == 0) msg = "Please enter user email"
+  else if (!Utils.isValidEmail(userMail)) msg = "Please enter valid email"
+  else if (userPwd.length < 6) msg = "Password must be min 6 characters"
+  else if (userPwd != this.confirmPwd) msg = "Confirm Password must be same as password"
 
   if (msg.length) {
    this.toastService.showToastWithCloseButton(msg, "danger")
@@ -66,27 +57,36 @@ export class SignupPage {
 
   this.createUser()
  }
-
  async createUser() {
   this.isLoading = true
-  const url = Constants.getApiUrl(Constants.SIGNUP_URL);
-  this.apiService.postApi(url, this.formPostdata).subscribe({
-   next: async (res: any) => {
-    this.isLoading = false
-    if (res["status"]) {
-     this.toastService.showToastWithCloseButton(res["msg"], "success")
-     this.clearForm()
-     this.navigateToPage("login")
-    } else {
-     const msg = res["msg"] || JSON.stringify(res)
+  const url = Constants.getApiUrl(Constants.SIGNUP_URL)
+
+  try {
+   const observable$ = await this.apiService.postApi(url, this.formPostdata)
+
+   observable$.subscribe({
+    next: (res: any) => {
+     this.isLoading = false
+     if (res["status"]) {
+      this.toastService.showToastWithCloseButton(res["msg"], "success")
+      this.clearForm()
+      this.navigateToPage("login")
+     } else {
+      const msg = res["msg"] || JSON.stringify(res)
+      this.toastService.showToastWithCloseButton(msg, "danger")
+     }
+    }, error: (err) => {
+     this.isLoading = false
+     const msg = Utils.getErrorMessage(err)
      this.toastService.showToastWithCloseButton(msg, "danger")
     }
-   }, error: err => {
-    this.isLoading = false
-    const msg = Utils.getErrorMessage(err)
-    this.toastService.showToastWithCloseButton(msg, "danger")
-   }
-  })
+   })
+
+  } catch (error) {
+   this.isLoading = false
+   this.toastService.showToastWithCloseButton("Something went wrong", "danger")
+   console.error("API error:", error)
+  }
  }
  navigateToPage(path: string) {
   this.router.navigate([path])

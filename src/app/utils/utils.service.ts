@@ -12,9 +12,7 @@ export class Utils {
  static resCartCountSubject = new Subject()
 
  static async clearLSonLogout() {
-  await LSService.removeItem(Constants.LS_TOKEN_KEY)
-  await LSService.removeItem(Constants.LS_USER_DATA_KEY)
-  await LSService.removeItem(Constants.LS_DEVICE_TOKEN_ID)
+  await LSService.clear()
  }
 
  static getErrorMessage(err: any): string {

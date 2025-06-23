@@ -18,12 +18,8 @@ import { Utils } from 'src/app/utils/utils.service';
  styleUrls: ['./login.page.scss'],
  standalone: true,
  imports: [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
-  IonContent, IonHeader, IonTitle, IonToolbar,
-  IonRow, IonCol, IonIcon, IonButton,
-  IonSpinner, IonInput, IonInputPasswordToggle, IonToast
+  CommonModule, FormsModule, ReactiveFormsModule, IonContent, IonHeader, IonTitle, IonToolbar,
+  IonRow, IonCol, IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonToast
  ]
 })
 export class LoginPage {
@@ -67,32 +63,42 @@ export class LoginPage {
 
   this.checkUser()
  }
-
  async checkUser() {
-  this.isLoading = true
-  const url = Constants.getApiUrl(Constants.LOGIN_URL);
-  this.apiService.postApi(url, this.formPostdata).subscribe({
-   next: async (res: any) => {
-    this.isLoading = false
-    if (res["status"]) {
-     const data = JSON.parse(JSON.stringify(res["data"] || {}))
-     const token = res["token"] || ""
-     await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
-     await LSService.setItem(Constants.LS_TOKEN_KEY, token)
-     // await LSService.setItem(data.device_token_id, Constants.LS_DEVICE_TOKEN_ID)
-     this.toastService.showToastWithCloseButton(res["msg"], "success")
-     this.clearForm()
-     this.router.navigate(["/layout/home"])
-    } else {
-     const msg = res["msg"] || JSON.stringify(res)
+  this.isLoading = true;
+  const url = Constants.getApiUrl(Constants.LOGIN_URL)
+
+  try {
+   const observable$ = await this.apiService.postApi(url, this.formPostdata);
+
+   observable$.subscribe({
+    next: async (res: any) => {
+     this.isLoading = false
+     if (res["status"]) {
+      const data = JSON.parse(JSON.stringify(res["data"] || {}))
+      const token = res["token"] || ""
+
+      await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
+      await LSService.setItem(Constants.LS_TOKEN_KEY, token)
+      // await LSService.setItem(data.device_token_id, Constants.LS_DEVICE_TOKEN_ID)
+
+      this.toastService.showToastWithCloseButton(res["msg"], "success")
+      this.clearForm()
+      this.router.navigate(["/layout/home"])
+     } else {
+      const msg = res["msg"] || JSON.stringify(res)
+      this.toastService.showToastWithCloseButton(msg, "danger")
+     }
+    }, error: (err) => {
+     this.isLoading = false
+     const msg = Utils.getErrorMessage(err)
      this.toastService.showToastWithCloseButton(msg, "danger")
     }
-   }, error: err => {
-    this.isLoading = false
-    const msg = Utils.getErrorMessage(err)
-    this.toastService.showToastWithCloseButton(msg, "danger")
-   }
-  })
+   })
+
+  } catch (error) {
+   this.isLoading = false
+   this.toastService.showToastWithCloseButton("Something went wrong", "danger")
+  }
  }
  navigateToPage(path: string) {
   this.router.navigate([path])

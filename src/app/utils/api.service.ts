@@ -9,35 +9,45 @@ import { Constants } from "./constants.service";
 export class ApiService {
  private readonly http = inject(HttpClient)
 
- private getHeaders(isFormData = false): HttpHeaders {
-  const token = LSService.getItem(Constants.LS_TOKEN_KEY);
-  let headers = new HttpHeaders();
-  if (token) headers = headers.set('Authorization', `Bearer ${token}`);
-  if (!isFormData) headers = headers.set('Content-Type', 'application/json');
-  return headers;
+ private async getHeaders(isFormData = false): Promise<HttpHeaders> {
+  const token = await LSService.getItem(Constants.LS_TOKEN_KEY)
+  let headers = new HttpHeaders()
+  console.log(token)
+
+  if (token) headers = headers.set('Authorization', `Bearer ${token}`)
+  else headers = headers.set('Authorization', 'red_towel')
+
+  if (!isFormData) headers = headers.set('Content-Type', 'application/json')
+  return headers
  }
 
- getApi(url: string) {
-  return this.http.get(url, { headers: this.getHeaders() });
+ async getApi(url: string) {
+  const headers = await this.getHeaders()
+  return this.http.get(url, { headers })
  }
 
- postApi(url: string, data: any) {
-  return this.http.post(url, data, { headers: this.getHeaders() });
+ async postApi(url: string, data: any) {
+  const headers = await this.getHeaders()
+  return this.http.post(url, data, { headers })
  }
 
- putApi(url: string, data: any) {
-  return this.http.put(url, data, { headers: this.getHeaders() });
+ async putApi(url: string, data: any) {
+  const headers = await this.getHeaders()
+  return this.http.put(url, data, { headers })
  }
 
- deleteApi(url: string) {
-  return this.http.delete(url, { headers: this.getHeaders() });
+ async deleteApi(url: string) {
+  const headers = await this.getHeaders()
+  return this.http.delete(url, { headers })
  }
 
- patchApi(url: string, data: any) {
-  return this.http.patch(url, data, { headers: this.getHeaders() });
+ async patchApi(url: string, data: any) {
+  const headers = await this.getHeaders()
+  return this.http.patch(url, data, { headers })
  }
 
- formPostApi(url: string, data: any) {
-  return this.http.post(url, data, { headers: this.getHeaders(true) });
+ async formPostApi(url: string, data: any) {
+  const headers = await this.getHeaders(true)
+  return this.http.post(url, data, { headers })
  }
 }

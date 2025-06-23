@@ -14,6 +14,9 @@ export class Constants {
  // api urls
  static readonly LOGIN_URL = "login"
  static readonly SIGNUP_URL = Constants.LOGIN_URL + "/sign-up"
+ static readonly USERS_URL = "users/"
+ static readonly USERS_UPDATE_URL = Constants.USERS_URL + "update"
+ static readonly USERS_DEATILS_URL = Constants.USERS_URL + "details"
 
  static readonly LS_TOKEN_KEY = 'token'
  static readonly LS_USER_DATA_KEY = 'login_user_data'

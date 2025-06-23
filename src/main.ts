@@ -11,7 +11,7 @@ import { routes } from './app/app.routes';
 import { addIcons } from 'ionicons';
 import {
  person, logIn, close, chatbubblesOutline, peopleOutline, albumsOutline, menuOutline, personCircleOutline, search,
- settings, colorWand, chatbubbleEllipses
+ settings, colorWand, chatbubbleEllipses, closeOutline
 } from 'ionicons/icons';
 
 addIcons({
@@ -26,7 +26,8 @@ addIcons({
  'search': search,
  'settings': settings,
  'color-wand': colorWand,
- 'chatbubble-ellipses': chatbubbleEllipses
+ 'chatbubble-ellipses': chatbubbleEllipses,
+ 'close-outline': closeOutline
 });
 
 

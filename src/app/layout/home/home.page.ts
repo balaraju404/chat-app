@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
  IonContent, IonHeader, IonTitle, IonToolbar, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonFooter,
- IonButtons, IonMenuButton, IonButton, MenuController, IonMenu
+ IonButtons, IonMenuButton, IonButton, MenuController, IonMenu, ModalController
 } from '@ionic/angular/standalone';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Router } from '@angular/router';
 import { SideBarPage } from "./side-bar/side-bar.page";
+import { ProfilePage } from './profile/profile.page';
 
 @Component({
  selector: 'app-home',
@@ -19,11 +20,12 @@ import { SideBarPage } from "./side-bar/side-bar.page";
   IonButton, IonHeader, IonTitle, IonToolbar, IonMenu, CommonModule, FormsModule, SideBarPage]
 })
 export class HomePage {
- private readonly router = inject(Router);
+ private readonly router = inject(Router)
  private menuCtrl = inject(MenuController)
+ private modalCtrl = inject(ModalController)
 
  ngOnInit() {
-  this.checkUserData();
+  this.checkUserData()
  }
 
  ionViewWillEnter() {
@@ -39,6 +41,12 @@ export class HomePage {
 
  openSidebar() {
   this.menuCtrl.open('side-bar');
+ }
+ async showProfileModal() {
+  const modal = await this.modalCtrl.create({
+   component: ProfilePage
+  })
+  await modal.present()
  }
  navigateToPage(path: string) {
   this.router.navigate([path]);

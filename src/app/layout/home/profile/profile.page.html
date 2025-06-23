@@ -1,0 +1,56 @@
+<ion-header>
+ <ion-toolbar>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+  <ion-title class="ion-text-center">My Profile</ion-title>
+ </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+ <div class="profile-container ion-text-center">
+  <ion-icon name="person-circle-outline" size="large"></ion-icon>
+ </div>
+
+ <ion-list>
+  <ion-item>
+   <ion-label position="floating">Username</ion-label>
+   <ion-input [(ngModel)]="userdata.username" [readonly]="!isEditing"></ion-input>
+  </ion-item>
+
+  <ion-item>
+   <ion-label position="floating">Email</ion-label>
+   <ion-input [(ngModel)]="userdata.email" readonly></ion-input>
+  </ion-item>
+
+  <ion-item>
+   <ion-label position="floating">Gender</ion-label>
+   <ion-select [(ngModel)]="userdata.gender_id" [disabled]="!isEditing">
+    <ion-select-option *ngFor="let item of gendersData" [value]="item.id">{{ item.name }}</ion-select-option>
+   </ion-select>
+  </ion-item>
+
+  <ion-item>
+   <ion-label position="floating">About</ion-label>
+   <ion-textarea [(ngModel)]="userdata.about" [readonly]="!isEditing"></ion-textarea>
+  </ion-item>
+ </ion-list>
+
+ <ion-grid>
+  <ion-row class="ion-justify-content-between ion-margin-top">
+   <ion-col size="6">
+    <ion-button expand="block" color="primary" (click)="toggleEdit()">
+     {{ isEditing ? 'Save' : 'Edit' }}
+    </ion-button>
+   </ion-col>
+   <ion-col size="6">
+    <ion-button expand="block" color="danger" (click)="onLogout()">
+     Logout
+    </ion-button>
+   </ion-col>
+  </ion-row>
+ </ion-grid>
+</ion-content>
