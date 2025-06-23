@@ -1,8 +1,14 @@
 <ion-header>
  <ion-toolbar>
   <ion-title class="ion-text-center">Side Bar</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="closeSidebar()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
  </ion-toolbar>
 </ion-header>
+
 
 <ion-content [fullscreen]="true" class="ion-padding">
  <ion-list>
