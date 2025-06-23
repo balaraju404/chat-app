@@ -10,14 +10,8 @@ import { routes } from './app/app.routes';
 
 import { addIcons } from 'ionicons';
 import {
- person,
- logIn,
- close,
- chatbubblesOutline,
- peopleOutline,
- albumsOutline,
- menuOutline,
- personCircleOutline
+ person, logIn, close, chatbubblesOutline, peopleOutline, albumsOutline, menuOutline, personCircleOutline, search,
+ settings, colorWand, chatbubbleEllipses
 } from 'ionicons/icons';
 
 addIcons({
@@ -28,7 +22,11 @@ addIcons({
  'people-outline': peopleOutline,
  'albums-outline': albumsOutline,
  'menu-outline': menuOutline,
- 'person-circle-outline': personCircleOutline
+ 'person-circle-outline': personCircleOutline,
+ 'search': search,
+ 'settings': settings,
+ 'color-wand': colorWand,
+ 'chatbubble-ellipses': chatbubbleEllipses
 });
 
 

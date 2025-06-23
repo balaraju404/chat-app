@@ -1,7 +1,7 @@
 <ion-header translucent>
  <ion-toolbar>
   <ion-buttons slot="start">
-   <ion-menu-button autoHide="false"></ion-menu-button>
+   <ion-menu-button autoHide="false" (click)="openSidebar()"></ion-menu-button>
   </ion-buttons>
 
   <ion-title>Chat App</ion-title>
@@ -14,7 +14,7 @@
  </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content id="main-content">
  <ion-router-outlet></ion-router-outlet>
 </ion-content>
 
@@ -36,3 +36,8 @@
   </ion-tab-button>
  </ion-tab-bar>
 </ion-footer>
+
+<!-- Side menu -->
+<ion-menu menuId="side-bar" contentId="main-content">
+ <app-side-bar></app-side-bar>
+</ion-menu>

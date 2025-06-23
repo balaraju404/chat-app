@@ -1,0 +1,16 @@
+<ion-header>
+ <ion-toolbar>
+  <ion-title class="ion-text-center">Side Bar</ion-title>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+ <ion-list>
+  @for (tab of tabsList; track $index) {
+  <ion-item button (click)="onTabClick(tab)">
+   <ion-icon slot="start" [name]="tab.icon"></ion-icon>
+   <ion-label>{{ tab.name }}</ion-label>
+  </ion-item>
+  }
+ </ion-list>
+</ion-content>

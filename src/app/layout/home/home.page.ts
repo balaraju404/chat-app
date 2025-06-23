@@ -1,20 +1,26 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonFooter, IonButtons, IonMenuButton, IonButton } from '@ionic/angular/standalone';
+import {
+ IonContent, IonHeader, IonTitle, IonToolbar, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonFooter,
+ IonButtons, IonMenuButton, IonButton, MenuController, IonMenu
+} from '@ionic/angular/standalone';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Router } from '@angular/router';
+import { SideBarPage } from "./side-bar/side-bar.page";
 
 @Component({
  selector: 'app-home',
  templateUrl: './home.page.html',
  styleUrls: ['./home.page.scss'],
  standalone: true,
- imports: [IonFooter, IonLabel, IonIcon, IonTabButton, IonTabBar, IonRouterOutlet, IonContent, IonButtons, IonMenuButton, IonButton, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+ imports: [IonFooter, IonLabel, IonIcon, IonTabButton, IonTabBar, IonRouterOutlet, IonContent, IonButtons, IonMenuButton,
+  IonButton, IonHeader, IonTitle, IonToolbar, IonMenu, CommonModule, FormsModule, SideBarPage]
 })
 export class HomePage {
  private readonly router = inject(Router);
+ private menuCtrl = inject(MenuController)
 
  ngOnInit() {
   this.checkUserData();
@@ -31,6 +37,9 @@ export class HomePage {
   }
  }
 
+ openSidebar() {
+  this.menuCtrl.open('side-bar');
+ }
  navigateToPage(path: string) {
   this.router.navigate([path]);
  }
