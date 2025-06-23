@@ -4,43 +4,62 @@
  display: flex;
  justify-content: center;
  align-items: center;
- background: #2e0e4f; //rebeccapurple;
+ background: #2e0e4f;
 
  .login-content {
   width: 85%;
   background: #80808052;
-  padding: 1rem;
-  border: none;
+  padding: 1.5rem;
   border-radius: 0.5rem;
 
   .login-header {
    border-bottom: 1px solid aliceblue;
-   padding-bottom: 0.5rem;
+   padding-bottom: 0.75rem;
+   margin-bottom: 1rem;
 
    p {
     font-size: 1.2rem;
     font-weight: 600;
     text-align: center;
     margin: 0;
+    color: white;
    }
   }
 
-  ion-button {
-   --ion-color-secondary: white;
-   --ion-color-secondary-shade: rgba(181, 179, 179, 0.78);
-   --ion-color-secondary-contrast: black;
+  .login-form {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
 
-   ion-spinner {
-    margin-left: 0.5rem;
-    color: black;
+   ion-col {
+    width: 100%;
    }
-  }
 
-  :host-context(.dark) ion-button {
-   --ion-color-secondary: black;
-   --ion-color-secondary-shade: rgba(255, 255, 255, 0.7);
-   --background: var(--ion-color-secondary);
-   --color: black;
+   ion-input {
+    --padding-start: 0.25rem;
+    --padding-end: 0.25rem;
+    --padding-top: 0.25rem;
+    --padding-bottom: 0.25rem;
+    border-radius: 0.4rem;
+   }
+
+   ion-button {
+    --ion-color-secondary: white;
+    --ion-color-secondary-shade: rgba(181, 179, 179, 0.78);
+    --ion-color-secondary-contrast: black;
+
+    ion-spinner {
+     margin-left: 0.5rem;
+     color: black;
+    }
+   }
+
+   :host-context(.dark) ion-button {
+    --ion-color-secondary: black;
+    --ion-color-secondary-shade: rgba(255, 255, 255, 0.7);
+    --background: var(--ion-color-secondary);
+    --color: black;
+   }
   }
  }
 }

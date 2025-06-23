@@ -14,21 +14,31 @@
 
     <ion-row>
      <ion-col size="12">
-      <ion-input type="text" aria-label="User Name" color="success" placeholder="Enter user name"
+      <ion-input type="text" aria-label="User Name" color="success" placeholder="Enter user name" autocomplete="off"
        [(ngModel)]="formPostdata['username']" (keydown.enter)="doCreateUser()"></ion-input>
      </ion-col>
     </ion-row>
 
     <ion-row>
      <ion-col size="12">
-      <ion-input type="text" aria-label="User Email" color="success" placeholder="Enter user email"
+      <ion-input type="text" aria-label="User Email" color="success" placeholder="Enter user email" autocomplete="off"
        [(ngModel)]="formPostdata['email']" (keydown.enter)="doCreateUser()"></ion-input>
      </ion-col>
     </ion-row>
 
     <ion-row>
      <ion-col size="12">
-      <ion-input type="password" placeholder="Enter password" [(ngModel)]="formPostdata['password']"
+      <ion-select [(ngModel)]="formPostdata.gender_id" interface="popover" placeholder="Select gender">
+       <ion-select-option *ngFor="let item of gendersData" [value]="item.id">
+        {{ item.name }}
+       </ion-select-option>
+      </ion-select>
+     </ion-col>
+    </ion-row>
+
+    <ion-row>
+     <ion-col size="12">
+      <ion-input type="password" placeholder="Enter password" [(ngModel)]="formPostdata['password']" autocomplete="off"
        (keydown.enter)="doCreateUser()">
        <ion-input-password-toggle slot="end" color="light"></ion-input-password-toggle>
       </ion-input>
@@ -38,7 +48,7 @@
     <ion-row>
      <ion-col size="12">
       <ion-input type="text" aria-label="Confirm Password" color="success" placeholder="Enter confirm password"
-       [(ngModel)]="confirmPwd" (keydown.enter)="doCreateUser()"></ion-input>
+       autocomplete="off" [(ngModel)]="confirmPwd" (keydown.enter)="doCreateUser()"></ion-input>
      </ion-col>
     </ion-row>
 

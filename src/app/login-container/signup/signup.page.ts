@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
- IonContent, IonHeader, IonTitle, IonToolbar, IonRow, IonCol,
- IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonToast
+ IonContent, IonHeader, IonTitle, IonToolbar, IonRow, IonCol, IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle,
+ IonToast, IonItem, IonLabel, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/utils/api.service';
 import { Router } from '@angular/router';
@@ -17,8 +17,8 @@ import { Utils } from 'src/app/utils/utils.service';
  styleUrls: ['./signup.page.scss'],
  standalone: true,
  imports: [
-  CommonModule, FormsModule, ReactiveFormsModule, IonContent, IonHeader, IonTitle, IonToolbar,
-  IonRow, IonCol, IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonToast
+  CommonModule, FormsModule, ReactiveFormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonRow, IonCol,
+  IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonSelect, IonSelectOption, IonToast
  ]
 })
 export class SignupPage {
@@ -26,10 +26,13 @@ export class SignupPage {
  private readonly toastService = inject(ToastService)
  private readonly router = inject(Router)
 
+ gendersData: any = Constants.GENDERS_LIST
  isLoading: boolean = false
  formPostdata: any = {
   username: "",
   email: "",
+  gender_id: 1,
+  gender_name: "",
   password: ""
  }
  confirmPwd: string = ""
@@ -39,14 +42,16 @@ export class SignupPage {
  }
 
  doCreateUser() {
-  let msg = ""
+  let msg = "";
   const username = this.formPostdata["username"] || ""
   const userMail = this.formPostdata["email"] || ""
   const userPwd = this.formPostdata["password"] || ""
+  const genderId = this.formPostdata["gender_id"] || ""
 
   if (username.length < 6) msg = "Username must be min 6 characters"
   else if (userMail.length == 0) msg = "Please enter user email"
   else if (!Utils.isValidEmail(userMail)) msg = "Please enter valid email"
+  else if (!genderId) msg = "Please select a gender"
   else if (userPwd.length < 6) msg = "Password must be min 6 characters"
   else if (userPwd != this.confirmPwd) msg = "Confirm Password must be same as password"
 
@@ -55,8 +60,11 @@ export class SignupPage {
    return
   }
 
+  const selectedGender = this.gendersData.find((g: any) => g.id === genderId)
+  if (selectedGender) this.formPostdata["gender_name"] = selectedGender.name
   this.createUser()
  }
+
  async createUser() {
   this.isLoading = true
   const url = Constants.getApiUrl(Constants.SIGNUP_URL)
@@ -95,6 +103,8 @@ export class SignupPage {
   this.formPostdata = {
    username: "",
    email: "",
+   gender_id: "",
+   gender_name: "",
    password: ""
   }
   this.confirmPwd = ""

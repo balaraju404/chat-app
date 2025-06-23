@@ -27,6 +27,13 @@ export class Constants {
  // assets
  static readonly APP_ICON = 'assets/images/app-icon.png'
 
+ // 
+ static readonly GENDERS_LIST = [
+  { id: 1, name: "Male" },
+  { id: 2, name: "Female" },
+  { id: 3, name: "Other" }
+ ]
+
  // regex values
  static readonly EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
  static readonly MOBILE_REGEX = /^\d{10}$/

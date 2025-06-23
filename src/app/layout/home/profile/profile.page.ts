@@ -26,13 +26,9 @@ export class ProfilePage {
  private readonly apiService = inject(ApiService)
  private readonly toastService = inject(ToastService)
  private readonly router = inject(Router)
- private readonly modalCtrl = inject(ModalController);
+ private readonly modalCtrl = inject(ModalController)
 
- gendersData: any = [
-  { id: 1, name: "Male" },
-  { id: 2, name: "Female" },
-  { id: 3, name: "Other" }
- ]
+ gendersData: any = Constants.GENDERS_LIST
  isEditing: boolean = false
  userdata: any = {}
 
