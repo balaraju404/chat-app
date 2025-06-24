@@ -57,10 +57,12 @@ export class FriendsListPage {
   })
   this.friendsList = data
  }
- openChatModal(item: any) { }
+ openChatModal(item: any) {
+
+ }
  async deleteRequest(item: any) {
-  const payload: any = { _id: item["req_id"] }
-  const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
+  const payload: any = { user_id: this.userData["user_id"], friend_id: item["user_id"] }
+  const url = Constants.getApiUrl(Constants.INVITE_UNFRIEND_URL)
 
   try {
    const observable$ = await this.apiService.postApi(url, payload)

@@ -24,6 +24,7 @@ export class Constants {
  static readonly INVITE_RECEIVED_URL = Constants.INVITE_URL + "received"
  static readonly INVITE_ACCEPT_URL = Constants.INVITE_URL + "accept"
  static readonly INVITE_DECLINE_URL = Constants.INVITE_URL + "decline"
+ static readonly INVITE_UNFRIEND_URL = Constants.INVITE_URL + "unfriend"
 
  static readonly LS_TOKEN_KEY = 'token'
  static readonly LS_USER_DATA_KEY = 'login_user_data'
