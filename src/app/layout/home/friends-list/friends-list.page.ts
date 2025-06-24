@@ -7,6 +7,7 @@ import { Constants } from 'src/app/utils/constants.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { ToastService } from 'src/app/utils/toast.service';
+import { FriendChatPage } from '../chat/friend-chat/friend-chat.page';
 
 @Component({
  selector: 'app-friends-list',
@@ -57,8 +58,12 @@ export class FriendsListPage {
   })
   this.friendsList = data
  }
- openChatModal(item: any) {
-
+ async openChatModal(item: any) {
+  const modal = await this.modalCtrl.create({
+   component: FriendChatPage,
+   componentProps: { friendData: item }
+  })
+  await modal.present()
  }
  async deleteRequest(item: any) {
   const payload: any = { user_id: this.userData["user_id"], friend_id: item["user_id"] }

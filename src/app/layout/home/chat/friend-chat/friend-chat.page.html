@@ -1,0 +1,18 @@
+<ion-header translucent>
+ <ion-toolbar>
+  <ion-title class="ion-text-center">{{friendData['username']}}</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-header collapse="condense">
+  <ion-toolbar>
+   <ion-title size="large">friend-chat</ion-title>
+  </ion-toolbar>
+ </ion-header>
+</ion-content>
