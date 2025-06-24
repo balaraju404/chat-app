@@ -39,7 +39,7 @@ export class FriendsListPage {
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
-    next: async (res: any) => {
+    next: (res: any) => {
      const data = res["data"] || []
      this.dataModifier(data)
     }, error: (err) => {
@@ -65,7 +65,7 @@ export class FriendsListPage {
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
-    next: async (res: any) => {
+    next: (res: any) => {
      if (res["status"]) {
       this.toastService.showToast(res["msg"], "success")
       this.getFriendsList()

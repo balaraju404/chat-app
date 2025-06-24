@@ -50,7 +50,7 @@ export class UserRequestsPage {
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
-    next: async (res: any) => {
+    next: (res: any) => {
      if (res["status"]) {
       const data = res["data"] || []
       this.tabsList[0]["count"] = data.length
@@ -77,7 +77,7 @@ export class UserRequestsPage {
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
-    next: async (res: any) => {
+    next: (res: any) => {
      if (res["status"]) {
       const data = res["data"] || []
       this.tabsList[1]["count"] = data.length
@@ -104,7 +104,7 @@ export class UserRequestsPage {
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
-    next: async (res: any) => {
+    next: (res: any) => {
      if (res["status"]) {
       this.toastService.showToast(res["msg"], "success")
       this.getReceivedRequests()
@@ -127,7 +127,7 @@ export class UserRequestsPage {
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
-    next: async (res: any) => {
+    next: (res: any) => {
      if (res["status"]) {
       const msg = flag ? "Request withdrawn successfully" : "Request rejected successfully"
       this.toastService.showToast(msg, "success")
