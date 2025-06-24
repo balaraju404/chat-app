@@ -12,7 +12,6 @@ export class ApiService {
  private async getHeaders(isFormData = false): Promise<HttpHeaders> {
   const token = await LSService.getItem(Constants.LS_TOKEN_KEY)
   let headers = new HttpHeaders()
-  console.log(token)
 
   if (token) headers = headers.set('Authorization', `Bearer ${token}`)
   else headers = headers.set('Authorization', 'red_towel')

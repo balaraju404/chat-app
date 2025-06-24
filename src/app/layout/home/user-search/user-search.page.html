@@ -1,0 +1,40 @@
+<ion-header translucent>
+ <ion-toolbar>
+  <ion-title class="ion-text-center">Search Users</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <ion-searchbar [(ngModel)]="searchText" placeholder="Search by name..." show-clear-button="always" animated
+  debounce="300" (ngModelChange)="searchUsersData()">
+ </ion-searchbar>
+ <ion-list>
+  @for (user of userList; track $index) {
+  <ion-item>
+   <ion-avatar slot="start">
+    <ion-icon [name]="user.user_profile" size="large" color="primary">
+    </ion-icon>
+   </ion-avatar>
+
+   <ion-label>{{ user.username }}</ion-label>
+
+   <ion-buttons slot="end">
+    @if (user.is_sended == 0) {
+    <ion-button color="success" (click)="sentRequest(user)">
+     <ion-icon name="send-outline"></ion-icon>
+    </ion-button>
+    } @else {
+    <ion-button color="medium" (click)="withdrawnRequest(user)">
+     <ion-icon name="arrow-undo-outline"></ion-icon>
+    </ion-button>
+    }
+   </ion-buttons>
+  </ion-item>
+  }
+ </ion-list>
+</ion-content>

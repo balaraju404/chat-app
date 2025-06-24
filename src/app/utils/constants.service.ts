@@ -17,6 +17,12 @@ export class Constants {
  static readonly USERS_URL = "users/"
  static readonly USERS_UPDATE_URL = Constants.USERS_URL + "update"
  static readonly USERS_DEATILS_URL = Constants.USERS_URL + "details"
+ static readonly USERS_OTHERS_URL = Constants.USERS_URL + "others"
+ static readonly INVITE_URL = "invite/"
+ static readonly INVITE_SENDED_URL = Constants.INVITE_URL + "sended"
+ static readonly INVITE_RECEIVED_URL = Constants.INVITE_URL + "received"
+ static readonly INVITE_ACCEPT_URL = Constants.INVITE_URL + "accept"
+ static readonly INVITE_DECLINE_URL = Constants.INVITE_URL + "decline"
 
  static readonly LS_TOKEN_KEY = 'token'
  static readonly LS_USER_DATA_KEY = 'login_user_data'

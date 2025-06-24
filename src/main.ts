@@ -10,12 +10,10 @@ import { routes } from './app/app.routes';
 
 import { addIcons } from 'ionicons';
 import {
- person, logIn, close, chatbubblesOutline, peopleOutline,
- albumsOutline, menuOutline, personCircleOutline, search,
- settings, colorWand, chatbubbleEllipses, closeOutline,
- checkmarkOutline, returnDownBackOutline, manOutline, womanOutline,
- accessibilityOutline, checkmarkCircleOutline, closeCircleOutline,
- maleOutline, femaleOutline
+ person, logIn, close, chatbubblesOutline, peopleOutline, albumsOutline, menuOutline, personCircleOutline, search,
+ settings, colorWand, chatbubbleEllipses, closeOutline, checkmarkOutline, returnDownBackOutline, manOutline, womanOutline,
+ accessibilityOutline, checkmarkCircleOutline, closeCircleOutline, maleOutline, femaleOutline, removeCircleOutline, sendOutline,
+ arrowUndoOutline
 } from 'ionicons/icons';
 
 addIcons({
@@ -40,7 +38,10 @@ addIcons({
  'checkmark-circle-outline': checkmarkCircleOutline,
  'close-circle-outline': closeCircleOutline,
  'male-outline': maleOutline,
- 'female-outline': femaleOutline
+ 'female-outline': femaleOutline,
+ 'remove-circle-outline': removeCircleOutline,
+ 'send-outline': sendOutline,
+ 'arrow-undo-outline': arrowUndoOutline
 });
 
 bootstrapApplication(AppComponent, {

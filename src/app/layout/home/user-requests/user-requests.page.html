@@ -1,49 +1,63 @@
 <ion-header translucent>
  <ion-toolbar>
-  <ion-title>User Requests</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+  <ion-title class="ion-text-center">User Requests</ion-title>
  </ion-toolbar>
 </ion-header>
 
 <ion-content>
- <ion-segment [(ngModel)]="selectedTab" value="received">
-  <ion-segment-button value="received">
-   <ion-label>Received ({{ receivedRequests.length }})</ion-label>
+ <ion-segment [(ngModel)]="selectedTab" [value]="selectedTab">
+  @for (tab of tabsList; track $index) {
+  <ion-segment-button [value]="tab.id">
+   <ion-label>{{tab.name}} ({{ tab.count }})</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="sent">
-   <ion-label>Sent ({{ sentRequests.length }})</ion-label>
-  </ion-segment-button>
+  }
  </ion-segment>
 
- <div *ngIf="selectedTab === 'received'">
-  <ion-list *ngFor="let req of receivedRequests">
+ @switch (selectedTab) {
+ @case (1) {
+ <div>
+  @for (item of receivedRequests; track $index) {
+  <ion-list>
    <ion-item>
     <ion-avatar slot="start">
-     <ion-icon [name]="getGenderIcon(req.gender_id)" size="large"></ion-icon>
+     <ion-icon [name]="getGenderIcon(item.gender_id)" size="large"></ion-icon>
     </ion-avatar>
-    <ion-label>{{ req.username }}</ion-label>
+    <ion-label>{{ item.username }}</ion-label>
     <ion-buttons slot="end">
-     <ion-button color="success" (click)="acceptRequest(req)">
+     <ion-button color="success" (click)="acceptRequest(item)">
       <ion-icon name="checkmark-circle-outline"></ion-icon>
      </ion-button>
-     <ion-button color="danger" (click)="rejectRequest(req)">
+     <ion-button color="danger" (click)="rejectRequest(item)">
       <ion-icon name="close-circle-outline"></ion-icon>
      </ion-button>
     </ion-buttons>
    </ion-item>
   </ion-list>
+  }
  </div>
-
- <div *ngIf="selectedTab === 'sent'">
-  <ion-list *ngFor="let req of sentRequests">
+ }
+ @case (2) {
+ <div>
+  @for (item of sentRequests; track $index) {
+  <ion-list>
    <ion-item>
     <ion-avatar slot="start">
-     <ion-icon [name]="getGenderIcon(req.gender_id)" size="large"></ion-icon>
+     <ion-icon [name]="getGenderIcon(item.gender_id)" size="large"></ion-icon>
     </ion-avatar>
-    <ion-label>{{ req.username }}</ion-label>
-    <ion-button slot="end" color="medium" (click)="withdrawRequest(req)">
+    <ion-label>{{ item.username }}</ion-label>
+    <ion-button slot="end" color="medium" (click)="withdrawRequest(item)">
      <ion-icon name="remove-circle-outline"></ion-icon>
     </ion-button>
    </ion-item>
   </ion-list>
+  }
  </div>
+ }
+ }
+
 </ion-content>

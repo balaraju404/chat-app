@@ -6,6 +6,7 @@ import {
  ModalController
 } from '@ionic/angular/standalone';
 import { UserRequestsPage } from '../user-requests/user-requests.page';
+import { UserSearchPage } from '../user-search/user-search.page';
 
 @Component({
  selector: 'app-side-bar',
@@ -39,6 +40,7 @@ export class SideBarPage {
   const id = tab["id"] || 0
   switch (id) {
    case 1:
+    this.showUserSearchModal()
     break
    case 2:
     this.showUserRequestsModal()
@@ -48,6 +50,12 @@ export class SideBarPage {
    case 4:
     break
   }
+ }
+ async showUserSearchModal() {
+  const modal = await this.modalCtrl.create({
+   component: UserSearchPage
+  })
+  await modal.present()
  }
  async showUserRequestsModal() {
   const modal = await this.modalCtrl.create({
