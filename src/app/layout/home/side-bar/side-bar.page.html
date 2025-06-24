@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header translucent>
  <ion-toolbar>
   <ion-title class="ion-text-center">Side Bar</ion-title>
   <ion-buttons slot="end">
@@ -10,7 +10,7 @@
 </ion-header>
 
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content fullscreen class="ion-padding">
  <ion-list>
   @for (tab of tabsList; track $index) {
   <ion-item button (click)="onTabClick(tab)">

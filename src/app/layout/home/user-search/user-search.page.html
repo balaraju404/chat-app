@@ -10,8 +10,7 @@
 </ion-header>
 
 <ion-content>
- <ion-searchbar [(ngModel)]="searchText" placeholder="Search by name..." show-clear-button="always" animated
-  debounce="300" (ngModelChange)="searchUsersData()">
+ <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
  </ion-searchbar>
  <ion-list>
   @for (user of userList; track $index) {

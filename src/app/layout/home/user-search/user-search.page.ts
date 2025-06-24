@@ -28,6 +28,10 @@ export class UserSearchPage {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.searchUsersData()
  }
+ onSearch(event: any) {
+  this.searchText = event.target.value
+  this.searchUsersData()
+ }
  async searchUsersData() {
   const payload: any = { user_id: this.userData["user_id"], search_text: this.searchText }
   const url = Constants.getApiUrl(Constants.USERS_OTHERS_URL)
