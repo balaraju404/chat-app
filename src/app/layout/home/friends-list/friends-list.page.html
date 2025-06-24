@@ -1,0 +1,37 @@
+<ion-header translucent>
+ <ion-toolbar>
+  <ion-title class="ion-text-center">Friends List</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
+ </ion-searchbar>
+ <ion-list>
+  @for (user of friendsList; track $index) {
+  <ion-item>
+   <ion-avatar slot="start">
+    <ion-icon [name]="user.user_profile" size="large" color="primary">
+    </ion-icon>
+   </ion-avatar>
+
+   <ion-label>{{ user.username }}</ion-label>
+
+   <ion-buttons slot="end">
+    <ion-button color="success" (click)="openChatModal(user)">
+     <ion-icon name="chatbubble-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="danger" (click)="deleteRequest(user)">
+     <ion-icon name="person-remove-outline"></ion-icon>
+    </ion-button>
+   </ion-buttons>
+
+  </ion-item>
+  }
+ </ion-list>
+</ion-content>

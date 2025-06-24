@@ -14,7 +14,7 @@
  <ion-list>
   @for (tab of tabsList; track $index) {
   <ion-item button (click)="onTabClick(tab)">
-   <ion-icon slot="start" [name]="tab.icon"></ion-icon>
+   <ion-icon slot="start" [name]="tab.icon" class="ion-margin-end"></ion-icon>
    <ion-label>{{ tab.name }}</ion-label>
   </ion-item>
   }

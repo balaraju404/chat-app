@@ -18,6 +18,7 @@ export class Constants {
  static readonly USERS_UPDATE_URL = Constants.USERS_URL + "update"
  static readonly USERS_DEATILS_URL = Constants.USERS_URL + "details"
  static readonly USERS_OTHERS_URL = Constants.USERS_URL + "others"
+ static readonly USERS_FRIENDS_URL = Constants.USERS_URL + "friends"
  static readonly INVITE_URL = "invite/"
  static readonly INVITE_SENDED_URL = Constants.INVITE_URL + "sended"
  static readonly INVITE_RECEIVED_URL = Constants.INVITE_URL + "received"

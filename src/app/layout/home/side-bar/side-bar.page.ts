@@ -7,6 +7,7 @@ import {
 } from '@ionic/angular/standalone';
 import { UserRequestsPage } from '../user-requests/user-requests.page';
 import { UserSearchPage } from '../user-search/user-search.page';
+import { FriendsListPage } from '../friends-list/friends-list.page';
 
 @Component({
  selector: 'app-side-bar',
@@ -25,8 +26,9 @@ export class SideBarPage {
  tabsList: any = [
   { id: 1, name: "Search User", icon: "search" },
   { id: 2, name: "User Requests", icon: "chatbubble-ellipses" },
-  { id: 3, name: "Themes", icon: "color-wand" },
-  { id: 4, name: "Settings", icon: "settings" }
+  { id: 3, name: "Friends List", icon: "people" },
+  { id: 4, name: "Themes", icon: "color-wand" },
+  { id: 5, name: "Settings", icon: "settings" }
  ];
 
  ngOnInit() { }
@@ -46,6 +48,7 @@ export class SideBarPage {
     this.showUserRequestsModal()
     break
    case 3:
+    this.showFriendsListModal()
     break
    case 4:
     break
@@ -60,6 +63,12 @@ export class SideBarPage {
  async showUserRequestsModal() {
   const modal = await this.modalCtrl.create({
    component: UserRequestsPage
+  })
+  await modal.present()
+ }
+ async showFriendsListModal() {
+  const modal = await this.modalCtrl.create({
+   component: FriendsListPage
   })
   await modal.present()
  }
