@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
- IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonGrid, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
- IonTextarea, IonList, IonButton, IonRow, IonCol, IonToast, ModalController, IonButtons
-} from '@ionic/angular/standalone';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Utils } from 'src/app/utils/utils.service';
 import { Constants } from 'src/app/utils/constants.service';
@@ -17,10 +14,7 @@ import { ToastService } from 'src/app/utils/toast.service';
  templateUrl: './profile.page.html',
  styleUrls: ['./profile.page.scss'],
  standalone: true,
- imports: [
-  CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonGrid, IonItem, IonLabel, IonInput,
-  IonSelect, IonSelectOption, IonTextarea, IonList, IonButton, IonRow, IonCol, IonToast, IonButtons
- ]
+ imports: [CommonModule, FormsModule, IonicModule]
 })
 export class ProfilePage {
  private readonly apiService = inject(ApiService)

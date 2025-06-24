@@ -130,4 +130,10 @@ export class UserSearchPage {
  dismissModal() {
   this.modalCtrl.dismiss()
  }
+ refreshData(event: any) {
+  this.searchUsersData()
+  setTimeout(() => {
+   event.target.complete()
+  }, 2000)
+ }
 }

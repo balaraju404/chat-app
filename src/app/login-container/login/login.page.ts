@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
- IonContent, IonHeader, IonTitle, IonToolbar, IonRow, IonCol,
- IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonToast
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { Router } from '@angular/router';
 import { LSService } from 'src/app/utils/ls-service.service';
@@ -17,10 +14,7 @@ import { Utils } from 'src/app/utils/utils.service';
  templateUrl: './login.page.html',
  styleUrls: ['./login.page.scss'],
  standalone: true,
- imports: [
-  CommonModule, FormsModule, ReactiveFormsModule, IonContent, IonHeader, IonTitle, IonToolbar,
-  IonRow, IonCol, IonIcon, IonButton, IonSpinner, IonInput, IonInputPasswordToggle, IonToast
- ]
+ imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule]
 })
 export class LoginPage {
  private readonly apiService = inject(ApiService)

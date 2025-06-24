@@ -10,53 +10,67 @@
 </ion-header>
 
 <ion-content>
+
+ <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
+   refreshingText="Refreshing...">
+  </ion-refresher-content>
+ </ion-refresher>
+
  <ion-segment [(ngModel)]="selectedTab" [value]="selectedTab">
   @for (tab of tabsList; track $index) {
   <ion-segment-button [value]="tab.id">
-   <ion-label>{{tab.name}} ({{ tab.count }})</ion-label>
+   <ion-label>{{ tab.name }} ({{ tab.count }})</ion-label>
   </ion-segment-button>
   }
  </ion-segment>
 
  @switch (selectedTab) {
  @case (1) {
- <div>
+ <ion-list>
   @for (item of receivedRequests; track $index) {
-  <ion-list>
-   <ion-item>
-    <ion-avatar slot="start">
-     <ion-icon [name]="item.user_profile" size="large"></ion-icon>
-    </ion-avatar>
-    <ion-label>{{ item.username }}</ion-label>
-    <ion-buttons slot="end">
-     <ion-button color="success" (click)="acceptRequest(item)">
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
-     </ion-button>
-     <ion-button color="danger" (click)="rejectRequest(item)">
-      <ion-icon name="close-circle-outline"></ion-icon>
-     </ion-button>
-    </ion-buttons>
-   </ion-item>
-  </ion-list>
-  }
- </div>
- }
- @case (2) {
- <div>
-  @for (item of sentRequests; track $index) {
-  <ion-list>
-   <ion-item>
-    <ion-avatar slot="start">
-     <ion-icon [name]="item.user_profile" size="large"></ion-icon>
-    </ion-avatar>
-    <ion-label>{{ item.username }}</ion-label>
-    <ion-button slot="end" color="medium" (click)="rejectRequest(item,true)">
-     <ion-icon name="remove-circle-outline"></ion-icon>
+  <ion-item>
+   <ion-avatar slot="start">
+    <ion-icon [name]="item.user_profile" size="large"></ion-icon>
+   </ion-avatar>
+   <ion-label>{{ item.username }}</ion-label>
+   <ion-buttons slot="end">
+    <ion-button color="success" (click)="acceptRequest(item)">
+     <ion-icon name="checkmark-circle-outline"></ion-icon>
     </ion-button>
-   </ion-item>
-  </ion-list>
+    <ion-button color="danger" (click)="rejectRequest(item)">
+     <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
+   </ion-buttons>
+  </ion-item>
+  } @empty {
+  <div class="no-data">
+   <ion-icon name="person-outline" size="large" color="medium"></ion-icon>
+   <p>No received requests</p>
+  </div>
   }
- </div>
+ </ion-list>
+ }
+
+ @case (2) {
+ <ion-list>
+  @for (item of sentRequests; track $index) {
+  <ion-item>
+   <ion-avatar slot="start">
+    <ion-icon [name]="item.user_profile" size="large"></ion-icon>
+   </ion-avatar>
+   <ion-label>{{ item.username }}</ion-label>
+   <ion-button slot="end" color="medium" (click)="rejectRequest(item, true)">
+    <ion-icon name="remove-circle-outline"></ion-icon>
+   </ion-button>
+  </ion-item>
+  } @empty {
+  <div class="no-data">
+   <ion-icon name="paper-plane-outline" size="large" color="medium"></ion-icon>
+   <p>No sent requests</p>
+  </div>
+  }
+ </ion-list>
  }
  }
 

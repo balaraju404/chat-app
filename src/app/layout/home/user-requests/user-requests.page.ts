@@ -148,4 +148,11 @@ export class UserRequestsPage {
  dismissModal() {
   this.modalCtrl.dismiss()
  }
+ refreshData(event: any) {
+  this.receivedRequests()
+  this.sentRequests()
+  setTimeout(() => {
+   event.target.complete()
+  }, 2000)
+ }
 }

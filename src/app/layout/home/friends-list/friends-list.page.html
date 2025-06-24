@@ -10,14 +10,21 @@
 </ion-header>
 
 <ion-content>
+
+ <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
+   refreshingText="Refreshing...">
+  </ion-refresher-content>
+ </ion-refresher>
+
  <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
  </ion-searchbar>
+
  <ion-list>
   @for (user of friendsList; track $index) {
   <ion-item>
    <ion-avatar slot="start">
-    <ion-icon [name]="user.user_profile" size="large" color="primary">
-    </ion-icon>
+    <ion-icon [name]="user.user_profile" size="large" color="primary"></ion-icon>
    </ion-avatar>
 
    <ion-label>{{ user.username }}</ion-label>
@@ -30,8 +37,13 @@
      <ion-icon name="person-remove-outline"></ion-icon>
     </ion-button>
    </ion-buttons>
-
   </ion-item>
+  } @empty {
+  <div class="no-data">
+   <ion-icon name="people-outline" size="large" color="medium"></ion-icon>
+   <p>No friends found</p>
+  </div>
   }
  </ion-list>
+
 </ion-content>

@@ -10,31 +10,38 @@
 </ion-header>
 
 <ion-content>
+
+ <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
+   refreshingText="Refreshing...">
+  </ion-refresher-content>
+ </ion-refresher>
+
  <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
  </ion-searchbar>
+
  <ion-list>
   @for (user of userList; track $index) {
   <ion-item>
    <ion-avatar slot="start">
-    <ion-icon [name]="user.user_profile" size="large" color="primary">
-    </ion-icon>
+    <ion-icon [name]="user.user_profile" size="large" color="primary"></ion-icon>
    </ion-avatar>
 
    <ion-label>{{ user.username }}</ion-label>
 
    <ion-buttons slot="end">
-    @switch (user.req_flag||0) {
-    @case(0){
+    @switch (user.req_flag || 0) {
+    @case(0) {
     <ion-button color="success" (click)="sentRequest(user)">
      <ion-icon name="send-outline"></ion-icon>
     </ion-button>
     }
-    @case(1){
+    @case(1) {
     <ion-button color="medium" (click)="rejectRequest(user)">
      <ion-icon name="arrow-undo-outline"></ion-icon>
     </ion-button>
     }
-    @case(2){
+    @case(2) {
     <ion-button color="success" (click)="acceptRequest(user)">
      <ion-icon name="checkmark-circle-outline"></ion-icon>
     </ion-button>
@@ -45,6 +52,12 @@
     }
    </ion-buttons>
   </ion-item>
+  } @empty {
+  <div class="no-data">
+   <ion-icon name="people-outline" size="large" color="medium"></ion-icon>
+   <p>No users found</p>
+  </div>
   }
  </ion-list>
+
 </ion-content>

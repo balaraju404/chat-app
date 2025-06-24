@@ -84,4 +84,10 @@ export class FriendsListPage {
  dismissModal() {
   this.modalCtrl.dismiss()
  }
+ refreshData(event: any) {
+  this.getFriendsList()
+  setTimeout(() => {
+   event.target.complete()
+  }, 2000)
+ }
 }
