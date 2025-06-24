@@ -80,16 +80,39 @@ export class UserSearchPage {
    console.error("Failed to call API:", error)
   }
  }
- async withdrawnRequest(item: any) {
+ async acceptRequest(item: any) {
   const payload: any = { _id: item["req_id"] }
-  const url = Constants.getApiUrl(Constants.INVITE_URL)
+  const url = Constants.getApiUrl(Constants.INVITE_ACCEPT_URL)
 
   try {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
     next: async (res: any) => {
      if (res["status"]) {
-      const msg = "Request withdrawn successfully"
+      this.toastService.showToast(res["msg"], "success")
+      this.searchUsersData()
+     } else {
+      this.toastService.showToast(res["msg"], "danger")
+     }
+    }, error: (err) => {
+     const errMsg = Utils.getErrorMessage(err)
+     this.toastService.showToast(errMsg, "danger")
+    }
+   })
+  } catch (error) {
+   console.error("Failed to call API:", error)
+  }
+ }
+ async rejectRequest(item: any, flag: boolean = false) {
+  const payload: any = { _id: item["req_id"] }
+  const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
+
+  try {
+   const observable$ = await this.apiService.postApi(url, payload)
+   observable$.subscribe({
+    next: async (res: any) => {
+     if (res["status"]) {
+      const msg = flag ? "Request withdrawn successfully" : "Request rejected successfully"
       this.toastService.showToast(msg, "success")
       this.searchUsersData()
      } else {

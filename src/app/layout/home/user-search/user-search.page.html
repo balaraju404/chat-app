@@ -23,14 +23,25 @@
    <ion-label>{{ user.username }}</ion-label>
 
    <ion-buttons slot="end">
-    @if (user.is_sended == 0) {
+    @switch (user.req_flag||0) {
+    @case(0){
     <ion-button color="success" (click)="sentRequest(user)">
      <ion-icon name="send-outline"></ion-icon>
     </ion-button>
-    } @else {
-    <ion-button color="medium" (click)="withdrawnRequest(user)">
+    }
+    @case(1){
+    <ion-button color="medium" (click)="rejectRequest(user)">
      <ion-icon name="arrow-undo-outline"></ion-icon>
     </ion-button>
+    }
+    @case(2){
+    <ion-button color="success" (click)="acceptRequest(user)">
+     <ion-icon name="checkmark-circle-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="danger" (click)="rejectRequest(user)">
+     <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
+    }
     }
    </ion-buttons>
   </ion-item>

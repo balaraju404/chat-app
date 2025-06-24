@@ -2,6 +2,11 @@ import { Component, inject } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from 'src/app/utils/api.service';
+import { ToastService } from 'src/app/utils/toast.service';
+import { Constants } from 'src/app/utils/constants.service';
+import { LSService } from 'src/app/utils/ls-service.service';
+import { Utils } from 'src/app/utils/utils.service';
 
 @Component({
  selector: 'app-user-requests',
@@ -11,44 +16,134 @@ import { FormsModule } from '@angular/forms';
  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class UserRequestsPage {
+ private readonly apiService = inject(ApiService)
  private readonly modalCtrl = inject(ModalController)
+ private readonly toastService = inject(ToastService)
 
  tabsList: any = [
   { id: 1, name: "Received", count: 0 },
   { id: 2, name: "Sent", count: 0 }
  ]
-
  selectedTab: any = 1
+ userData: any = {}
+ receivedRequests: any = []
+ sentRequests: any = []
 
- receivedRequests = [
-  { id: 1, username: 'John Doe', gender_id: 1 },
-  { id: 2, username: 'Jane Smith', gender_id: 2 },
-  { id: 3, username: 'Alex Other', gender_id: 3 }
- ]
- sentRequests = [
-  { id: 4, username: 'Alice Brown', gender_id: 2 },
-  { id: 5, username: 'Mike Jones', gender_id: 1 }
- ]
-
- getGenderIcon(gender_id: number): string {
-  // if (gender_id === 1) return 'male-outline'
-  // if (gender_id === 2) return 'female-outline'
-  return 'person-circle-outline'
+ ngOnInit() {
+  this.callAsyncFuns()
  }
-
- acceptRequest(req: any) {
-  console.log('Accepted:', req)
-  // API call here
+ ionViewDidEnter() {
+  this.callAsyncFuns()
  }
-
- rejectRequest(req: any) {
-  console.log('Rejected:', req)
-  // API call here
+ async callAsyncFuns() {
+  await this.setUserData()
+  await this.getReceivedRequests()
+  await this.getSendedRequests()
  }
+ async setUserData() {
+  this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
+ }
+ async getReceivedRequests() {
+  const payload: any = { user_id: this.userData["user_id"] }
+  const url = Constants.getApiUrl(Constants.INVITE_RECEIVED_URL)
 
- withdrawRequest(req: any) {
-  console.log('Withdrawn:', req)
-  // API call here
+  try {
+   const observable$ = await this.apiService.postApi(url, payload)
+   observable$.subscribe({
+    next: async (res: any) => {
+     if (res["status"]) {
+      const data = res["data"] || []
+      this.tabsList[0]["count"] = data.length
+      data.forEach((m: any) => {
+       m["user_profile"] = Utils.getUserProfile(m)
+      })
+      this.receivedRequests = data
+     } else {
+      this.toastService.showToast(res["msg"], "danger")
+     }
+    }, error: (err) => {
+     const errMsg = Utils.getErrorMessage(err)
+     this.toastService.showToast(errMsg, "danger")
+    }
+   })
+  } catch (error) {
+   console.error("Failed to call API:", error)
+  }
+ }
+ async getSendedRequests() {
+  const payload: any = { user_id: this.userData["user_id"] }
+  const url = Constants.getApiUrl(Constants.INVITE_SENDED_URL)
+
+  try {
+   const observable$ = await this.apiService.postApi(url, payload)
+   observable$.subscribe({
+    next: async (res: any) => {
+     if (res["status"]) {
+      const data = res["data"] || []
+      this.tabsList[1]["count"] = data.length
+      data.forEach((m: any) => {
+       m["user_profile"] = Utils.getUserProfile(m)
+      })
+      this.sentRequests = data
+     } else {
+      this.toastService.showToast(res["msg"], "danger")
+     }
+    }, error: (err) => {
+     const errMsg = Utils.getErrorMessage(err)
+     this.toastService.showToast(errMsg, "danger")
+    }
+   })
+  } catch (error) {
+   console.error("Failed to call API:", error)
+  }
+ }
+ async acceptRequest(item: any) {
+  const payload: any = { _id: item._id }
+  const url = Constants.getApiUrl(Constants.INVITE_ACCEPT_URL)
+
+  try {
+   const observable$ = await this.apiService.postApi(url, payload)
+   observable$.subscribe({
+    next: async (res: any) => {
+     if (res["status"]) {
+      this.toastService.showToast(res["msg"], "success")
+      this.getReceivedRequests()
+     } else {
+      this.toastService.showToast(res["msg"], "danger")
+     }
+    }, error: (err) => {
+     const errMsg = Utils.getErrorMessage(err)
+     this.toastService.showToast(errMsg, "danger")
+    }
+   })
+  } catch (error) {
+   console.error("Failed to call API:", error)
+  }
+ }
+ async rejectRequest(item: any, flag: boolean = false) {
+  const payload: any = { _id: item["_id"] }
+  const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
+
+  try {
+   const observable$ = await this.apiService.postApi(url, payload)
+   observable$.subscribe({
+    next: async (res: any) => {
+     if (res["status"]) {
+      const msg = flag ? "Request withdrawn successfully" : "Request rejected successfully"
+      this.toastService.showToast(msg, "success")
+      if (flag) this.getSendedRequests()
+      else this.getReceivedRequests()
+     } else {
+      this.toastService.showToast(res["msg"], "danger")
+     }
+    }, error: (err) => {
+     const errMsg = Utils.getErrorMessage(err)
+     this.toastService.showToast(errMsg, "danger")
+    }
+   })
+  } catch (error) {
+   console.error("Failed to call API:", error)
+  }
  }
  dismissModal() {
   this.modalCtrl.dismiss()

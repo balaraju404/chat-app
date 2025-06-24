@@ -25,7 +25,7 @@
   <ion-list>
    <ion-item>
     <ion-avatar slot="start">
-     <ion-icon [name]="getGenderIcon(item.gender_id)" size="large"></ion-icon>
+     <ion-icon [name]="item.user_profile" size="large"></ion-icon>
     </ion-avatar>
     <ion-label>{{ item.username }}</ion-label>
     <ion-buttons slot="end">
@@ -47,10 +47,10 @@
   <ion-list>
    <ion-item>
     <ion-avatar slot="start">
-     <ion-icon [name]="getGenderIcon(item.gender_id)" size="large"></ion-icon>
+     <ion-icon [name]="item.user_profile" size="large"></ion-icon>
     </ion-avatar>
     <ion-label>{{ item.username }}</ion-label>
-    <ion-button slot="end" color="medium" (click)="withdrawRequest(item)">
+    <ion-button slot="end" color="medium" (click)="rejectRequest(item,true)">
      <ion-icon name="remove-circle-outline"></ion-icon>
     </ion-button>
    </ion-item>
