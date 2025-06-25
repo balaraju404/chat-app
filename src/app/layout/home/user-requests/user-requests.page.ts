@@ -59,11 +59,11 @@ export class UserRequestsPage {
       })
       this.receivedRequests = data
      } else {
-      this.toastService.showToast(res["msg"], "danger")
+      this.toastService.showToastWithCloseButton(res["msg"], "danger")
      }
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {
@@ -86,11 +86,11 @@ export class UserRequestsPage {
       })
       this.sentRequests = data
      } else {
-      this.toastService.showToast(res["msg"], "danger")
+      this.toastService.showToastWithCloseButton(res["msg"], "danger")
      }
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {
@@ -106,14 +106,14 @@ export class UserRequestsPage {
    observable$.subscribe({
     next: (res: any) => {
      if (res["status"]) {
-      this.toastService.showToast(res["msg"], "success")
+      this.toastService.showToastWithCloseButton(res["msg"], "success")
       this.getReceivedRequests()
      } else {
-      this.toastService.showToast(res["msg"], "danger")
+      this.toastService.showToastWithCloseButton(res["msg"], "danger")
      }
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {
@@ -130,15 +130,15 @@ export class UserRequestsPage {
     next: (res: any) => {
      if (res["status"]) {
       const msg = flag ? "Request withdrawn successfully" : "Request rejected successfully"
-      this.toastService.showToast(msg, "success")
+      this.toastService.showToastWithCloseButton(msg, "success")
       if (flag) this.getSendedRequests()
       else this.getReceivedRequests()
      } else {
-      this.toastService.showToast(res["msg"], "danger")
+      this.toastService.showToastWithCloseButton(res["msg"], "danger")
      }
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {

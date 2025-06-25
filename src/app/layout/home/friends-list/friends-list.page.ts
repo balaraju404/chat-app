@@ -45,7 +45,7 @@ export class FriendsListPage {
      this.dataModifier(data)
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {
@@ -74,14 +74,14 @@ export class FriendsListPage {
    observable$.subscribe({
     next: (res: any) => {
      if (res["status"]) {
-      this.toastService.showToast(res["msg"], "success")
+      this.toastService.showToastWithCloseButton(res["msg"], "success")
       this.getFriendsList()
      } else {
-      this.toastService.showToast(res["msg"], "danger")
+      this.toastService.showToastWithCloseButton(res["msg"], "danger")
      }
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {

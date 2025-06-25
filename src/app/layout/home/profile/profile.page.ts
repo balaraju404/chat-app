@@ -81,7 +81,7 @@ export class ProfilePage {
      this.getUserData()
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {
@@ -101,7 +101,7 @@ export class ProfilePage {
      this.userdata = data
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToast(errMsg, "danger")
+     this.toastService.showToastWithCloseButton(errMsg, "danger")
     }
    })
   } catch (error) {

@@ -13,7 +13,8 @@ import {
  person, logIn, close, chatbubblesOutline, peopleOutline, albumsOutline, menuOutline, personCircleOutline, search,
  settings, colorWand, chatbubbleEllipses, closeOutline, checkmarkOutline, returnDownBackOutline, manOutline, womanOutline,
  accessibilityOutline, checkmarkCircleOutline, closeCircleOutline, maleOutline, femaleOutline, removeCircleOutline, sendOutline,
- arrowUndoOutline, people, chatbubbleOutline, personRemoveOutline, personOutline, paperPlaneOutline
+ arrowUndoOutline, people, chatbubbleOutline, personRemoveOutline, personOutline, paperPlaneOutline, arrowDownOutline,
+ arrowBackOutline
 } from 'ionicons/icons';
 
 addIcons({
@@ -46,7 +47,9 @@ addIcons({
  'chatbubble-outline': chatbubbleOutline,
  'person-remove-outline': personRemoveOutline,
  'person-outline': personOutline,
- 'paper-plane-outline': paperPlaneOutline
+ 'paper-plane-outline': paperPlaneOutline,
+ 'arrow-down-outline': arrowDownOutline,
+ 'arrow-back-outline': arrowBackOutline
 });
 
 bootstrapApplication(AppComponent, {
