@@ -1,4 +1,4 @@
-import { Component, Input, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -25,8 +25,6 @@ export class FriendChatPage {
  userData: any = {}
  chatData: any[] = []
  msgValue: string = ""
-
- @ViewChild("chatContainer", { static: false }) chatContainer?: ElementRef
 
  async ngOnInit() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
