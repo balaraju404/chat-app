@@ -88,12 +88,9 @@ export class FriendChatPage {
  }
 
  private scrollToBottom() {
-  // Use timeout to wait for DOM to update
   setTimeout(() => {
-   const container = this.chatContainer?.nativeElement
-   if (container) {
-    container.scrollTop = container.scrollHeight
-   }
+   const el = document.getElementById("last-msg")
+   if (el) el.scrollIntoView({ behavior: "smooth" })
   }, 100)
  }
 }
