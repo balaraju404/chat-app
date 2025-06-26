@@ -59,7 +59,6 @@ export class ProfilePage {
  }
  getUpdatePayload() {
   const payload: any = {
-   user_id: this.userdata.user_id,
    username: this.userdata.username,
    gender_id: this.userdata.gender_id,
    about: this.userdata.about

@@ -33,7 +33,7 @@ export class UserSearchPage {
   this.searchUsersData()
  }
  async searchUsersData() {
-  const payload: any = { user_id: this.userData["user_id"], search_text: this.searchText }
+  const payload: any = { search_text: this.searchText }
   const url = Constants.getApiUrl(Constants.USERS_OTHERS_URL)
 
   try {
@@ -58,7 +58,7 @@ export class UserSearchPage {
   this.userList = data
  }
  async sentRequest(item: any) {
-  const payload: any = { sender_id: this.userData["user_id"], receiver_id: item.user_id }
+  const payload: any = { receiver_id: item.user_id }
   const url = Constants.getApiUrl(Constants.INVITE_URL)
 
   try {

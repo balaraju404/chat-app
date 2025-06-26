@@ -44,7 +44,7 @@ export class UserRequestsPage {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
  }
  async getReceivedRequests() {
-  const payload: any = { user_id: this.userData["user_id"] }
+  const payload: any = {}
   const url = Constants.getApiUrl(Constants.INVITE_RECEIVED_URL)
 
   try {
@@ -71,7 +71,7 @@ export class UserRequestsPage {
   }
  }
  async getSendedRequests() {
-  const payload: any = { user_id: this.userData["user_id"] }
+  const payload: any = {}
   const url = Constants.getApiUrl(Constants.INVITE_SENDED_URL)
 
   try {

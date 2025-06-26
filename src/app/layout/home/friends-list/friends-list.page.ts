@@ -34,7 +34,7 @@ export class FriendsListPage {
   this.getFriendsList()
  }
  async getFriendsList() {
-  const payload: any = { user_id: this.userData["user_id"], search_text: this.searchText }
+  const payload: any = { search_text: this.searchText }
   const url = Constants.getApiUrl(Constants.USERS_FRIENDS_URL)
 
   try {
@@ -66,7 +66,7 @@ export class FriendsListPage {
   await modal.present()
  }
  async deleteRequest(item: any) {
-  const payload: any = { user_id: this.userData["user_id"], friend_id: item["user_id"] }
+  const payload: any = { friend_id: item["user_id"] }
   const url = Constants.getApiUrl(Constants.INVITE_UNFRIEND_URL)
 
   try {

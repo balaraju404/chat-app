@@ -32,7 +32,7 @@ export class FriendChatPage {
  }
 
  async getChatDetails(event: any = null) {
-  const payload = { user_id: this.userData["user_id"], friend_id: this.friendData["user_id"] }
+  const payload = { friend_id: this.friendData["user_id"] }
   const url = Constants.getApiUrl(Constants.GET_FRIENDS_MSGS_URL)
 
   try {
@@ -56,7 +56,7 @@ export class FriendChatPage {
 
  async sendMessage() {
   if (!this.msgValue.trim()) return
-  const payload = { sender_id: this.userData["user_id"], receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
+  const payload = { receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.SEND_MSG_URL)
 
   try {

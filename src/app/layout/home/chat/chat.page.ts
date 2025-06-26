@@ -31,7 +31,7 @@ export class ChatPage {
  }
 
  async getRecentChatDetails(event: any = null) {
-  const payload = { user_id: this.userData["user_id"] }
+  const payload = {}
   const url = Constants.getApiUrl(Constants.GET_RECENT_CHATS_URL)
 
   try {
