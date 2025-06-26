@@ -1,15 +1,22 @@
 <ion-header translucent>
  <ion-toolbar>
+
   <ion-buttons slot="start">
    <ion-button fill="clear" (click)="dismissModal()">
     <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
    </ion-button>
   </ion-buttons>
-  <ion-title class="ion-text-center">
-   {{ friendData['username'] }}
-  </ion-title>
+
+  <ion-buttons slot="start" class="avatar-name-group">
+   <ion-avatar class="avatar-icon">
+    <ion-icon [name]="friendData.user_profile"></ion-icon>
+   </ion-avatar>
+   <div class="friend-name">{{ friendData.username }}</div>
+  </ion-buttons>
+
  </ion-toolbar>
 </ion-header>
+
 
 <ion-content [fullscreen]="true" class="chat-content">
 

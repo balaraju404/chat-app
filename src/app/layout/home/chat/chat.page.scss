@@ -1,0 +1,65 @@
+.chat-list {
+ --background: transparent;
+ background: transparent;
+}
+
+.chat-item {
+ --background: transparent;
+ --min-height: 72px;
+ --inner-padding-start: 8px;
+ --inner-padding-end: 8px;
+ padding: 4px 0;
+}
+
+.chat-avatar-icon {
+ font-size: 32px;
+ color: var(--ion-color-medium);
+}
+
+.chat-label {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ padding: 0;
+}
+
+.chat-header-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.chat-username {
+ font-size: 15px;
+ font-weight: 500;
+ margin: 0;
+}
+
+.chat-badge {
+ font-size: 11px;
+ height: 18px;
+ line-height: 16px;
+ padding: 0 6px;
+}
+
+.chat-content-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.chat-msg {
+ font-size: 14px;
+ color: var(--ion-color-medium);
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ margin: 2px 0;
+ flex: 1;
+}
+
+.chat-time {
+ font-size: 12px;
+ margin-left: 8px;
+ white-space: nowrap;
+}

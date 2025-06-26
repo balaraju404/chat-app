@@ -1,3 +1,44 @@
 <ion-content [fullscreen]="true" class="ion-padding">
- <span>Chat Component</span>
+
+ <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
+   refreshingText="Refreshing..."></ion-refresher-content>
+ </ion-refresher>
+
+ <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
+ </ion-searchbar>
+
+ <ion-list class="chat-list">
+  @for (chat of filterData; track $index) {
+  <ion-item button (click)="openChatModal(chat)" class="chat-item" lines="none">
+
+   <ion-avatar slot="start" class="chat-avatar">
+    <ion-icon [name]="chat.user_profile" class="chat-avatar-icon"></ion-icon>
+   </ion-avatar>
+
+   <ion-label class="chat-label">
+    <div class="chat-header-row">
+     <h3 class="chat-username">{{ chat.username }}</h3>
+     @if (chat.unseen_count > 0) {
+     <ion-badge color="danger" class="chat-badge">{{ chat.unseen_count }}</ion-badge>
+     }
+    </div>
+
+    <div class="chat-content-row">
+     <p class="chat-msg">{{ chat.last_message?.msg }}</p>
+     <ion-note class="chat-time" color="medium">
+      {{ chat.last_message?.created_at | date: 'hh:mm a' }}
+     </ion-note>
+    </div>
+   </ion-label>
+
+  </ion-item>
+  } @empty {
+  <div class="no-data">
+   <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+   <p>No recent chats found</p>
+  </div>
+  }
+ </ion-list>
+
 </ion-content>
