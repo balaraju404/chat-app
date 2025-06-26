@@ -25,6 +25,7 @@ export class FriendChatPage {
  userData: any = {}
  chatData: any[] = []
  msgValue: string = ""
+ isUpdate: boolean = false
 
  async ngOnInit() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
@@ -64,6 +65,7 @@ export class FriendChatPage {
    observable$.subscribe({
     next: (res: any) => {
      if (res["status"]) {
+      this.isUpdate = true
       this.msgValue = ""
       this.getChatDetails()
      }
@@ -78,7 +80,7 @@ export class FriendChatPage {
  }
 
  dismissModal() {
-  this.modalCtrl.dismiss()
+  this.modalCtrl.dismiss({ is_updated: this.isUpdate })
  }
 
  refreshData(event: any) {

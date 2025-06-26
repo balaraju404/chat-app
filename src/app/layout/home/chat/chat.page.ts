@@ -25,7 +25,11 @@ export class ChatPage {
  allChatData: any[] = []
  filterData: any[] = []
 
- async ngOnInit() {
+ ionViewWillEnter() {
+  this.callOnLoad()
+ }
+
+ async callOnLoad() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.getRecentChatDetails()
  }
@@ -85,6 +89,13 @@ export class ChatPage {
    component: FriendChatPage,
    componentProps: { friendData: data }
   })
+
+  modal.onWillDismiss().then((result) => {
+   if (result.data?.is_updated) {
+    this.getRecentChatDetails()
+   }
+  })
+
   await modal.present()
  }
 

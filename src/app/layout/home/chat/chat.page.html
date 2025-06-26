@@ -25,7 +25,9 @@
     </div>
 
     <div class="chat-content-row">
-     <p class="chat-msg">{{ chat.last_message?.msg }}</p>
+     <p class="chat-msg">
+      {{(chat.last_message?.sender_id)==userData.user_id?'You: ':''}}{{ chat.last_message?.msg }}
+     </p>
      <ion-note class="chat-time" color="medium">
       {{ chat.last_message?.created_at | date: 'hh:mm a' }}
      </ion-note>
