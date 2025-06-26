@@ -32,4 +32,16 @@ export class Utils {
  static isValidEmail(email: string) {
   return Constants.EMAIL_REGEX.test(email)
  }
+
+ // date helper functions
+ static isToday(dateStr: string | Date): boolean {
+  const inputDate = new Date(dateStr)
+  const today = new Date()
+
+  return (
+   inputDate.getFullYear() === today.getFullYear() &&
+   inputDate.getMonth() === today.getMonth() &&
+   inputDate.getDate() === today.getDate()
+  )
+ }
 }

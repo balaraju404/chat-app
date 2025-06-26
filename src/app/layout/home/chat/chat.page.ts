@@ -60,6 +60,7 @@ export class ChatPage {
  dataModifier(data: any) {
   data.forEach((m: any) => {
    m["user_profile"] = Utils.getUserProfile(m)
+   m["is_today"] = Utils.isToday(m["last_message"]["created_at"])
   })
   this.allChatData = Utils.cloneData(data)
   this.filterData = Utils.cloneData(data)

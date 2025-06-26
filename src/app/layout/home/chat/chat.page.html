@@ -29,7 +29,7 @@
       {{(chat.last_message?.sender_id)==userData.user_id?'You: ':''}}{{ chat.last_message?.msg }}
      </p>
      <ion-note class="chat-time" color="medium">
-      {{ chat.last_message?.created_at | date: 'hh:mm a' }}
+      {{ chat.last_message?.created_at | date: chat["is_today"]?'hh:mm a':'dd MMM yy hh:mm a' }}
      </ion-note>
     </div>
    </ion-label>
