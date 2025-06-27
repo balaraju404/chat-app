@@ -1,0 +1,23 @@
+<ion-header translucent>
+ <ion-toolbar>
+  <ion-buttons slot="start">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+  <ion-title>Create Group</ion-title>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+ <ion-item lines="inset">
+  <ion-label position="floating">Group Name</ion-label>
+  <ion-input [(ngModel)]="groupName" placeholder="Enter group name"></ion-input>
+ </ion-item>
+
+ <ion-button expand="block" class="ion-margin-top" (click)="createGroup()" [disabled]="!groupName.trim()">
+  Create Group
+ </ion-button>
+
+</ion-content>

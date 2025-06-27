@@ -14,7 +14,7 @@ import {
  settings, colorWand, chatbubbleEllipses, closeOutline, checkmarkOutline, returnDownBackOutline, manOutline, womanOutline,
  accessibilityOutline, checkmarkCircleOutline, closeCircleOutline, maleOutline, femaleOutline, removeCircleOutline, sendOutline,
  arrowUndoOutline, people, chatbubbleOutline, personRemoveOutline, personOutline, paperPlaneOutline, arrowDownOutline,
- arrowBackOutline, chatbubbleEllipsesOutline
+ arrowBackOutline, chatbubbleEllipsesOutline, addOutline
 } from 'ionicons/icons';
 
 addIcons({
@@ -50,7 +50,8 @@ addIcons({
  'paper-plane-outline': paperPlaneOutline,
  'arrow-down-outline': arrowDownOutline,
  'arrow-back-outline': arrowBackOutline,
- 'chatbubble-ellipses-outline': chatbubbleEllipsesOutline
+ 'chatbubble-ellipses-outline': chatbubbleEllipsesOutline,
+ 'add-outline': addOutline
 });
 
 bootstrapApplication(AppComponent, {

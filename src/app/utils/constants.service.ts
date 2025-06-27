@@ -29,6 +29,9 @@ export class Constants {
  static readonly GET_FRIENDS_MSGS_URL = Constants.MESSAGES_URL + "chat"
  static readonly SEND_MSG_URL = Constants.MESSAGES_URL + "msg"
  static readonly GET_RECENT_CHATS_URL = Constants.MESSAGES_URL + "dashboard"
+ static readonly GROUPS_URL = "groups/"
+ static readonly GROUPS_CREATE_URL = Constants.GROUPS_URL + "create"
+ static readonly GROUPS_DETAILS_URL = Constants.GROUPS_URL + "details"
 
  static readonly LS_TOKEN_KEY = 'token'
  static readonly LS_USER_DATA_KEY = 'login_user_data'
