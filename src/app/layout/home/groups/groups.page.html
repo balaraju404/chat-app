@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true" class="ion-padding">
 
- <!-- Refresh -->
+ <!-- Pull to Refresh -->
  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
   <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
    refreshingText="Refreshing...">
@@ -8,8 +8,30 @@
  </ion-refresher>
 
  <!-- Searchbar -->
- <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
+ <ion-searchbar placeholder="Search by group name..." [debounce]="300" (ionInput)="onSearch($event)">
  </ion-searchbar>
+
+ <!-- Group List -->
+ <ion-list>
+  @for (group of filteredGroupsData; track group.group_id) {
+  <ion-item button detail (click)="openGroupModal(group)">
+   <ion-avatar slot="start">
+    <ion-icon [name]="group.group_profile" size="large"></ion-icon>
+   </ion-avatar>
+
+   <ion-label>
+    <h2>{{ group.groupname }}</h2>
+    <p>{{ group.members.length }} members</p>
+   </ion-label>
+  </ion-item>
+  }@empty {
+  <div class="ion-text-center ion-margin-top">
+   <ion-text color="medium">
+    <p>No groups found.</p>
+   </ion-text>
+  </div>
+  }
+ </ion-list>
 
  <!-- Floating Add Button -->
  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
@@ -17,8 +39,5 @@
    <ion-icon name="add-outline"></ion-icon>
   </ion-fab-button>
  </ion-fab>
-
- <!-- Placeholder for group list -->
- <span>Groups Component</span>
 
 </ion-content>

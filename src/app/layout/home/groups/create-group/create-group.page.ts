@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
-import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 
@@ -23,6 +22,16 @@ export class CreateGroupPage {
  isUpdate: boolean = false
  groupName: string = ""
 
+ checkValidations() {
+  let msg = ""
+  if (this.groupName.trim() == "") msg = "Please enter group name"
+  else if (this.groupName.length < 4) msg = "Group name should be at least 4 characters long"
+  if (msg != "") {
+   this.toastService.showToastWithCloseButton(msg, "danger")
+   return
+  }
+  this.createGroup()
+ }
  async createGroup() {
   const payload = { groupname: this.groupName }
   const url = Constants.getApiUrl(Constants.GROUPS_CREATE_URL)
@@ -35,6 +44,7 @@ export class CreateGroupPage {
       this.isUpdate = true
       this.groupName = ""
       this.toastService.showToastWithCloseButton(res["msg"], "success")
+      this.dismissModal()
      }
     }, error: (err) => {
      const errMsg = Utils.getErrorMessage(err)

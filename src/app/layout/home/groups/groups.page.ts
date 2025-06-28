@@ -22,60 +22,58 @@ export class GroupsPage {
  private readonly toastService = inject(ToastService)
 
  userData: any = {}
- allChatData: any[] = []
- filterData: any[] = []
+ allGroupsData: any[] = []
+ filteredGroupsData: any[] = []
 
  ionViewWillEnter() {
-  this.callOnLoad()
+  this.loadUserAndGroups()
  }
 
- async callOnLoad() {
+ async loadUserAndGroups() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
-  this.getGroupsDetails()
+  this.fetchGroupList()
  }
 
- async getGroupsDetails(event: any = null) {
-  const payload = {}
-  const url = Constants.getApiUrl(Constants.GET_RECENT_CHATS_URL)
+ async fetchGroupList(event: any = null) {
+  const payload = { user_id: this.userData["user_id"] }
+  const url = Constants.getApiUrl(Constants.GROUPS_DETAILS_URL)
 
   try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
+   const response$ = await this.apiService.postApi(url, payload)
+   response$.subscribe({
     next: (res: any) => {
      const data = res["data"] || []
      this.dataModifier(data)
-     if (event) event.target.complete()
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-     if (event) event.target.complete()
+     event?.target?.complete()
+    },
+    error: (err) => {
+     const errorMsg = Utils.getErrorMessage(err)
+     this.toastService.showToastWithCloseButton(errorMsg, "danger")
+     event?.target?.complete()
     }
    })
   } catch (error) {
-   console.error("Failed to call API:", error)
-   if (event) event.target.complete()
+   console.error("Failed to load groups:", error)
+   event?.target?.complete()
   }
  }
 
- dataModifier(data: any) {
-  data.forEach((m: any) => {
-   m["user_profile"] = Utils.getUserProfile(m)
-   m["is_today"] = Utils.isToday(m["last_message"]["created_at"])
+ dataModifier(data: any[]) {
+  data.forEach(group => {
+   group.group_profile = Utils.getGroupProfile(group)
   })
-  this.allChatData = Utils.cloneData(data)
-  this.filterData = Utils.cloneData(data)
+
+  this.allGroupsData = Utils.cloneData(data)
+  this.filteredGroupsData = Utils.cloneData(data)
  }
 
  onSearch(event: any) {
-  const search_text = event.target.value?.toLowerCase() || ""
-  if (!search_text.trim()) {
-   this.filterData = Utils.cloneData(this.allChatData)
-   return
-  }
-
-  this.filterData = this.allChatData.filter((m: any) =>
-   m["username"].toLowerCase().includes(search_text)
-  )
+  const searchText = event.target.value?.toLowerCase().trim() || ""
+  this.filteredGroupsData = searchText
+   ? this.allGroupsData.filter(group =>
+    group.groupname?.toLowerCase().includes(searchText)
+   )
+   : Utils.cloneData(this.allGroupsData)
  }
 
  async openCreateGroupModal() {
@@ -83,38 +81,20 @@ export class GroupsPage {
    component: CreateGroupPage
   })
 
-  modal.onWillDismiss().then((result) => {
+  modal.onWillDismiss().then(result => {
    if (result.data?.is_updated) {
-    this.getGroupsDetails()
+    this.fetchGroupList()
    }
   })
 
   await modal.present()
  }
 
- async openGroupModal(item: any) {
-  const data = {
-   user_id: item["friend_id"],
-   username: item["username"],
-   gender_id: item["gender_id"],
-   user_profile: item["user_profile"]
-  }
-
-  // const modal = await this.modalCtrl.create({
-  //  component: FriendChatPage,
-  //  componentProps: { friendData: data }
-  // })
-
-  // modal.onWillDismiss().then((result) => {
-  //  if (result.data?.is_updated) {
-  //   this.getGroupsDetails()
-  //  }
-  // })
-
-  // await modal.present()
+ async openGroupModal(group: any) {
+  console.log("Open group modal for:", group.groupname)
  }
 
  refreshData(event: any) {
-  this.getGroupsDetails(event)
+  this.fetchGroupList(event)
  }
 }

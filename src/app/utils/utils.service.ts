@@ -18,6 +18,9 @@ export class Utils {
   // if (gender_id === 2) return 'female-outline'
   return 'person-circle-outline'
  }
+ static getGroupProfile(groupData: any) {
+  return 'people-outline'
+ }
  static async clearLSonLogout() {
   await LSService.clear()
  }
