@@ -17,6 +17,11 @@
    <ion-input [(ngModel)]="groupName" placeholder="Enter group name" clearInput></ion-input>
   </ion-item>
 
+  <ion-item lines="none" class="clean-item">
+   <ion-label position="floating">Description</ion-label>
+   <ion-input [(ngModel)]="description" placeholder="Enter group description" clearInput></ion-input>
+  </ion-item>
+
   <ion-button expand="block" shape="round" color="primary" class="create-btn" [disabled]="!groupName.trim()"
    (click)="checkValidations()">
    Create Group

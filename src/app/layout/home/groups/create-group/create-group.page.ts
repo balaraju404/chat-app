@@ -21,6 +21,7 @@ export class CreateGroupPage {
 
  isUpdate: boolean = false
  groupName: string = ""
+ description: string = ""
 
  checkValidations() {
   let msg = ""
@@ -33,7 +34,7 @@ export class CreateGroupPage {
   this.createGroup()
  }
  async createGroup() {
-  const payload = { groupname: this.groupName }
+  const payload = { groupname: this.groupName, description: this.description }
   const url = Constants.getApiUrl(Constants.GROUPS_CREATE_URL)
 
   try {
@@ -43,6 +44,7 @@ export class CreateGroupPage {
      if (res["status"]) {
       this.isUpdate = true
       this.groupName = ""
+      this.description = ""
       this.toastService.showToastWithCloseButton(res["msg"], "success")
       this.dismissModal()
      }

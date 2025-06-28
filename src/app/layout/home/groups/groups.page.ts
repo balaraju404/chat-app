@@ -8,6 +8,7 @@ import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { CreateGroupPage } from './create-group/create-group.page';
+import { GroupChatPage } from './group-chat/group-chat.page';
 
 @Component({
  selector: 'app-groups',
@@ -36,7 +37,7 @@ export class GroupsPage {
 
  async fetchGroupList(event: any = null) {
   const payload = { user_id: this.userData["user_id"] }
-  const url = Constants.getApiUrl(Constants.GROUPS_DETAILS_URL)
+  const url = Constants.getApiUrl(Constants.DASHBOARD_GROUPS_URL)
 
   try {
    const response$ = await this.apiService.postApi(url, payload)
@@ -90,8 +91,19 @@ export class GroupsPage {
   await modal.present()
  }
 
- async openGroupModal(group: any) {
-  console.log("Open group modal for:", group.groupname)
+ async openGroupModal(data: any) {
+  const modal = await this.modalCtrl.create({
+   component: GroupChatPage,
+   componentProps: { groupData: data }
+  })
+
+  modal.onWillDismiss().then(result => {
+   if (result.data?.is_updated) {
+    this.fetchGroupList()
+   }
+  })
+
+  await modal.present()
  }
 
  refreshData(event: any) {

@@ -32,6 +32,12 @@ export class Constants {
  static readonly GROUPS_URL = "groups/"
  static readonly GROUPS_CREATE_URL = Constants.GROUPS_URL + "create"
  static readonly GROUPS_DETAILS_URL = Constants.GROUPS_URL + "details"
+ static readonly GROUP_CHAT_URL = "group_chat/"
+ static readonly GROUP_CHAT_SEND_URL = Constants.GROUP_CHAT_URL + "send"
+ static readonly GROUP_CHAT_DETAILS_URL = Constants.GROUP_CHAT_URL + "details"
+ static readonly DASHBOARD_URL = "dashboard/"
+ static readonly DASHBOARD_CHATS_URL = Constants.DASHBOARD_URL + "chats"
+ static readonly DASHBOARD_GROUPS_URL = Constants.DASHBOARD_URL + "groups"
 
  static readonly LS_TOKEN_KEY = 'token'
  static readonly LS_USER_DATA_KEY = 'login_user_data'

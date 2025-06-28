@@ -36,7 +36,7 @@ export class ChatPage {
 
  async getRecentChatDetails(event: any = null) {
   const payload = {}
-  const url = Constants.getApiUrl(Constants.GET_RECENT_CHATS_URL)
+  const url = Constants.getApiUrl(Constants.DASHBOARD_CHATS_URL)
 
   try {
    const observable$ = await this.apiService.postApi(url, payload)

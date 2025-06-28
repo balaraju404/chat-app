@@ -1,0 +1,58 @@
+.group-info-wrapper {
+ display: flex;
+ flex-direction: column;
+ gap: 0.25rem;
+ width: 100%;
+ padding: 0.5rem;
+}
+
+.group-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.group-name {
+ font-weight: 600;
+ font-size: 16px;
+ margin: 0;
+}
+
+.message-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ gap: 8px;
+ margin-top: 4px;
+}
+
+.last-message {
+ font-size: 14px;
+ color: var(--ion-color-medium);
+ flex: 1;
+ overflow: hidden;
+ white-space: nowrap;
+ text-overflow: ellipsis;
+}
+
+.message-time {
+ font-size: 12px;
+ color: var(--ion-color-medium);
+ white-space: nowrap;
+}
+
+.members-count {
+ font-size: 12px;
+ color: var(--ion-color-step-600);
+ margin-top: 2px;
+}
+
+.unseen-badge {
+ margin-left: 8px;
+ font-size: 12px;
+ min-width: 18px;
+ text-align: center;
+ height: 18px;
+ line-height: 18px;
+ border-radius: 10px;
+}

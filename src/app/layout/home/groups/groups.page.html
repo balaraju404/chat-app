@@ -16,15 +16,35 @@
   @for (group of filteredGroupsData; track group.group_id) {
   <ion-item button detail (click)="openGroupModal(group)">
    <ion-avatar slot="start">
-    <ion-icon [name]="group.group_profile" size="large"></ion-icon>
+    <ion-icon [name]="group.group_profile || 'chatbubble-ellipses-outline'" size="large"></ion-icon>
    </ion-avatar>
 
-   <ion-label>
-    <h2>{{ group.groupname }}</h2>
-    <p>{{ group.members.length }} members</p>
-   </ion-label>
+   <div class="group-info-wrapper">
+    <div class="group-header">
+     <h2 class="group-name">{{ group.groupname }}</h2>
+     @if (group.unseen_count > 0) {
+     <ion-badge color="danger" class="unseen-badge">{{ group.unseen_count }}</ion-badge>
+     }
+    </div>
+
+    @if (group.last_message) {
+    <div class="message-row">
+     <span class="last-message">
+      <strong>{{ group.last_message.texted_by === userData.user_id ? 'You' : group.last_message.username }}:</strong>
+      {{ group.last_message.msg }}
+     </span>
+     @if (group.last_message?.created_at) {
+     <span class="message-time">{{ group.last_message.created_at | date: 'hh:mm a' }}</span>
+     }
+    </div>
+    } @else {
+    <p class="last-message">No messages yet</p>
+    }
+
+    <p class="members-count">{{ group.members.length }} members</p>
+   </div>
   </ion-item>
-  }@empty {
+  } @empty {
   <div class="ion-text-center ion-margin-top">
    <ion-text color="medium">
     <p>No groups found.</p>

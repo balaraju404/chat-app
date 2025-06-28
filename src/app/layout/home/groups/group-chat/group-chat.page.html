@@ -1,0 +1,59 @@
+<ion-header translucent>
+ <ion-toolbar>
+
+  <ion-buttons slot="start">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+
+  <ion-buttons slot="start" class="avatar-name-group">
+   <ion-avatar class="avatar-icon">
+    <ion-icon [name]="groupData.group_profile"></ion-icon>
+   </ion-avatar>
+   <div class="friend-name">{{ groupData.groupname }}</div>
+  </ion-buttons>
+
+ </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="chat-content">
+
+ <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
+   refreshingText="Refreshing...">
+  </ion-refresher-content>
+ </ion-refresher>
+
+ <div class="chat-container ion-padding">
+  @for (chat of chatData; track $index) {
+  <div class="chat-bubble ion-padding" [ngClass]="{
+            'own-message': chat.texted_by === userData?.user_id,
+            'friend-message': chat.texted_by !== userData?.user_id
+          }" id="{{$first ? 'last-msg' : ''}}">
+   <div class="message-text">{{ chat.msg }}</div>
+   <div class="message-time ion-text-end ion-text-small">
+    {{ chat.created_at | date: 'dd MMM yy hh:mm a' }}
+   </div>
+  </div>
+  } @empty {
+  <div class="ion-text-center ion-padding-top">No messages yet</div>
+  }
+ </div>
+
+
+</ion-content>
+
+<ion-footer class="chat-footer no-gradient-footer">
+ <ion-toolbar>
+  <ion-item lines="none" class="ion-align-items-center chat-input-item">
+   <ion-input [(ngModel)]="msgValue" placeholder="Type a message" class="message-input" (keydown.enter)="sendMessage()"
+    clearInput>
+   </ion-input>
+   <ion-button fill="clear" slot="end" (click)="sendMessage()" [disabled]="!msgValue.trim()">
+    <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+   </ion-button>
+  </ion-item>
+ </ion-toolbar>
+</ion-footer>
