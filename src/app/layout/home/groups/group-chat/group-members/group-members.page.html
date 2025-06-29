@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+ <ion-toolbar>
+  <ion-title class="ion-text-center">Group Members</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
+   refreshingText="Refreshing...">
+  </ion-refresher-content>
+ </ion-refresher>
+
+ <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
+ </ion-searchbar>
+
+ <!-- Segment Tabs -->
+ <ion-segment [(ngModel)]="activeTab">
+  @for (tab of tabs; track tab.key) {
+  <ion-segment-button [value]="tab.key">
+   <ion-label>{{ tab.label }}</ion-label>
+  </ion-segment-button>
+  }
+ </ion-segment>
+
+ <!-- Members List -->
+ @if (activeTab === 'members') {
+ <ion-list>
+  @if (groupDetails.is_admin) {
+  <ion-row>
+   <ion-button fill="clear" (click)="openAddMemebrsModal()">
+    <ion-icon name="add-outline"></ion-icon>
+    Add Members
+   </ion-button>
+  </ion-row>
+  }
+
+  @for (member of filteredMembers; track member.user_id) {
+  <ion-item>
+   <ion-avatar slot="start">
+    <ion-icon [name]="member.user_profile" size="large"></ion-icon>
+   </ion-avatar>
+   <ion-label>
+    <h2>{{ member.username }}</h2>
+    <p>
+     {{ member.user_id === userData.user_id ? 'You' : (member.is_admin ? 'Admin' : 'Member') }}
+    </p>
+   </ion-label>
+
+   @if (groupDetails.is_admin && member.user_id !== userData.user_id) {
+   @if ( !member.is_admin) {
+   <ion-button slot="end" fill="clear" (click)="makeAdmin(member.user_id)" title="Add Admin">
+    <ion-icon name="person-add-outline"></ion-icon>
+   </ion-button>
+   }
+
+   <ion-button slot="end" fill="clear" color="danger" (click)="removeMember(member.user_id)" title="Remove Member">
+    <ion-icon name="trash-outline"></ion-icon>
+   </ion-button>
+   }
+
+  </ion-item>
+  } @empty {
+  <ion-item>
+   <ion-label>No members found.</ion-label>
+  </ion-item>
+  }
+ </ion-list>
+ }
+
+ <!-- Admins List -->
+ @if (activeTab === 'admins') {
+ <ion-list>
+  @for (admin of filteredAdmins; track admin.user_id) {
+  <ion-item>
+   <ion-avatar slot="start">
+    <ion-icon [name]="admin.user_profile" size="large"></ion-icon>
+   </ion-avatar>
+   <ion-label>
+    <h2>{{ admin.username }}</h2>
+    <p>{{ admin.user_id === userData.user_id ? 'You (Admin)' : 'Admin' }}</p>
+   </ion-label>
+
+   @if (groupDetails.is_admin && admin.user_id !== userData.user_id) {
+   <ion-button slot="end" fill="clear" color="danger" (click)="removeAdmin(admin.user_id)" title="Remove Admin">
+    <ion-icon name="person-remove-outline"></ion-icon>
+   </ion-button>
+   }
+  </ion-item>
+  } @empty {
+  <ion-item>
+   <ion-label>No admins found.</ion-label>
+  </ion-item>
+  }
+ </ion-list>
+ }
+</ion-content>

@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { LSService } from 'src/app/utils/ls-service.service';
+import { GroupMembersPage } from './group-members/group-members.page';
 
 @Component({
  selector: 'app-group-chat',
@@ -81,6 +82,25 @@ export class GroupChatPage {
   } catch (error) {
    console.error("Failed to call API:", error)
   }
+ }
+
+ async openMembersModal() {
+  const modal = await this.modalCtrl.create({
+   component: GroupMembersPage,
+   componentProps: { groupData: this.groupData }
+  })
+
+  modal.onWillDismiss().then(result => {
+   if (result.data?.is_updated) {
+    // this.fetchGroupList()
+   }
+  })
+
+  await modal.present()
+ }
+
+ openGroupOptions() {
+  // Open popover or action sheet with group actions
  }
 
  dismissModal() {

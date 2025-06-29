@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+ <ion-toolbar>
+  <ion-title class="ion-text-center">Add Members</ion-title>
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+ <!-- List of Friends -->
+ <ion-list>
+  @for (friend of friendsList; track friend._id) {
+  <ion-item lines="full" class="friend-item">
+   <ion-avatar slot="start">
+    <ion-icon [name]="friend.user_profile" size="large"></ion-icon>
+   </ion-avatar>
+
+   <ion-label>
+    <h2 class="username">{{ friend.username }}</h2>
+    @if (friend.is_add) {
+    <p class="already-added">Already added</p>
+    }
+   </ion-label>
+
+   @if (!friend.is_add) {
+   <ion-checkbox slot="end" [(ngModel)]="friend.checked" (ionChange)="onSelectMember(friend)">
+   </ion-checkbox>
+   }
+  </ion-item>
+  } @empty {
+  <ion-item>
+   <ion-label>No users available.</ion-label>
+  </ion-item>
+  }
+ </ion-list>
+
+ <ion-button expand="block" [disabled]="newMembersIds.length === 0" (click)="addGroupMembers()">
+  Add Members
+ </ion-button>
+</ion-content>

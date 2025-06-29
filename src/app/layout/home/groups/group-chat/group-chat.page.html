@@ -1,22 +1,35 @@
 <ion-header translucent>
  <ion-toolbar>
 
+  <!-- Back Button -->
   <ion-buttons slot="start">
    <ion-button fill="clear" (click)="dismissModal()">
     <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
    </ion-button>
   </ion-buttons>
 
+  <!-- Group Avatar and Name -->
   <ion-buttons slot="start" class="avatar-name-group">
    <ion-avatar class="avatar-icon">
-    <ion-icon [name]="groupData.group_profile"></ion-icon>
+    <ion-icon [name]="groupData.group_profile || 'people-outline'"></ion-icon>
    </ion-avatar>
    <div class="friend-name">{{ groupData.groupname }}</div>
   </ion-buttons>
 
+  <!-- Members Icon -->
+  <ion-buttons slot="end">
+   <ion-button fill="clear" (click)="openMembersModal()">
+    <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+   </ion-button>
+
+   <!-- 3 Dots (More Options) -->
+   <ion-button fill="clear" (click)="openGroupOptions()">
+    <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+
  </ion-toolbar>
 </ion-header>
-
 
 <ion-content [fullscreen]="true" class="chat-content">
 
@@ -41,7 +54,6 @@
   <div class="ion-text-center ion-padding-top">No messages yet</div>
   }
  </div>
-
 
 </ion-content>
 
