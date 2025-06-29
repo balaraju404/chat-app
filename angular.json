@@ -16,7 +16,7 @@
    "prefix": "app",
    "architect": {
     "build": {
-     "builder": "@angular-devkit/build-angular:browser",
+     "builder": "@angular-devkit/build-angular:application",
      "options": {
       "outputPath": "www",
       "index": "src/index.html",
@@ -37,7 +37,7 @@
        "src/theme/variables.scss"
       ],
       "scripts": [],
-      "main": "src/main.ts"
+      "browser": "src/main.ts"
      },
      "configurations": {
       "production": {
