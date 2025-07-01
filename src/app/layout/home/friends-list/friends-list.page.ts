@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { LSService } from 'src/app/utils/ls-service.service';
@@ -10,7 +9,7 @@ import { ToastService } from 'src/app/utils/toast.service';
 import { FriendChatPage } from '../chat/friend-chat/friend-chat.page';
 import {
  IonSearchbar, IonHeader, IonToolbar, IonButton, IonTitle, IonButtons, IonIcon, IonContent, IonRefresher, IonRefresherContent,
- IonList, IonItem, IonAvatar, IonLabel
+ IonList, IonItem, IonAvatar, IonLabel, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({

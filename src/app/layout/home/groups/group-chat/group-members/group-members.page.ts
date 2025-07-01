@@ -1,7 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
@@ -11,7 +10,7 @@ import { AddMembersPage } from './add-members/add-members.page';
 import { AlertService } from 'src/app/utils/alert.service';
 import {
  IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent,
- IonSearchbar, IonSegmentButton, IonLabel, IonList, IonRow, IonItem, IonAvatar
+ IonSearchbar, IonSegmentButton, IonLabel, IonList, IonRow, IonItem, IonAvatar, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({

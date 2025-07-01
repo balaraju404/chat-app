@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Utils } from 'src/app/utils/utils.service';
 import { Constants } from 'src/app/utils/constants.service';
@@ -10,7 +9,7 @@ import { LSService } from 'src/app/utils/ls-service.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import {
  IonButton, IonHeader, IonToolbar, IonButtons, IonIcon, IonTitle, IonContent, IonList, IonItem, IonLabel, IonGrid, IonRow,
- IonCol, IonInput, IonSelect, IonSelectOption, IonTextarea
+ IonCol, IonInput, IonSelect, IonSelectOption, IonTextarea, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({

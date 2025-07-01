@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { LSService } from 'src/app/utils/ls-service.service';
@@ -11,7 +10,7 @@ import { CreateGroupPage } from './create-group/create-group.page';
 import { GroupChatPage } from './group-chat/group-chat.page';
 import {
  IonContent, IonRefresher, IonRefresherContent, IonSearchbar, IonList, IonItem, IonAvatar, IonIcon, IonBadge, IonText, IonFab,
- IonFabButton
+ IonFabButton, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({

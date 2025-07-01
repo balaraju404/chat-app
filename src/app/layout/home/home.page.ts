@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
  IonContent, IonHeader, IonTitle, IonToolbar, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonFooter,
- IonButtons, IonMenuButton, IonButton, MenuController, IonMenu, ModalController
+ IonButtons, IonMenuButton, IonButton, IonMenu, ModalController, MenuController
 } from '@ionic/angular/standalone';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';

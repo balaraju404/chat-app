@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from 'src/app/utils/api.service';
@@ -9,7 +8,7 @@ import { LSService } from 'src/app/utils/ls-service.service';
 import { Utils } from 'src/app/utils/utils.service';
 import {
  IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonSegment,
- IonSegmentButton, IonLabel, IonList, IonItem, IonAvatar
+ IonSegmentButton, IonLabel, IonList, IonItem, IonAvatar, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({
