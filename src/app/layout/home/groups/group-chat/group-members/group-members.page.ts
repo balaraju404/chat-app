@@ -10,7 +10,7 @@ import { AddMembersPage } from './add-members/add-members.page';
 import { AlertService } from 'src/app/utils/alert.service';
 import {
  IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent,
- IonSearchbar, IonSegmentButton, IonLabel, IonList, IonRow, IonItem, IonAvatar, ModalController
+ IonSearchbar, IonSegment, IonSegmentButton, IonLabel, IonList, IonRow, IonItem, IonAvatar, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -18,7 +18,7 @@ import {
  templateUrl: './group-members.page.html',
  styleUrls: ['./group-members.page.scss'],
  standalone: true,
- imports: [IonAvatar, IonItem, IonRow, IonList, IonLabel, IonSegmentButton, IonSearchbar, IonRefresherContent, IonRefresher,
+ imports: [IonAvatar, IonItem, IonRow, IonList, IonLabel, IonSegment, IonSegmentButton, IonSearchbar, IonRefresherContent, IonRefresher,
   IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonToolbar, IonHeader, CommonModule, FormsModule]
 })
 export class GroupMembersPage {

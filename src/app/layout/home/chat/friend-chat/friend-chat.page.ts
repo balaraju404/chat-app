@@ -8,7 +8,7 @@ import { Utils } from 'src/app/utils/utils.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import {
  IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonAvatar, IonContent, IonRefresherContent, IonRefresher, IonFooter,
- IonItem, ModalController
+ IonItem, IonInput, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -16,7 +16,7 @@ import {
  templateUrl: './friend-chat.page.html',
  styleUrls: ['./friend-chat.page.scss'],
  standalone: true,
- imports: [IonItem, IonFooter, IonRefresher, IonRefresherContent, IonContent, IonAvatar, IonIcon, IonButton, IonButtons,
+ imports: [IonItem, IonFooter, IonRefresher, IonRefresherContent, IonContent, IonAvatar, IonIcon, IonButton, IonButtons, IonInput,
   IonToolbar, IonHeader, CommonModule, FormsModule]
 })
 export class FriendChatPage {

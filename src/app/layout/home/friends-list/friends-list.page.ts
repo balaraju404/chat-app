@@ -7,6 +7,7 @@ import { LSService } from 'src/app/utils/ls-service.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { FriendChatPage } from '../chat/friend-chat/friend-chat.page';
+import { AlertService } from 'src/app/utils/alert.service';
 import {
  IonSearchbar, IonHeader, IonToolbar, IonButton, IonTitle, IonButtons, IonIcon, IonContent, IonRefresher, IonRefresherContent,
  IonList, IonItem, IonAvatar, IonLabel, ModalController
@@ -70,6 +71,9 @@ export class FriendsListPage {
   await modal.present()
  }
  async deleteRequest(item: any) {
+  const confirmed = await AlertService.showConfirmAlert("Confirm", "Are you sure you want to remove?", "Remove")
+  if (!confirmed) return
+
   const payload: any = { friend_id: item["user_id"] }
   const url = Constants.getApiUrl(Constants.INVITE_UNFRIEND_URL)
 

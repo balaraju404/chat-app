@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
- IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon,
- IonToast
+ IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon
 } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/utils/api.service';
 import { Router } from '@angular/router';
@@ -18,7 +17,7 @@ import { Utils } from 'src/app/utils/utils.service';
  styleUrls: ['./login.page.scss'],
  standalone: true,
  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol,
-  IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon, IonToast]
+  IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon]
 })
 export class LoginPage {
  private readonly apiService = inject(ApiService)

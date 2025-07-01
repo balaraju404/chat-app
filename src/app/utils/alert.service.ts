@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular/standalone';
 
 @Injectable({
  providedIn: 'root',
