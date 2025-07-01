@@ -1,20 +1,25 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { GroupMembersPage } from './group-members/group-members.page';
+import {
+ IonHeader, IonAvatar, IonToolbar, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonFooter,
+ IonItem, IonInput
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-group-chat',
  templateUrl: './group-chat.page.html',
  styleUrls: ['./group-chat.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonItem, IonFooter, IonRefresherContent, IonRefresher, IonContent, IonIcon, IonButton, IonButtons, IonToolbar, IonAvatar,
+  IonInput, IonHeader, CommonModule, FormsModule]
 })
 export class GroupChatPage {
  @Input() groupData: any = {}

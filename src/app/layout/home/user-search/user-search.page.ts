@@ -1,19 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { ToastService } from 'src/app/utils/toast.service';
+import {
+ IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonSearchbar,
+ IonList, IonItem, IonAvatar, IonLabel
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-user-search',
  templateUrl: './user-search.page.html',
  styleUrls: ['./user-search.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonLabel, IonAvatar, IonItem, IonList, IonSearchbar, IonRefresherContent, IonRefresher, IonContent, IonIcon, IonButton,
+  IonButtons, IonTitle, IonToolbar, IonHeader, CommonModule, FormsModule]
 })
 export class UserSearchPage {
  private readonly apiService = inject(ApiService)

@@ -1,7 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
@@ -9,13 +9,18 @@ import { Utils } from 'src/app/utils/utils.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { AddMembersPage } from './add-members/add-members.page';
 import { AlertService } from 'src/app/utils/alert.service';
+import {
+ IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent,
+ IonSearchbar, IonSegmentButton, IonLabel, IonList, IonRow, IonItem, IonAvatar
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-group-members',
  templateUrl: './group-members.page.html',
  styleUrls: ['./group-members.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonAvatar, IonItem, IonRow, IonList, IonLabel, IonSegmentButton, IonSearchbar, IonRefresherContent, IonRefresher,
+  IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonToolbar, IonHeader, CommonModule, FormsModule]
 })
 export class GroupMembersPage {
  @Input() groupData: any = {}

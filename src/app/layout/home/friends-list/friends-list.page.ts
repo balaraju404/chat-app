@@ -1,20 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { FriendChatPage } from '../chat/friend-chat/friend-chat.page';
+import {
+ IonSearchbar, IonHeader, IonToolbar, IonButton, IonTitle, IonButtons, IonIcon, IonContent, IonRefresher, IonRefresherContent,
+ IonList, IonItem, IonAvatar, IonLabel
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-friends-list',
  templateUrl: './friends-list.page.html',
  styleUrls: ['./friends-list.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonLabel, IonAvatar, IonItem, IonList, IonRefresherContent, IonRefresher, IonContent, IonIcon, IonButtons, IonTitle,
+  IonButton, IonToolbar, IonHeader, IonSearchbar, CommonModule, FormsModule]
 })
 export class FriendsListPage {
  private readonly apiService = inject(ApiService)

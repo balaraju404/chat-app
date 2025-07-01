@@ -1,18 +1,22 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
+import {
+ IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonAvatar, IonLabel
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-add-members',
  templateUrl: './add-members.page.html',
  styleUrls: ['./add-members.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonLabel, IonAvatar, IonItem, IonList, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonToolbar, IonHeader,
+  CommonModule, FormsModule]
 })
 export class AddMembersPage {
  @Input() groupData: any = {}

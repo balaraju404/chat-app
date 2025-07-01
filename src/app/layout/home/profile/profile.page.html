@@ -29,7 +29,9 @@
   <ion-item>
    <ion-label position="floating">Gender</ion-label>
    <ion-select [(ngModel)]="userdata.gender_id" [disabled]="!isEditing">
-    <ion-select-option *ngFor="let item of gendersData" [value]="item.id">{{ item.name }}</ion-select-option>
+    @for (item of gendersData; track $index) {
+    <ion-select-option [value]="item.id">{{ item.name }}</ion-select-option>
+    }
    </ion-select>
   </ion-item>
 

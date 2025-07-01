@@ -1,7 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+ IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonInput, IonSelect, IonSelectOption, IonInputPasswordToggle,
+ IonButton, IonIcon, IonSpinner
+} from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/utils/api.service';
 import { Router } from '@angular/router';
 import { Constants } from 'src/app/utils/constants.service';
@@ -13,7 +16,8 @@ import { Utils } from 'src/app/utils/utils.service';
  templateUrl: './signup.page.html',
  styleUrls: ['./signup.page.scss'],
  standalone: true,
- imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule]
+ imports: [CommonModule, FormsModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol,
+  IonInput, IonSelect, IonSelectOption, IonInputPasswordToggle, IonButton, IonIcon, IonSpinner]
 })
 export class SignupPage {
  private readonly apiService = inject(ApiService)

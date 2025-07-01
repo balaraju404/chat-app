@@ -24,23 +24,19 @@ export class HomePage {
  private menuCtrl = inject(MenuController)
  private modalCtrl = inject(ModalController)
 
- ngOnInit() {
+ ionViewWillEnter() {
   this.checkUserData()
  }
 
- ionViewWillEnter() {
-  // Optional lifecycle logic
- }
-
  async checkUserData() {
-  const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY);
+  const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   if (!userData || Object.keys(userData).length === 0) {
-   this.navigateToPage('/login');
+   this.navigateToPage("/login")
   }
  }
 
  openSidebar() {
-  this.menuCtrl.open('side-bar');
+  this.menuCtrl.open("side-bar")
  }
  async showProfileModal() {
   const modal = await this.modalCtrl.create({
@@ -49,6 +45,6 @@ export class HomePage {
   await modal.present()
  }
  navigateToPage(path: string) {
-  this.router.navigate([path]);
+  this.router.navigate([path])
  }
 }

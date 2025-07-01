@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from 'src/app/utils/api.service';
@@ -7,13 +7,18 @@ import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Utils } from 'src/app/utils/utils.service';
+import {
+ IonIcon, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonSegment,
+ IonSegmentButton, IonLabel, IonList, IonItem, IonAvatar
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-user-requests',
  templateUrl: './user-requests.page.html',
  styleUrls: ['./user-requests.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonAvatar, IonItem, IonList, IonLabel, IonSegment, IonSegmentButton, IonRefresherContent, IonRefresher, IonContent,
+  IonTitle, IonButton, IonButtons, IonToolbar, IonHeader, IonIcon, CommonModule, FormsModule]
 })
 export class UserRequestsPage {
  private readonly apiService = inject(ApiService)

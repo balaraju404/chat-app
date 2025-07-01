@@ -1,20 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/utils/api.service';
 import { ToastService } from 'src/app/utils/toast.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 import { FriendChatPage } from './friend-chat/friend-chat.page';
+import {
+ IonRefresher, IonRefresherContent, IonSearchbar, IonItem, IonContent, IonList, IonAvatar, IonIcon, IonLabel, IonBadge, IonNote
+} from "@ionic/angular/standalone";
 
 @Component({
  selector: 'app-chat',
  templateUrl: './chat.page.html',
  styleUrls: ['./chat.page.scss'],
  standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
+ imports: [IonNote, IonBadge, IonLabel, IonIcon, IonAvatar, IonList, IonContent, IonItem, IonSearchbar, IonRefresherContent,
+  IonRefresher, CommonModule, FormsModule]
 })
 export class ChatPage {
  private readonly apiService = inject(ApiService)
