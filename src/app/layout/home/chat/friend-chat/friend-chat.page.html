@@ -31,7 +31,7 @@
   <div class="chat-bubble ion-padding" [ngClass]="{
         'own-message': chat.sender_id === userData?.user_id,
         'friend-message': chat.sender_id !== userData?.user_id
-      }" id="{{$first?'last-msg':''}}">
+      }" id="{{$last?'last-msg':''}}">
    <div class="message-text">{{ chat.msg }}</div>
    <div class="message-time ion-text-end ion-text-small">
     {{ chat.created_at | date: chat['is_today']?'hh:mm a':'dd MMM yy hh:mm a' }}

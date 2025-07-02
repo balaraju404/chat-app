@@ -38,10 +38,10 @@ export class FriendChatPage {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.getChatDetails()
   this.receiveMsg = SocketService.msgSubject.subscribe((data) => {
-    console.log(data);
-    if(data['sender_id'] == this.friendData['user_id']){
-     this.chatData.push(data);
-    }
+   if (data["sender_id"] == this.friendData["user_id"]) {
+    data["is_today"] = true
+    this.chatData.push(data)
+   }
   })
  }
 
