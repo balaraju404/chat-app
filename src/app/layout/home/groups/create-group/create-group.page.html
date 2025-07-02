@@ -13,13 +13,13 @@
 
  <ion-card class="form-card">
   <ion-item lines="none" class="clean-item">
-   <ion-label position="floating">Group Name</ion-label>
-   <ion-input [(ngModel)]="groupName" placeholder="Enter group name" clearInput></ion-input>
+   <ion-input label="Group Name" labelPlacement="floating" placeholder="Enter group name" [(ngModel)]="groupName"
+    clearInput></ion-input>
   </ion-item>
 
   <ion-item lines="none" class="clean-item">
-   <ion-label position="floating">Description</ion-label>
-   <ion-input [(ngModel)]="description" placeholder="Enter group description" clearInput></ion-input>
+   <ion-input label="Description" labelPlacement="floating" placeholder="Enter group description"
+    [(ngModel)]="description" clearInput></ion-input>
   </ion-item>
 
   <ion-button expand="block" shape="round" color="primary" class="create-btn" [disabled]="!groupName.trim()"

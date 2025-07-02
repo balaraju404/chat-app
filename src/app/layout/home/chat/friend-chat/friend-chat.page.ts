@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from 'src/app/utils/api.service';
@@ -8,7 +8,7 @@ import { Utils } from 'src/app/utils/utils.service';
 import { LSService } from 'src/app/utils/ls-service.service';
 import {
  IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonAvatar, IonContent, IonRefresherContent, IonRefresher, IonFooter,
- IonItem, IonInput, ModalController
+ IonItem, IonTextarea, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -16,8 +16,9 @@ import {
  templateUrl: './friend-chat.page.html',
  styleUrls: ['./friend-chat.page.scss'],
  standalone: true,
- imports: [IonItem, IonFooter, IonRefresher, IonRefresherContent, IonContent, IonAvatar, IonIcon, IonButton, IonButtons, IonInput,
-  IonToolbar, IonHeader, CommonModule, FormsModule]
+ imports: [IonItem, IonFooter, IonRefresher, IonRefresherContent, IonContent, IonAvatar, IonIcon, IonButton, IonButtons, IonTextarea,
+  IonToolbar, IonHeader, CommonModule, FormsModule],
+ schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FriendChatPage {
  @Input() friendData: any = {}

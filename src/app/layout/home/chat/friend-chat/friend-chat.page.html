@@ -42,12 +42,12 @@
 
 </ion-content>
 
-<ion-footer class="chat-footer no-gradient-footer">
+<ion-footer class="chat-footer no-gradient-footer" keyboard-attach>
  <ion-toolbar>
   <ion-item lines="none" class="ion-align-items-center chat-input-item">
-   <ion-input [(ngModel)]="msgValue" placeholder="Type a message" class="message-input" (keydown.enter)="sendMessage()"
-    clearInput>
-   </ion-input>
+   <ion-textarea [(ngModel)]="msgValue" placeholder="Type a message" class="message-input" [autoGrow]="true"
+    (keydown.enter)="sendMessage()">
+   </ion-textarea>
    <ion-button fill="clear" slot="end" (click)="sendMessage()" [disabled]="!msgValue.trim()">
     <ion-icon slot="icon-only" name="send-outline"></ion-icon>
    </ion-button>

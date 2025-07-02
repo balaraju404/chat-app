@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from 'src/app/utils/api.service';
@@ -9,7 +9,7 @@ import { LSService } from 'src/app/utils/ls-service.service';
 import { GroupMembersPage } from './group-members/group-members.page';
 import {
  IonHeader, IonAvatar, IonToolbar, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonFooter,
- IonItem, IonInput, ModalController
+ IonItem, IonTextarea, ModalController
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -18,7 +18,8 @@ import {
  styleUrls: ['./group-chat.page.scss'],
  standalone: true,
  imports: [IonItem, IonFooter, IonRefresherContent, IonRefresher, IonContent, IonIcon, IonButton, IonButtons, IonToolbar, IonAvatar,
-  IonInput, IonHeader, CommonModule, FormsModule]
+  IonTextarea, IonHeader, CommonModule, FormsModule],
+ schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GroupChatPage {
  @Input() groupData: any = {}

@@ -6,7 +6,7 @@ import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 import {
- IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonContent, IonCard, IonItem, IonLabel, IonInput,
+ IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonContent, IonCard, IonItem, IonInput,
  ModalController
 } from "@ionic/angular/standalone";
 
@@ -15,7 +15,7 @@ import {
  templateUrl: './create-group.page.html',
  styleUrls: ['./create-group.page.scss'],
  standalone: true,
- imports: [IonLabel, IonItem, IonCard, IonContent, IonTitle, IonIcon, IonButton, IonButtons, IonToolbar, IonHeader, IonInput,
+ imports: [IonItem, IonCard, IonContent, IonTitle, IonIcon, IonButton, IonButtons, IonToolbar, IonHeader, IonInput,
   CommonModule, FormsModule]
 })
 export class CreateGroupPage {
