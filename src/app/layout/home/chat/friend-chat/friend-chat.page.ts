@@ -10,6 +10,7 @@ import {
  IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonAvatar, IonContent, IonRefresherContent, IonRefresher, IonFooter,
  IonItem, IonTextarea, ModalController
 } from "@ionic/angular/standalone";
+import { SocketService } from 'src/app/utils/socket.service';
 
 @Component({
  selector: 'app-friend-chat',
@@ -31,10 +32,17 @@ export class FriendChatPage {
  chatData: any[] = []
  msgValue: string = ""
  isUpdate: boolean = false
+ receiveMsg: any
 
  async ngOnInit() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.getChatDetails()
+  this.receiveMsg = SocketService.msgSubject.subscribe((data) => {
+    console.log(data);
+    if(data['sender_id'] == this.friendData['user_id']){
+     this.chatData.push(data);
+    }
+  })
  }
 
  async getChatDetails(event: any = null) {
