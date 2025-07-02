@@ -30,10 +30,8 @@ export class LoginPage {
   password: ""
  }
 
- ngOnInit() {
-  this.checkUserData()
- }
  ionViewWillEnter() {
+  this.checkUserData()
   this.clearForm()
  }
  async checkUserData() {
