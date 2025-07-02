@@ -64,8 +64,9 @@ export class GroupsPage {
  }
 
  dataModifier(data: any[]) {
-  data.forEach(group => {
-   group.group_profile = Utils.getGroupProfile(group)
+  data.forEach(m => {
+   m["group_profile"] = Utils.getGroupProfile(m)
+   m["is_today"] = Utils.isToday(m["last_message"]["created_at"])
   })
 
   this.allGroupsData = Utils.cloneData(data)

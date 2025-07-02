@@ -49,7 +49,8 @@ export class GroupChatPage {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
     next: (res: any) => {
-     this.chatData = res["data"] || []
+     const data = res["data"] || []
+     this.dataModifier(data)
      this.scrollToBottom()
      if (event) event.target.complete()
     }, error: (err) => {
@@ -63,7 +64,12 @@ export class GroupChatPage {
    if (event) event.target.complete()
   }
  }
-
+ dataModifier(data: any) {
+  data.forEach((m: any) => {
+   m["is_today"] = Utils.isToday(m["created_at"])
+  })
+  this.chatData = data
+ }
  async sendMessage() {
   if (!this.msgValue.trim()) return
   const payload = { group_id: this.groupData["group_id"], msg: this.msgValue.trim() }

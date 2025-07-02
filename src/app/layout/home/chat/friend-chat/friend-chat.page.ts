@@ -44,7 +44,8 @@ export class FriendChatPage {
    const observable$ = await this.apiService.postApi(url, payload)
    observable$.subscribe({
     next: (res: any) => {
-     this.chatData = res["data"] || []
+     const data = res["data"] || []
+     this.dataModifier(data)
      this.scrollToBottom()
      if (event) event.target.complete()
     }, error: (err) => {
@@ -57,6 +58,12 @@ export class FriendChatPage {
    console.error("Failed to call API:", error)
    if (event) event.target.complete()
   }
+ }
+ dataModifier(data: any) {
+  data.forEach((m: any) => {
+   m["is_today"] = Utils.isToday(m["created_at"])
+  })
+  this.chatData = data
  }
 
  async sendMessage() {

@@ -16,7 +16,7 @@
   @for (group of filteredGroupsData; track group.group_id) {
   <ion-item button detail (click)="openGroupModal(group)">
    <ion-avatar slot="start">
-    <ion-icon [name]="group.group_profile || 'chatbubble-ellipses-outline'" size="large"></ion-icon>
+    <ion-icon [name]="group.group_profile" size="large"></ion-icon>
    </ion-avatar>
 
    <div class="group-info-wrapper">
@@ -34,7 +34,9 @@
       {{ group.last_message.msg }}
      </span>
      @if (group.last_message?.created_at) {
-     <span class="message-time">{{ group.last_message.created_at | date: 'hh:mm a' }}</span>
+     <span class="message-time">
+      {{ group.last_message?.created_at | date: group["is_today"]?'hh:mm a':'dd MMM yy hh:mm a' }}
+     </span>
      }
     </div>
     } @else {

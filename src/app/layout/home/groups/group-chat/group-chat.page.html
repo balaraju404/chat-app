@@ -45,9 +45,12 @@
             'own-message': chat.texted_by === userData?.user_id,
             'friend-message': chat.texted_by !== userData?.user_id
           }" id="{{$first ? 'last-msg' : ''}}">
+   @if (chat.texted_by !== userData?.user_id) {
+   <div class="sender-name">{{ chat.username }}</div>
+   }
    <div class="message-text">{{ chat.msg }}</div>
    <div class="message-time ion-text-end ion-text-small">
-    {{ chat.created_at | date: 'dd MMM yy hh:mm a' }}
+    {{ chat.created_at | date: chat['is_today']?'hh:mm a':'dd MMM yy hh:mm a' }}
    </div>
   </div>
   } @empty {
