@@ -18,7 +18,9 @@ export class SocketService {
     });
 
     // Optional: log connection
-    this.socket.on('connected', () => {});
+    this.socket.on('connection', () => {
+     console.log("connection")
+    });
 
     this.socket.on('msg', (data) => {
      SocketService.msgSubject.next(data);
