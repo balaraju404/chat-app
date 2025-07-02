@@ -24,7 +24,7 @@ export class LoginPage {
  private readonly apiService = inject(ApiService)
  private readonly toastService = inject(ToastService)
  private readonly router = inject(Router)
- private readonly socket = inject(SocketService)
+
  isLoading: boolean = false
  formPostdata: any = {
   email: "",
@@ -79,7 +79,6 @@ export class LoginPage {
 
       this.toastService.showToastWithCloseButton(res["msg"], "success")
       this.clearForm()
-      this.socket.connected({ user_id: data['user_id'] });
       this.router.navigate(["/layout/home"])
      } else {
       const msg = res["msg"] || JSON.stringify(res)

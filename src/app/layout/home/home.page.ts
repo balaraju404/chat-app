@@ -10,6 +10,7 @@ import { Constants } from 'src/app/utils/constants.service';
 import { Router } from '@angular/router';
 import { SideBarPage } from "./side-bar/side-bar.page";
 import { ProfilePage } from './profile/profile.page';
+import { SocketService } from 'src/app/utils/socket.service';
 
 @Component({
  selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomePage {
  private readonly router = inject(Router)
  private menuCtrl = inject(MenuController)
  private modalCtrl = inject(ModalController)
+ private readonly socket = inject(SocketService)
 
  footerTabs = [
   { label: "Chat", icon: "chatbubbles-outline", tab: "chat", path: "/layout/home/chat" },
@@ -41,6 +43,8 @@ export class HomePage {
   const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   if (!userData || Object.keys(userData).length === 0) {
    this.navigateToPage("/login")
+  }  else{
+   this.socket.connected({ user_id: userData['user_id'] });
   }
  }
 
