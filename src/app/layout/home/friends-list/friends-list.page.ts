@@ -29,15 +29,18 @@ export class FriendsListPage {
  userData: any = {}
  friendsList: any = []
  searchText: string = ""
+ isUpdate: boolean = false
 
  async ngOnInit() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.getFriendsList()
  }
+
  onSearch(event: any) {
   this.searchText = event.target.value
   this.getFriendsList()
  }
+
  async getFriendsList() {
   const payload: any = { search_text: this.searchText }
   const url = Constants.getApiUrl(Constants.USERS_FRIENDS_URL)
@@ -57,19 +60,27 @@ export class FriendsListPage {
    console.error("Failed to call API:", error)
   }
  }
+
  dataModifier(data: any) {
   data.forEach((m: any) => {
    m["user_profile"] = Utils.getUserProfile(m)
   })
   this.friendsList = data
  }
+
  async openChatModal(item: any) {
   const modal = await this.modalCtrl.create({
    component: FriendChatPage,
    componentProps: { friendData: item }
   })
+
+  modal.onWillDismiss().then(result => {
+   this.isUpdate = result.data?.is_updated || false
+  })
+
   await modal.present()
  }
+
  async deleteRequest(item: any) {
   const confirmed = await AlertService.showConfirmAlert("Confirm", "Are you sure you want to remove?", "Remove")
   if (!confirmed) return
@@ -96,9 +107,11 @@ export class FriendsListPage {
    console.error("Failed to call API:", error)
   }
  }
+
  dismissModal() {
-  this.modalCtrl.dismiss()
+  this.modalCtrl.dismiss({ is_updated: this.isUpdate })
  }
+
  refreshData(event: any) {
   this.getFriendsList()
   setTimeout(() => {

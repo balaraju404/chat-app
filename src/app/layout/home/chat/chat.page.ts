@@ -9,8 +9,9 @@ import { Utils } from 'src/app/utils/utils.service';
 import { FriendChatPage } from './friend-chat/friend-chat.page';
 import {
  IonRefresher, IonRefresherContent, IonSearchbar, IonItem, IonContent, IonList, IonAvatar, IonIcon, IonLabel, IonBadge, IonNote,
- ModalController
+ IonFab, IonFabButton, ModalController
 } from "@ionic/angular/standalone";
+import { FriendsListPage } from '../friends-list/friends-list.page';
 
 @Component({
  selector: 'app-chat',
@@ -18,7 +19,7 @@ import {
  styleUrls: ['./chat.page.scss'],
  standalone: true,
  imports: [IonNote, IonBadge, IonLabel, IonIcon, IonAvatar, IonList, IonContent, IonItem, IonSearchbar, IonRefresherContent,
-  IonRefresher, CommonModule, FormsModule]
+  IonRefresher, IonFab, IonFabButton, CommonModule, FormsModule]
 })
 export class ChatPage {
  private readonly apiService = inject(ApiService)
@@ -96,6 +97,20 @@ export class ChatPage {
   })
 
   modal.onWillDismiss().then((result) => {
+   if (result.data?.is_updated) {
+    this.getRecentChatDetails()
+   }
+  })
+
+  await modal.present()
+ }
+
+ async openFriendsListModal() {
+  const modal = await this.modalCtrl.create({
+   component: FriendsListPage
+  })
+
+  modal.onWillDismiss().then(result => {
    if (result.data?.is_updated) {
     this.getRecentChatDetails()
    }
