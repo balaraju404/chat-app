@@ -6,7 +6,7 @@ import { ToastService } from 'src/app/utils/toast.service';
 import { Constants } from 'src/app/utils/constants.service';
 import { Utils } from 'src/app/utils/utils.service';
 import {
- IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonAvatar, IonLabel,
+ IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonAvatar, IonLabel, IonCheckbox,
  ModalController
 } from "@ionic/angular/standalone";
 
@@ -16,7 +16,7 @@ import {
  styleUrls: ['./add-members.page.scss'],
  standalone: true,
  imports: [IonLabel, IonAvatar, IonItem, IonList, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonToolbar, IonHeader,
-  CommonModule, FormsModule]
+  IonCheckbox, CommonModule, FormsModule]
 })
 export class AddMembersPage {
  @Input() groupData: any = {}
@@ -59,11 +59,8 @@ export class AddMembersPage {
  }
 
  onSelectMember(friend: any) {
-  if (friend.checked) {
-   this.newMembersIds.push(friend._id)
-  } else {
-   this.newMembersIds = this.newMembersIds.filter((id: any) => id !== friend._id)
-  }
+  if (friend.checked) this.newMembersIds.push(friend._id)
+  else this.newMembersIds = this.newMembersIds.filter((id: any) => id !== friend._id)
  }
 
  async addGroupMembers() {
