@@ -1,7 +1,7 @@
 <ion-header translucent>
  <ion-toolbar>
   <ion-buttons slot="start">
-   <ion-menu-button autoHide="false" (click)="openSidebar()"></ion-menu-button>
+   <ion-menu-button autoHide="false" color="light" (click)="openSidebar()"></ion-menu-button>
   </ion-buttons>
 
   <ion-title>Chat App</ion-title>
@@ -19,25 +19,16 @@
 </ion-content>
 
 <ion-footer>
- <ion-tab-bar slot="bottom">
-  <ion-tab-button tab="chat" (click)="navigateToPage('/layout/home/chat')">
-   <ion-icon name="chatbubbles-outline"></ion-icon>
-   <ion-label>Chat</ion-label>
+ <ion-tab-bar slot="bottom" class="custom-tab-bar">
+  @for (tab of footerTabs; track tab.tab) {
+  <ion-tab-button (click)="navigateToPage(tab.path);curPath=tab.tab" [class.active-tab]="curPath == tab.tab">
+   <ion-icon [name]="tab.icon"></ion-icon>
+   <ion-label>{{ tab.label }}</ion-label>
   </ion-tab-button>
-
-  <ion-tab-button tab="groups" (click)="navigateToPage('/layout/home/groups')">
-   <ion-icon name="people-outline"></ion-icon>
-   <ion-label>Groups</ion-label>
-  </ion-tab-button>
-
-  <ion-tab-button tab="posts" (click)="navigateToPage('/layout/home/posts')">
-   <ion-icon name="albums-outline"></ion-icon>
-   <ion-label>Posts</ion-label>
-  </ion-tab-button>
+  }
  </ion-tab-bar>
 </ion-footer>
 
-<!-- Side menu -->
 <ion-menu menuId="side-bar" contentId="main-content">
  <app-side-bar></app-side-bar>
 </ion-menu>

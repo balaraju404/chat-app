@@ -1,4 +1,23 @@
-ion-tab-bar {
- --color: #ffffff;
- --color-selected: #00ccff
+// ion-tab-bar {
+//  // --color: #ffffff;
+//  --color-selected: #00ccff
+// }
+
+.custom-tab-bar {
+ ion-tab-button {
+  --color-selected: var(--ion-color-primary);
+
+  &.active-tab {
+   --color: var(--ion-color-primary);
+   font-weight: 600;
+  }
+
+  ion-icon {
+   font-size: 22px;
+  }
+
+  ion-label {
+   font-size: 13px;
+  }
+ }
 }

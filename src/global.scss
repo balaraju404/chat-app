@@ -42,21 +42,21 @@
  padding: 0;
 }
 
-ion-header,
-ion-footer {
+ion-header {
  background: linear-gradient(135deg, #6a5acd, #4b0082);
 
  ion-toolbar {
   --background: #f2f0f000;
+
+  ion-icon {
+   color: white;
+  }
  }
 
  ion-title {
   color: white;
  }
 
- ion-icon {
-  color: white;
- }
 }
 
 // ion-content {

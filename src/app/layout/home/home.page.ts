@@ -24,7 +24,16 @@ export class HomePage {
  private menuCtrl = inject(MenuController)
  private modalCtrl = inject(ModalController)
 
+ footerTabs = [
+  { label: "Chat", icon: "chatbubbles-outline", tab: "chat", path: "/layout/home/chat" },
+  { label: "Groups", icon: "people-outline", tab: "groups", path: "/layout/home/groups" },
+  { label: "Posts", icon: "albums-outline", tab: "posts", path: "/layout/home/posts" }
+ ]
+ curPath: string = "chat"
+
  ionViewWillEnter() {
+  const locArr = window.location.href.split('/')
+  this.curPath = locArr[5]
   this.checkUserData()
  }
 
@@ -38,12 +47,14 @@ export class HomePage {
  openSidebar() {
   this.menuCtrl.open("side-bar")
  }
+
  async showProfileModal() {
   const modal = await this.modalCtrl.create({
    component: ProfilePage
   })
   await modal.present()
  }
+
  navigateToPage(path: string) {
   this.router.navigate([path])
  }
