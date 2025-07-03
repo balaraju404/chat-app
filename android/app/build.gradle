@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 android {
-    namespace "chat.app"
+    namespace "com.gbr.chatapp"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "chat.app"
+        applicationId "com.gbr.chatapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

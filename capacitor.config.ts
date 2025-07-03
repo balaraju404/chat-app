@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
- appId: "chat.app",
- appName: "Chat App",
+ appId: "com.gbr.chatapp",
+ appName: "GBR Chat App",
  webDir: "www",
  plugins: {
   Keyboard: {
