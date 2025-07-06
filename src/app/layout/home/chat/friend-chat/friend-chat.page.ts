@@ -77,7 +77,7 @@ export class FriendChatPage {
 
  async sendMessage() {
   if (!this.msgValue.trim()) return
-  const payload = { receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
+  const payload = { username: this.userData["username"], receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.SEND_MSG_URL)
 
   try {

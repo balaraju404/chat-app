@@ -1,21 +1,20 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import {
  IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon
-} from '@ionic/angular/standalone';
-import { ApiService } from 'src/app/utils/api.service';
-import { Router } from '@angular/router';
-import { LSService } from 'src/app/utils/ls-service.service';
-import { Constants } from 'src/app/utils/constants.service';
-import { ToastService } from 'src/app/utils/toast.service';
-import { Utils } from 'src/app/utils/utils.service';
-import { SocketService } from 'src/app/utils/socket.service';
+} from "@ionic/angular/standalone"
+import { ApiService } from "src/app/utils/api.service"
+import { Router } from "@angular/router"
+import { LSService } from "src/app/utils/ls-service.service"
+import { Constants } from "src/app/utils/constants.service"
+import { ToastService } from "src/app/utils/toast.service"
+import { Utils } from "src/app/utils/utils.service"
 
 @Component({
- selector: 'app-login',
- templateUrl: './login.page.html',
- styleUrls: ['./login.page.scss'],
+ selector: "app-login",
+ templateUrl: "./login.page.html",
+ styleUrls: ["./login.page.scss"],
  standalone: true,
  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol,
   IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon]
@@ -60,11 +59,14 @@ export class LoginPage {
   this.checkUser()
  }
  async checkUser() {
-  this.isLoading = true;
+  this.isLoading = true
   const url = Constants.getApiUrl(Constants.LOGIN_URL)
 
   try {
-   const observable$ = await this.apiService.postApi(url, this.formPostdata);
+   const payload = { ...this.formPostdata }
+   const deviceToken = await LSService.getItem(Constants.LS_DEVICE_TOKEN_ID)
+   if (deviceToken) payload["device_token"] = deviceToken
+   const observable$ = await this.apiService.postApi(url, payload)
 
    observable$.subscribe({
     next: async (res: any) => {
@@ -72,11 +74,8 @@ export class LoginPage {
      if (res["status"]) {
       const data = JSON.parse(JSON.stringify(res["data"] || {}))
       const token = res["token"] || ""
-
       await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
       await LSService.setItem(Constants.LS_TOKEN_KEY, token)
-      // await LSService.setItem(data.device_token_id, Constants.LS_DEVICE_TOKEN_ID)
-
       this.toastService.showToastWithCloseButton(res["msg"], "success")
       this.clearForm()
       this.router.navigate(["/layout/home"])
@@ -100,9 +99,6 @@ export class LoginPage {
   this.router.navigate([path])
  }
  clearForm() {
-  this.formPostdata = {
-   email: "",
-   password: ""
-  }
+  this.formPostdata = { email: "", password: "" }
  }
 }
