@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { environment } from "../../environments/environment";
+import { Injectable } from "@angular/core"
+import { environment } from "../../environments/environment"
 
 @Injectable({
- providedIn: 'root',
+ providedIn: "root",
 })
 export class Constants {
  static readonly NODE_URL = environment.NODE_URL
@@ -11,6 +11,7 @@ export class Constants {
  static getApiUrl(path: string) {
   return Constants.API_URL + path
  }
+
  // api urls
  static readonly LOGIN_URL = "login"
  static readonly SIGNUP_URL = Constants.LOGIN_URL + "/sign-up"
@@ -43,14 +44,12 @@ export class Constants {
  static readonly DASHBOARD_CHATS_URL = Constants.DASHBOARD_URL + "chats"
  static readonly DASHBOARD_GROUPS_URL = Constants.DASHBOARD_URL + "groups"
 
- static readonly LS_TOKEN_KEY = 'token'
- static readonly LS_USER_DATA_KEY = 'login_user_data'
- static readonly LS_FIREBASE_TOKEN_KEY = 'firebase_token_key'
- static readonly LS_DEVICE_TOKEN_ID = 'device_token_id'
- static FIREBASE_TOKEN = ''
+ static readonly LS_TOKEN_KEY = "token"
+ static readonly LS_USER_DATA_KEY = "login_user_data"
+ static readonly LS_DEVICE_TOKEN_ID = "device_token_id"
 
  // assets
- static readonly APP_ICON = 'assets/images/app-icon.png'
+ static readonly APP_ICON = "assets/images/app-icon.png"
 
  // 
  static readonly GENDERS_LIST = [

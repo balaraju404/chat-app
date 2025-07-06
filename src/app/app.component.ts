@@ -32,8 +32,7 @@ export class AppComponent {
    // Send this token to your server for later use
    if (token["value"] && token["value"].length > 0) {
     const tokenValue = token["value"]
-    Constants.FIREBASE_TOKEN = tokenValue
-    await LSService.setItem(tokenValue, Constants.LS_FIREBASE_TOKEN_KEY)
+    await LSService.setItem(tokenValue, Constants.LS_DEVICE_TOKEN_ID)
    }
   })
 
