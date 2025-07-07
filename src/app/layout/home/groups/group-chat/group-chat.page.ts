@@ -32,6 +32,7 @@ export class GroupChatPage {
  chatData: any[] = []
  msgValue: string = ""
  isUpdate: boolean = false
+ isSendingMsg: boolean = false
 
  ionViewWillEnter() {
   this.loadUserAndDetails()
@@ -65,17 +66,20 @@ export class GroupChatPage {
   this.chatData = data
  }
  sendMessage() {
-  if (!this.msgValue.trim()) return
+  if (!this.msgValue.trim() || this.isSendingMsg) return
   const payload = { group_id: this.groupData["group_id"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.GROUP_CHAT_SEND_URL)
+  this.isSendingMsg = true
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
+    this.isSendingMsg = false
     if (res["status"]) {
      this.isUpdate = true
      this.msgValue = ""
      this.getChatDetails()
     }
    }, error: (err) => {
+    this.isSendingMsg = false
     const errMsg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(errMsg, "danger")
    }

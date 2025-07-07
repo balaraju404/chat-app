@@ -33,8 +33,12 @@ export class FriendChatPage {
  msgValue: string = ""
  isUpdate: boolean = false
  receiveMsg: any
+ isSendingMsg: boolean = false
 
- async ngOnInit() {
+ ngOnInit() {
+  this.initializeChat()
+ }
+ async initializeChat() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.getChatDetails()
   this.receiveMsg = SocketService.msgSubject.subscribe((data) => {
@@ -44,7 +48,6 @@ export class FriendChatPage {
    }
   })
  }
-
  getChatDetails(event: any = null) {
   const payload = { friend_id: this.friendData["user_id"] }
   const url = Constants.getApiUrl(Constants.GET_FRIENDS_MSGS_URL)
@@ -69,17 +72,20 @@ export class FriendChatPage {
  }
 
  sendMessage() {
-  if (!this.msgValue.trim()) return
+  if (!this.msgValue.trim() || this.isSendingMsg) return
   const payload = { username: this.userData["username"], receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.SEND_MSG_URL)
+  this.isSendingMsg = true
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
+    this.isSendingMsg = false
     if (res["status"]) {
      this.isUpdate = true
      this.msgValue = ""
      this.getChatDetails()
     }
    }, error: (err) => {
+    this.isSendingMsg = false
     const errMsg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(errMsg, "danger")
    }

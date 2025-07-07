@@ -48,7 +48,7 @@
    <ion-textarea [(ngModel)]="msgValue" placeholder="Type a message" class="message-input" [autoGrow]="true"
     (keydown.enter)="sendMessage()">
    </ion-textarea>
-   <ion-button fill="clear" slot="end" (click)="sendMessage()" [disabled]="!msgValue.trim()">
+   <ion-button fill="clear" slot="end" (click)="sendMessage()" [disabled]="!msgValue.trim()||isSendingMsg">
     <ion-icon slot="icon-only" name="send-outline"></ion-icon>
    </ion-button>
   </ion-item>
