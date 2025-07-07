@@ -23,31 +23,23 @@ export class AppComponent {
     if (result.receive === "granted") {
      PushNotifications.register()
     } else {
-     console.log("Push permission not granted")
      AlertService.showAlert("Error", "Push permission not granted")
     }
    })
 
    PushNotifications.addListener("registration", async (token: Token) => {
-    console.log("Push registration success, token: " + token.value)
-    AlertService.showAlert("Success", "Push registration success, token: " + JSON.stringify(token))
-    if (token?.value) {
-     await LSService.setItem(Constants.LS_DEVICE_TOKEN_ID, token.value)
-    }
+    if (token?.value) await LSService.setItem(Constants.LS_DEVICE_TOKEN_ID, token.value)
    })
 
    PushNotifications.addListener("registrationError", (error: any) => {
-    console.error("Push registration error: ", error)
     AlertService.showAlert("Error", "Push registration error: " + JSON.stringify(error))
    })
 
    PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-    console.log("Notification received: ", notification)
     AlertService.showAlert("Notification", "Notification received: " + JSON.stringify(notification))
    })
 
    PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
-    console.log("Notification action performed", notification)
     AlertService.showAlert("Notification", "Notification action performed: " + JSON.stringify(notification))
    })
   } else {

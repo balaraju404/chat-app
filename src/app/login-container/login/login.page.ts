@@ -5,7 +5,7 @@ import {
  IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon
 } from "@ionic/angular/standalone"
 import { ApiService } from "src/app/utils/api.service"
-import { Router } from "@angular/router"
+import { NavigationStart, Router } from "@angular/router"
 import { LSService } from "src/app/utils/ls-service.service"
 import { Constants } from "src/app/utils/constants.service"
 import { ToastService } from "src/app/utils/toast.service"
@@ -28,6 +28,12 @@ export class LoginPage {
  formPostdata: any = {
   email: "",
   password: ""
+ }
+
+ constructor() {
+  this.router.events.subscribe(event => {
+   if (event instanceof NavigationStart && event.restoredState) this.checkUserData()
+  })
  }
 
  ionViewWillEnter() {
@@ -96,7 +102,7 @@ export class LoginPage {
   }
  }
  navigateToPage(path: string) {
-  this.router.navigate([path])
+  this.router.navigate([path], { replaceUrl: true })
  }
  clearForm() {
   this.formPostdata = { email: "", password: "" }
