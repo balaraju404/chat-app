@@ -37,29 +37,23 @@ export class CreateGroupPage {
   }
   this.createGroup()
  }
- async createGroup() {
+ createGroup() {
   const payload = { groupname: this.groupName, description: this.description }
   const url = Constants.getApiUrl(Constants.GROUPS_CREATE_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.isUpdate = true
-      this.groupName = ""
-      this.description = ""
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.dismissModal()
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.isUpdate = true
+     this.groupName = ""
+     this.description = ""
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.dismissModal()
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
  dismissModal() {
   this.modalCtrl.dismiss({ is_updated: this.isUpdate })

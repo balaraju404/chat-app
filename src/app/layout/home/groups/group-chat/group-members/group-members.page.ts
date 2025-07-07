@@ -48,38 +48,31 @@ export class GroupMembersPage {
   this.getGroupDetails()
  }
 
- async getGroupDetails(event: any = null) {
+ getGroupDetails(event: any = null) {
   const payload = { group_id: this.groupData["group_id"] }
   const url = Constants.getApiUrl(Constants.GROUPS_DETAILS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     const data = res["data"]?.[0] || {}
-     const admins = data.admins || []
-     data.members_info?.forEach((n: any) => {
-      n.user_profile = Utils.getUserProfile(n)
-      n["is_admin"] = admins.includes(n.user_id)
-     })
-     data.admins_info?.forEach((n: any) => {
-      n.user_profile = Utils.getUserProfile(n)
-     })
-     data["is_admin"] = admins.includes(this.userData.user_id)
-     this.groupDetails = data
-     this.filteredMembers = [...(data.members_info || [])]
-     this.filteredAdmins = [...(data.admins_info || [])]
-     if (event) event.target.complete()
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-     if (event) event.target.complete()
-    }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-   if (event) event.target.complete()
-  }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    const data = res["data"]?.[0] || {}
+    const admins = data.admins || []
+    data.members_info?.forEach((n: any) => {
+     n.user_profile = Utils.getUserProfile(n)
+     n["is_admin"] = admins.includes(n.user_id)
+    })
+    data.admins_info?.forEach((n: any) => {
+     n.user_profile = Utils.getUserProfile(n)
+    })
+    data["is_admin"] = admins.includes(this.userData.user_id)
+    this.groupDetails = data
+    this.filteredMembers = [...(data.members_info || [])]
+    this.filteredAdmins = [...(data.admins_info || [])]
+    if (event) event.target.complete()
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+    if (event) event.target.complete()
+   }
+  })
  }
 
  async removeMember(friend_id: any) {
@@ -88,67 +81,49 @@ export class GroupMembersPage {
 
   const payload = { group_id: this.groupData["group_id"], friend_id: friend_id }
   const url = Constants.getApiUrl(Constants.GROUPS_REMOVE_MEMBER_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.getGroupDetails()
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.getGroupDetails()
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
- async makeAdmin(friend_id: any) {
+ makeAdmin(friend_id: any) {
   const payload = { group_id: this.groupData["group_id"], friend_id: friend_id }
   const url = Constants.getApiUrl(Constants.GROUPS_ADD_ADMIN_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.getGroupDetails()
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.getGroupDetails()
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
- async removeAdmin(friend_id: any) {
+ removeAdmin(friend_id: any) {
   const payload = { group_id: this.groupData["group_id"], friend_id: friend_id }
   const url = Constants.getApiUrl(Constants.GROUPS_REMOVE_ADMIN_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.getGroupDetails()
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.getGroupDetails()
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
  onSearch(event: any) {

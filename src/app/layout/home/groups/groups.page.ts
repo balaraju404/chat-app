@@ -39,28 +39,21 @@ export class GroupsPage {
   this.fetchGroupList()
  }
 
- async fetchGroupList(event: any = null) {
+ fetchGroupList(event: any = null) {
   const payload = { user_id: this.userData["user_id"] }
   const url = Constants.getApiUrl(Constants.DASHBOARD_GROUPS_URL)
-
-  try {
-   const response$ = await this.apiService.postApi(url, payload)
-   response$.subscribe({
-    next: (res: any) => {
-     const data = res["data"] || []
-     this.dataModifier(data)
-     event?.target?.complete()
-    },
-    error: (err) => {
-     const errorMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errorMsg, "danger")
-     event?.target?.complete()
-    }
-   })
-  } catch (error) {
-   console.error("Failed to load groups:", error)
-   event?.target?.complete()
-  }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    const data = res["data"] || []
+    this.dataModifier(data)
+    event?.target?.complete()
+   },
+   error: (err) => {
+    const errorMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errorMsg, "danger")
+    event?.target?.complete()
+   }
+  })
  }
 
  dataModifier(data: any[]) {

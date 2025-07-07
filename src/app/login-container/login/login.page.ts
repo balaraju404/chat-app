@@ -68,38 +68,33 @@ export class LoginPage {
   this.isLoading = true
   const url = Constants.getApiUrl(Constants.LOGIN_URL)
 
-  try {
-   const payload = { ...this.formPostdata }
-   const deviceToken = await LSService.getItem(Constants.LS_DEVICE_TOKEN_ID)
-   if (deviceToken) payload["device_token"] = deviceToken
-   const observable$ = await this.apiService.postApi(url, payload)
-
-   observable$.subscribe({
-    next: async (res: any) => {
-     this.isLoading = false
-     if (res["status"]) {
-      const data = JSON.parse(JSON.stringify(res["data"] || {}))
-      const token = res["token"] || ""
-      await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
-      await LSService.setItem(Constants.LS_TOKEN_KEY, token)
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.clearForm()
-      this.router.navigate(["/layout/home"])
-     } else {
-      const msg = res["msg"] || JSON.stringify(res)
-      this.toastService.showToastWithCloseButton(msg, "danger")
-     }
-    }, error: (err) => {
-     this.isLoading = false
-     const msg = Utils.getErrorMessage(err)
+  const payload = { ...this.formPostdata }
+  const deviceToken = await LSService.getItem(Constants.LS_DEVICE_TOKEN_ID)
+  if (deviceToken) payload["device_token"] = deviceToken
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    this.isLoading = false
+    if (res["status"]) {
+     this.onSuccessLogin(res)
+    } else {
+     const msg = res["msg"] || JSON.stringify(res)
      this.toastService.showToastWithCloseButton(msg, "danger")
     }
-   })
-
-  } catch (error) {
-   this.isLoading = false
-   this.toastService.showToastWithCloseButton("Something went wrong", "danger")
-  }
+   }, error: (err) => {
+    this.isLoading = false
+    const msg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(msg, "danger")
+   }
+  })
+ }
+ async onSuccessLogin(res: any) {
+  const data = JSON.parse(JSON.stringify(res["data"] || {}))
+  const token = res["token"] || ""
+  await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
+  await LSService.setItem(Constants.LS_TOKEN_KEY, token)
+  this.toastService.showToastWithCloseButton(res["msg"], "success")
+  this.clearForm()
+  this.navigateToPage("/layout/home")
  }
  navigateToPage(path: string) {
   this.router.navigate([path], { replaceUrl: true })

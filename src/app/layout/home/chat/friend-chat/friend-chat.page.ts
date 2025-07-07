@@ -45,28 +45,21 @@ export class FriendChatPage {
   })
  }
 
- async getChatDetails(event: any = null) {
+ getChatDetails(event: any = null) {
   const payload = { friend_id: this.friendData["user_id"] }
   const url = Constants.getApiUrl(Constants.GET_FRIENDS_MSGS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     const data = res["data"] || []
-     this.dataModifier(data)
-     this.scrollToBottom()
-     if (event) event.target.complete()
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-     if (event) event.target.complete()
-    }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-   if (event) event.target.complete()
-  }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    const data = res["data"] || []
+    this.dataModifier(data)
+    this.scrollToBottom()
+    if (event) event.target.complete()
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+    if (event) event.target.complete()
+   }
+  })
  }
  dataModifier(data: any) {
   data.forEach((m: any) => {
@@ -75,28 +68,22 @@ export class FriendChatPage {
   this.chatData = data
  }
 
- async sendMessage() {
+ sendMessage() {
   if (!this.msgValue.trim()) return
   const payload = { username: this.userData["username"], receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.SEND_MSG_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.isUpdate = true
-      this.msgValue = ""
-      this.getChatDetails()
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.isUpdate = true
+     this.msgValue = ""
+     this.getChatDetails()
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
  dismissModal() {

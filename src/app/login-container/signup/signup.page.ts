@@ -63,36 +63,26 @@ export class SignupPage {
   this.createUser()
  }
 
- async createUser() {
+ createUser() {
   this.isLoading = true
   const url = Constants.getApiUrl(Constants.SIGNUP_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, this.formPostdata)
-
-   observable$.subscribe({
-    next: (res: any) => {
-     this.isLoading = false
-     if (res["status"]) {
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.clearForm()
-      this.navigateToPage("login")
-     } else {
-      const msg = res["msg"] || JSON.stringify(res)
-      this.toastService.showToastWithCloseButton(msg, "danger")
-     }
-    }, error: (err) => {
-     this.isLoading = false
-     const msg = Utils.getErrorMessage(err)
+  this.apiService.postApi(url, this.formPostdata).subscribe({
+   next: (res: any) => {
+    this.isLoading = false
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.clearForm()
+     this.navigateToPage("login")
+    } else {
+     const msg = res["msg"] || JSON.stringify(res)
      this.toastService.showToastWithCloseButton(msg, "danger")
     }
-   })
-
-  } catch (error) {
-   this.isLoading = false
-   this.toastService.showToastWithCloseButton("Something went wrong", "danger")
-   console.error("API error:", error)
-  }
+   }, error: (err) => {
+    this.isLoading = false
+    const msg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(msg, "danger")
+   }
+  })
  }
  navigateToPage(path: string) {
   this.router.navigate([path])

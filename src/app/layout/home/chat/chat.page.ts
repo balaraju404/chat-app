@@ -39,27 +39,20 @@ export class ChatPage {
   this.getRecentChatDetails()
  }
 
- async getRecentChatDetails(event: any = null) {
+ getRecentChatDetails(event: any = null) {
   const payload = {}
   const url = Constants.getApiUrl(Constants.DASHBOARD_CHATS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     const data = res["data"] || []
-     this.dataModifier(data)
-     if (event) event.target.complete()
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-     if (event) event.target.complete()
-    }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-   if (event) event.target.complete()
-  }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    const data = res["data"] || []
+    this.dataModifier(data)
+    if (event) event.target.complete()
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+    if (event) event.target.complete()
+   }
+  })
  }
 
  dataModifier(data: any) {

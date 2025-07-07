@@ -41,24 +41,18 @@ export class FriendsListPage {
   this.getFriendsList()
  }
 
- async getFriendsList() {
+ getFriendsList() {
   const payload: any = { search_text: this.searchText }
   const url = Constants.getApiUrl(Constants.USERS_FRIENDS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     const data = res["data"] || []
-     this.dataModifier(data)
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-    }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    const data = res["data"] || []
+    this.dataModifier(data)
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
  dataModifier(data: any) {
@@ -87,25 +81,19 @@ export class FriendsListPage {
 
   const payload: any = { friend_id: item["user_id"] }
   const url = Constants.getApiUrl(Constants.INVITE_UNFRIEND_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.toastService.showToastWithCloseButton(res["msg"], "success")
-      this.getFriendsList()
-     } else {
-      this.toastService.showToastWithCloseButton(res["msg"], "danger")
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.getFriendsList()
+    } else {
+     this.toastService.showToastWithCloseButton(res["msg"], "danger")
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
  dismissModal() {

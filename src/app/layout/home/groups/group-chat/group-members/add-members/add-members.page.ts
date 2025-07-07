@@ -33,29 +33,23 @@ export class AddMembersPage {
   this.getFriends()
  }
 
- async getFriends() {
+ getFriends() {
   const payload = { group_id: this.groupData["group_id"] }
   const url = Constants.getApiUrl(Constants.GROUPS_FRIENDS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      const data = res["data"] || []
-      data.forEach((m: any) => {
-       m["user_profile"] = Utils.getUserProfile(m)
-      })
-      this.friendsList = data
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     const data = res["data"] || []
+     data.forEach((m: any) => {
+      m["user_profile"] = Utils.getUserProfile(m)
+     })
+     this.friendsList = data
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
  onSelectMember(friend: any) {
@@ -63,26 +57,20 @@ export class AddMembersPage {
   else this.newMembersIds = this.newMembersIds.filter((id: any) => id !== friend._id)
  }
 
- async addGroupMembers() {
+ addGroupMembers() {
   const payload = { group_id: this.groupData["group_id"], members: this.newMembersIds }
   const url = Constants.getApiUrl(Constants.GROUPS_ADD_MEMBERS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     if (res["status"]) {
-      this.isUpdated = true
-      this.getFriends()
-     }
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.isUpdated = true
+     this.getFriends()
     }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
 
  dismissModal() {

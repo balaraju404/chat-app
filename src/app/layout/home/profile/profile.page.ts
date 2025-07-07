@@ -71,45 +71,33 @@ export class ProfilePage {
   if (selectedGender) payload["gender_name"] = selectedGender.name
   return payload
  }
- async updateUserData() {
+ updateUserData() {
   const payload: any = this.getUpdatePayload()
   const url = Constants.getApiUrl(Constants.USERS_UPDATE_URL)
-
-  try {
-   const observable$ = await this.apiService.putApi(url, payload)
-   observable$.subscribe({
-    next: (res: any) => {
-     this.toastService.showToastWithCloseButton(res["msg"], "success")
-     this.isEditing = false
-     this.getUserData()
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-    }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+  this.apiService.putApi(url, payload).subscribe({
+   next: (res: any) => {
+    this.toastService.showToastWithCloseButton(res["msg"], "success")
+    this.isEditing = false
+    this.getUserData()
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
- async getUserData() {
+ getUserData() {
   const payload: any = { user_id: this.userdata["user_id"] }
   const url = Constants.getApiUrl(Constants.USERS_DEATILS_URL)
-
-  try {
-   const observable$ = await this.apiService.postApi(url, payload)
-   observable$.subscribe({
-    next: async (res: any) => {
-     const data = res["data"]?.[0] || {}
-     await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
-     this.userdata = data
-    }, error: (err) => {
-     const errMsg = Utils.getErrorMessage(err)
-     this.toastService.showToastWithCloseButton(errMsg, "danger")
-    }
-   })
-  } catch (error) {
-   console.error("Failed to call API:", error)
-  }
+  this.apiService.postApi(url, payload).subscribe({
+   next: async (res: any) => {
+    const data = res["data"]?.[0] || {}
+    await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
+    this.userdata = data
+   }, error: (err) => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
  async onLogout() {
   await Utils.clearLSonLogout()

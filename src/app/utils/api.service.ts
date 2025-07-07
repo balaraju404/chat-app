@@ -1,7 +1,5 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { LSService } from "./ls-service.service";
-import { Constants } from "./constants.service";
 
 @Injectable({
  providedIn: 'root'
@@ -9,44 +7,27 @@ import { Constants } from "./constants.service";
 export class ApiService {
  private readonly http = inject(HttpClient)
 
- private async getHeaders(isFormData = false): Promise<HttpHeaders> {
-  const token = await LSService.getItem(Constants.LS_TOKEN_KEY)
-  let headers = new HttpHeaders()
-
-  if (token) headers = headers.set('Authorization', `Bearer ${token}`)
-  else headers = headers.set('Authorization', 'red_towel')
-
-  if (!isFormData) headers = headers.set('Content-Type', 'application/json')
-  return headers
+ getApi(url: string) {
+  return this.http.get(url)
  }
 
- async getApi(url: string) {
-  const headers = await this.getHeaders()
-  return this.http.get(url, { headers })
+ postApi(url: string, data: any) {
+  return this.http.post(url, data)
  }
 
- async postApi(url: string, data: any) {
-  const headers = await this.getHeaders()
-  return this.http.post(url, data, { headers })
+ putApi(url: string, data: any) {
+  return this.http.put(url, data)
  }
 
- async putApi(url: string, data: any) {
-  const headers = await this.getHeaders()
-  return this.http.put(url, data, { headers })
+ deleteApi(url: string) {
+  return this.http.delete(url)
  }
 
- async deleteApi(url: string) {
-  const headers = await this.getHeaders()
-  return this.http.delete(url, { headers })
+ patchApi(url: string, data: any) {
+  return this.http.patch(url, data)
  }
 
- async patchApi(url: string, data: any) {
-  const headers = await this.getHeaders()
-  return this.http.patch(url, data, { headers })
- }
-
- async formPostApi(url: string, data: any) {
-  const headers = await this.getHeaders(true)
-  return this.http.post(url, data, { headers })
+ formPostApi(url: string, data: any) {
+  return this.http.post(url, data)
  }
 }
