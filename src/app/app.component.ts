@@ -32,7 +32,7 @@ export class AppComponent {
     console.log("Push registration success, token: " + token.value)
     AlertService.showAlert("Success", "Push registration success, token: " + JSON.stringify(token))
     if (token?.value) {
-     await LSService.setItem(token.value, Constants.LS_DEVICE_TOKEN_ID)
+     await LSService.setItem(Constants.LS_DEVICE_TOKEN_ID, token.value)
     }
    })
 
