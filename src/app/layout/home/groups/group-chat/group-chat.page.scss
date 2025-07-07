@@ -135,3 +135,30 @@ ion-button[slot="end"] {
 .no-gradient-footer {
  background: var(--ion-color-light, #ffffff) !important;
 }
+
+.unread-separator {
+ text-align: center;
+ font-size: 13px;
+ font-weight: 500;
+ color: var(--ion-color-medium);
+ margin: 12px 0;
+ position: relative;
+}
+
+.unread-separator::before,
+.unread-separator::after {
+ content: "";
+ position: absolute;
+ top: 50%;
+ width: 33%;
+ height: 1px;
+ background: var(--ion-color-medium);
+}
+
+.unread-separator::before {
+ left: 0;
+}
+
+.unread-separator::after {
+ right: 0;
+}

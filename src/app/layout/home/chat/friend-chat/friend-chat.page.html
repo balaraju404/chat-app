@@ -28,6 +28,9 @@
 
  <div class="chat-container ion-padding">
   @for (chat of chatData; track $index) {
+  @if (chat["show_unread"]) {
+  <div class="unread-separator">Unread Messages</div>
+  }
   <div class="chat-bubble ion-padding" [ngClass]="{
         'own-message': chat.sender_id === userData?.user_id,
         'friend-message': chat.sender_id !== userData?.user_id

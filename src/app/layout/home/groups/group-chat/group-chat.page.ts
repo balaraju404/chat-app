@@ -33,6 +33,7 @@ export class GroupChatPage {
  msgValue: string = ""
  isUpdate: boolean = false
  isSendingMsg: boolean = false
+ foundUnread: boolean = false
 
  ionViewWillEnter() {
   this.loadUserAndDetails()
@@ -60,8 +61,13 @@ export class GroupChatPage {
   })
  }
  dataModifier(data: any) {
+  this.foundUnread = false
   data.forEach((m: any) => {
    m["is_today"] = Utils.isToday(m["created_at"])
+   if (!this.foundUnread && m["sender_id"] != this.userData["user_id"] && m["is_seen"] == 0) {
+    m["show_unread"] = true
+    this.foundUnread = true
+   }
   })
   this.chatData = data
  }

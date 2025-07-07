@@ -12,6 +12,7 @@ import {
  IonFab, IonFabButton, ModalController
 } from "@ionic/angular/standalone";
 import { FriendsListPage } from '../friends-list/friends-list.page';
+import { SocketService } from 'src/app/utils/socket.service';
 
 @Component({
  selector: 'app-chat',
@@ -36,16 +37,21 @@ export class ChatPage {
 
  async callOnLoad() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
+  SocketService.msgSubject.subscribe((data) => {
+   this.getRecentChatDetails(null, data["sender_id"])
+  })
   this.getRecentChatDetails()
  }
 
- getRecentChatDetails(event: any = null) {
-  const payload = {}
+ getRecentChatDetails(event: any = null, friend_id: any = "") {
+  const payload: any = {}
+  if (friend_id) payload["friend_id"] = friend_id
   const url = Constants.getApiUrl(Constants.DASHBOARD_CHATS_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
     const data = res["data"] || []
-    this.dataModifier(data)
+    const flag = friend_id != ""
+    this.dataModifier(data, flag)
     if (event) event.target.complete()
    }, error: (err) => {
     const errMsg = Utils.getErrorMessage(err)
@@ -55,13 +61,21 @@ export class ChatPage {
   })
  }
 
- dataModifier(data: any) {
+ dataModifier(data: any, flag: boolean = false) {
+  if (!Array.isArray(data) || data.length === 0) return
+
   data.forEach((m: any) => {
    m["user_profile"] = Utils.getUserProfile(m)
-   m["is_today"] = Utils.isToday(m["last_message"]["created_at"])
+   m["is_today"] = Utils.isToday(m?.last_message?.created_at)
   })
-  this.allChatData = Utils.cloneData(data)
-  this.filterData = Utils.cloneData(data)
+
+  if (flag) {
+   const newObj = data[0]
+   const index = this.allChatData.findIndex((m: any) => m["friend_id"] == newObj["friend_id"])
+   if (index !== -1) this.allChatData.splice(index, 1)
+   this.allChatData.unshift(newObj)
+  } else this.allChatData = Utils.cloneData(data)
+  this.filterData = Utils.cloneData(this.allChatData)
  }
 
  onSearch(event: any) {
