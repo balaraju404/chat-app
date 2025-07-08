@@ -36,14 +36,16 @@ export class UserSearchPage {
   this.searchText = event.target.value
   this.searchUsersData()
  }
- searchUsersData() {
+ searchUsersData(event: any = null) {
   const payload: any = { search_text: this.searchText }
   const url = Constants.getApiUrl(Constants.USERS_OTHERS_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
+    if (event) event.target.complete()
     const data = res["data"] || []
     this.dataModifier(data)
    }, error: (err) => {
+    if (event) event.target.complete()
     const errMsg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(errMsg, "danger")
    }
@@ -73,7 +75,7 @@ export class UserSearchPage {
   })
  }
  acceptRequest(item: any) {
-  const payload: any = { _id: item["req_id"] }
+  const payload: any = { _id: item["req_id"], username: this.userData["username"] }
   const url = Constants.getApiUrl(Constants.INVITE_ACCEPT_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
@@ -90,7 +92,7 @@ export class UserSearchPage {
   })
  }
  rejectRequest(item: any, flag: boolean = false) {
-  const payload: any = { _id: item["req_id"] }
+  const payload: any = { _id: item["req_id"], friend_id: item["user_id"], username: this.userData["username"], flag: flag ? 0 : 1 }
   const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
@@ -111,9 +113,6 @@ export class UserSearchPage {
   this.modalCtrl.dismiss()
  }
  refreshData(event: any) {
-  this.searchUsersData()
-  setTimeout(() => {
-   event.target.complete()
-  }, 2000)
+  this.searchUsersData(event)
  }
 }

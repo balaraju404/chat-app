@@ -33,16 +33,13 @@ export class UserRequestsPage {
  receivedRequests: any = []
  sentRequests: any = []
 
- ngOnInit() {
-  this.callAsyncFuns()
- }
  ionViewDidEnter() {
   this.callAsyncFuns()
  }
  async callAsyncFuns() {
   await this.setUserData()
-  await this.getReceivedRequests()
-  await this.getSendedRequests()
+  this.getReceivedRequests()
+  this.getSendedRequests()
  }
  async setUserData() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
@@ -90,7 +87,7 @@ export class UserRequestsPage {
   })
  }
  acceptRequest(item: any) {
-  const payload: any = { _id: item._id }
+  const payload: any = { _id: item._id, username: this.userData["username"] }
   const url = Constants.getApiUrl(Constants.INVITE_ACCEPT_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
@@ -107,7 +104,7 @@ export class UserRequestsPage {
   })
  }
  rejectRequest(item: any, flag: boolean = false) {
-  const payload: any = { _id: item["_id"] }
+  const payload: any = { _id: item["_id"], friend_id: item["user_id"], username: this.userData["username"], flag: flag ? 0 : 1 }
   const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
