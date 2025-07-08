@@ -28,7 +28,10 @@ export class UserSearchPage {
  userList: any = []
  searchText: string = ""
 
- async ngOnInit() {
+ ionViewDidEnter() {
+  this.loadUserdata()
+ }
+ async loadUserdata() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
   this.searchUsersData()
  }
