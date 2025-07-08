@@ -11,6 +11,7 @@ import {
  IonHeader, IonAvatar, IonToolbar, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonFooter,
  IonItem, IonTextarea, ModalController
 } from "@ionic/angular/standalone";
+import { SocketService } from 'src/app/utils/socket.service';
 
 @Component({
  selector: 'app-group-chat',
@@ -41,6 +42,10 @@ export class GroupChatPage {
 
  async loadUserAndDetails() {
   this.userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
+  SocketService.grpMsgSubject.subscribe((data: any) => {
+   console.log(data);
+
+  })
   this.getChatDetails()
  }
 
@@ -73,7 +78,7 @@ export class GroupChatPage {
  }
  sendMessage() {
   if (!this.msgValue.trim() || this.isSendingMsg) return
-  const payload = { group_id: this.groupData["group_id"], msg: this.msgValue.trim() }
+  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], username: this.userData["username"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.GROUP_CHAT_SEND_URL)
   this.isSendingMsg = true
   this.apiService.postApi(url, payload).subscribe({

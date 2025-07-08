@@ -4,31 +4,34 @@ import { io, Socket } from 'socket.io-client';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+ providedIn: 'root'
 })
 
 export class SocketService {
  private socket: Socket;
-  static msgSubject = new Subject<any>()
+ static msgSubject = new Subject<any>()
+ static grpMsgSubject = new Subject<any>()
 
-  constructor() {
-    this.socket = io(Constants.NODE_URL, {
-      withCredentials: true, // Only if your server uses cookies/session
-      transports: ['websocket'],
-    });
+ constructor() {
+  this.socket = io(Constants.NODE_URL, {
+   withCredentials: true, // Only if your server uses cookies/session
+   transports: ['websocket'],
+  })
 
-    // Optional: log connection
-    this.socket.on('connection', () => {
-     console.log("connection")
-    });
+  this.socket.on('connection', () => {
+   console.log("connection")
+  })
 
-    this.socket.on('msg', (data) => {
-     SocketService.msgSubject.next(data);
-   });
-  }
+  this.socket.on('msg', (data) => {
+   SocketService.msgSubject.next(data)
+  })
 
-   connected(payload: any) {
-    this.socket.emit('register_user', payload);
-  }
+  this.socket.on('group_msg', (data) => {
+   SocketService.grpMsgSubject.next(data)
+  })
+ }
 
+ connected(payload: any) {
+  this.socket.emit('register_user', payload)
+ }
 }
