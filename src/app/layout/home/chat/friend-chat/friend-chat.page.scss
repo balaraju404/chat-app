@@ -157,3 +157,31 @@ ion-button[slot="end"] {
 .unread-separator::after {
  right: 0;
 }
+
+.message-meta {
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+ gap: 4px;
+ margin-top: 6px;
+}
+
+.tick-icons {
+ display: inline-flex;
+ align-items: center;
+ gap: 2px;
+}
+
+.tick-icon {
+ font-size: 14px;
+ vertical-align: middle;
+ color: rgba(255, 255, 255, 0.7);
+}
+
+.friend-message .tick-icon {
+ color: var(--ion-color-medium);
+}
+
+.tick-icon.double.blue {
+ color: #00e5ff;
+}

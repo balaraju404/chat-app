@@ -31,16 +31,41 @@
   @if (chat["show_unread"]) {
   <div class="unread-separator">Unread Messages</div>
   }
+
   <div class="chat-bubble ion-padding" [ngClass]="{
         'own-message': chat.sender_id === userData?.user_id,
         'friend-message': chat.sender_id !== userData?.user_id
-      }" id="{{$last?'last-msg':''}}">
+      }" id="{{$last ? 'last-msg' : ''}}">
+
    <div class="message-text">{{ chat.msg }}</div>
-   <div class="message-time ion-text-end ion-text-small">
-    {{ chat.created_at | date: chat['is_today']?'hh:mm a':'dd MMM yy hh:mm a' }}
+
+   <div class="message-meta ion-text-end ion-text-small">
+    <span class="message-time">
+     {{ chat.created_at | date: chat['is_today'] ? 'hh:mm a' : 'dd MMM yy hh:mm a' }}
+    </span>
+
+    @if (chat.sender_id === userData?.user_id) {
+    <span class="tick-icons">
+     @switch (chat.message_status||0) {
+     @case(0){
+     <ion-icon name="checkmark-outline" class="tick-icon single"></ion-icon>
+     }
+     @case(1){
+     <ion-icon name="checkmark-done-outline" class="tick-icon double"></ion-icon>
+     }
+     @case(2){
+     <ion-icon name="checkmark-done-outline" class="tick-icon double blue"></ion-icon>
+     }
+     }
+    </span>
+    }
    </div>
   </div>
   }
+  @empty {
+  <div class="ion-text-center ion-padding-top">No messages yet</div>
+  }
+
  </div>
 
 </ion-content>
