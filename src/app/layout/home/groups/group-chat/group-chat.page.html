@@ -47,7 +47,7 @@
   <div class="chat-bubble ion-padding" [ngClass]="{
             'own-message': chat.texted_by === userData?.user_id,
             'friend-message': chat.texted_by !== userData?.user_id
-          }" id="{{$first ? 'last-msg' : ''}}">
+          }" id="{{$last ? 'last-msg' : ''}}">
    @if (chat.texted_by !== userData?.user_id) {
    <div class="sender-name">{{ chat.username }}</div>
    }
