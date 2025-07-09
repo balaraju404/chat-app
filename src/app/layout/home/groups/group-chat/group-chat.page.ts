@@ -78,7 +78,7 @@ export class GroupChatPage {
  }
  sendMessage() {
   if (!this.msgValue.trim() || this.isSendingMsg) return
-  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], username: this.userData["username"], msg: this.msgValue.trim() }
+  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.GROUP_CHAT_SEND_URL)
   this.isSendingMsg = true
   this.apiService.postApi(url, payload).subscribe({

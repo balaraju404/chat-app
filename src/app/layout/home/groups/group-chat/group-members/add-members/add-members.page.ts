@@ -58,7 +58,7 @@ export class AddMembersPage {
  }
 
  addGroupMembers() {
-  const payload = { group_id: this.groupData["group_id"], members: this.newMembersIds }
+  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], members: this.newMembersIds }
   const url = Constants.getApiUrl(Constants.GROUPS_ADD_MEMBERS_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {

@@ -79,7 +79,7 @@ export class GroupMembersPage {
   const confirmed = await AlertService.showConfirmAlert("Confirm", "Are you sure you want to remove this member?", "Remove")
   if (!confirmed) return
 
-  const payload = { group_id: this.groupData["group_id"], friend_id: friend_id }
+  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], friend_id: friend_id }
   const url = Constants.getApiUrl(Constants.GROUPS_REMOVE_MEMBER_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
@@ -95,7 +95,7 @@ export class GroupMembersPage {
  }
 
  makeAdmin(friend_id: any) {
-  const payload = { group_id: this.groupData["group_id"], friend_id: friend_id }
+  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], friend_id: friend_id }
   const url = Constants.getApiUrl(Constants.GROUPS_ADD_ADMIN_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
@@ -111,7 +111,7 @@ export class GroupMembersPage {
  }
 
  removeAdmin(friend_id: any) {
-  const payload = { group_id: this.groupData["group_id"], friend_id: friend_id }
+  const payload = { group_id: this.groupData["group_id"], groupname: this.groupData["groupname"], friend_id: friend_id }
   const url = Constants.getApiUrl(Constants.GROUPS_REMOVE_ADMIN_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {

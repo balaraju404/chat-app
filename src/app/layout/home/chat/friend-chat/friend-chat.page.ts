@@ -81,7 +81,7 @@ export class FriendChatPage {
 
  sendMessage() {
   if (!this.msgValue.trim() || this.isSendingMsg) return
-  const payload = { username: this.userData["username"], receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
+  const payload = { receiver_id: this.friendData["user_id"], msg: this.msgValue.trim() }
   const url = Constants.getApiUrl(Constants.SEND_MSG_URL)
   this.isSendingMsg = true
   this.apiService.postApi(url, payload).subscribe({
