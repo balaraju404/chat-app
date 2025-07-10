@@ -13,8 +13,10 @@ export class Constants {
  }
 
  // api urls
- static readonly LOGIN_URL = "login"
- static readonly SIGNUP_URL = Constants.LOGIN_URL + "/sign-up"
+ static readonly LOGIN_URL = "login/"
+ static readonly SIGNUP_URL = Constants.LOGIN_URL + "sign-up"
+ static readonly SEND_OTP_URL = Constants.LOGIN_URL + "send_otp"
+ static readonly VERIFY_OTP_URL = Constants.LOGIN_URL + "verify_otp"
  static readonly USERS_URL = "users/"
  static readonly USERS_UPDATE_URL = Constants.USERS_URL + "update"
  static readonly USERS_DEATILS_URL = Constants.USERS_URL + "details"

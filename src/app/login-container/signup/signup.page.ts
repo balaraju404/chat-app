@@ -26,13 +26,18 @@ export class SignupPage {
 
  gendersData: any = Constants.GENDERS_LIST
  isLoading: boolean = false
+ isSendingOtp: boolean = false
+ isVerifyingOtp: boolean = false
  formPostdata: any = {
   username: "",
   email: "",
   gender_id: 1,
   gender_name: "",
-  password: ""
+  password: "",
+  is_verified: 0
  }
+ otpId: any = ""
+ otpInput: any = ""
  confirmPwd: string = ""
 
  ionViewWillEnter() {
@@ -45,8 +50,10 @@ export class SignupPage {
   const userMail = this.formPostdata["email"] || ""
   const userPwd = this.formPostdata["password"] || ""
   const genderId = this.formPostdata["gender_id"] || ""
+  const is_verified = this.formPostdata["is_verified"] || 0
 
-  if (username.length < 6) msg = "Username must be min 6 characters"
+  if (is_verified == 0) msg = "Please verify email first"
+  else if (username.length < 6) msg = "Username must be min 6 characters"
   else if (userMail.length == 0) msg = "Please enter user email"
   else if (!Utils.isValidEmail(userMail)) msg = "Please enter valid email"
   else if (!genderId) msg = "Please select a gender"
@@ -84,6 +91,52 @@ export class SignupPage {
    }
   })
  }
+ sendOtp() {
+  this.isSendingOtp = true
+  const url = Constants.getApiUrl(Constants.SEND_OTP_URL)
+  const payload = { email: this.formPostdata["email"] }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    this.isSendingOtp = false
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.otpId = res["otp_id"]
+    } else {
+     const msg = res["msg"] || JSON.stringify(res)
+     this.toastService.showToastWithCloseButton(msg, "danger")
+    }
+   }, error: (err) => {
+    this.isSendingOtp = false
+    const msg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(msg, "danger")
+   }
+  })
+ }
+ verfiedOtp() {
+  this.isVerifyingOtp = true
+  const url = Constants.getApiUrl(Constants.VERIFY_OTP_URL)
+  const payload = { otp_id: this.otpId, otp: this.otpInput }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    this.isVerifyingOtp = false
+    if (res["status"]) {
+     this.toastService.showToastWithCloseButton(res["msg"], "success")
+     this.formPostdata["is_verified"] = 1
+    } else {
+     const msg = res["msg"] || JSON.stringify(res)
+     this.toastService.showToastWithCloseButton(msg, "danger")
+    }
+   }, error: (err) => {
+    this.isVerifyingOtp = false
+    const msg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(msg, "danger")
+   }
+  })
+ }
+ isValidEmail() {
+  const email = this.formPostdata["email"] || ""
+  return Utils.isValidEmail(email)
+ }
  navigateToPage(path: string) {
   this.router.navigate([path])
  }
@@ -93,8 +146,11 @@ export class SignupPage {
    email: "",
    gender_id: "",
    gender_name: "",
-   password: ""
+   password: "",
+   is_verified: 0
   }
+  this.otpId = ""
+  this.otpInput = ""
   this.confirmPwd = ""
  }
 }

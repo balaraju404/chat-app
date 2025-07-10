@@ -64,3 +64,40 @@
   }
  }
 }
+
+ion-button.otp-button {
+ height: 100%;
+ font-size: 0.75rem;
+ --padding-start: 0.5rem;
+ --padding-end: 0.5rem;
+ --border-radius: 0.4rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+
+ ion-spinner {
+  margin-left: 0.5rem;
+  width: 16px;
+  height: 16px;
+  color: black;
+ }
+
+ &:disabled {
+  opacity: 0.5;
+ }
+}
+
+.email-verified-text {
+ color: #00ffab; // soft green
+ font-weight: bold;
+ font-size: 1rem;
+ margin-top: 0.25rem;
+ display: flex;
+ align-items: center;
+ gap: 0.4rem;
+
+ &::before {
+  content: '✅';
+  font-size: 1.2rem;
+ }
+}
