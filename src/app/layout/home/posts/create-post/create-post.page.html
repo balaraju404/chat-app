@@ -1,0 +1,29 @@
+<ion-header translucent>
+ <ion-toolbar>
+  <ion-buttons slot="start">
+   <ion-button fill="clear" (click)="dismissModal()">
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+   </ion-button>
+  </ion-buttons>
+  <ion-title class="ion-text-start">Create Post</ion-title>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding create-group-page">
+ <ion-card class="form-card">
+  <ion-item lines="none" class="clean-item">
+   <ion-textarea placeholder="Enter your post ..."></ion-textarea>
+   <ion-icon (click)="openFriendModal()" name="people-outline"></ion-icon>
+  </ion-item>
+ </ion-card>
+</ion-content>
+
+<ion-grid>
+ <ion-row class="ion-justify-content-center ion-margin-top">
+  <ion-col size="auto" class="ion-text-center">
+   <ion-button color="primary" (click)="savePost()">
+    Save Post
+   </ion-button>
+  </ion-col>
+ </ion-row>
+</ion-grid>

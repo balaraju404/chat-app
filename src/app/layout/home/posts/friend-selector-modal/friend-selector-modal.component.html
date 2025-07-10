@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Select Friends</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let friend of friends">
+      <ion-checkbox
+        slot="start"
+        [checked]="selectedFriends.includes(friend)"
+        (ionChange)="toggleSelection(friend)">
+      </ion-checkbox>
+      <ion-label class="ion-padding">{{ friend.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
