@@ -43,7 +43,7 @@ export class AppComponent {
    PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
     AlertService.showAlert("Notification", "Notification action performed: " + JSON.stringify(notification))
     const data = notification.notification?.["data"] || ""
-    if (data) this.onClickNotification(JSON.parse(data))
+    if (data) this.onClickNotification(data)
    })
   } else {
    console.log("Push Notifications not supported on web")
@@ -57,7 +57,7 @@ export class AppComponent {
    case 1:
     break
    case 2:
-    this.openFriendChatModal(data)
+    this.openFriendChatModal(JSON.parse(data["data"]))
     break
    case 3:
     break
