@@ -6,6 +6,7 @@ import { AlertService } from "./utils/alert.service"
 import { Constants } from "./utils/constants.service"
 import { LSService } from "./utils/ls-service.service"
 import { FriendChatPage } from "./layout/home/chat/friend-chat/friend-chat.page"
+import { ApiService } from "./utils/api.service"
 
 @Component({
  selector: "app-root",
@@ -14,6 +15,7 @@ import { FriendChatPage } from "./layout/home/chat/friend-chat/friend-chat.page"
 })
 export class AppComponent {
  private readonly modalCtrl = inject(ModalController)
+ private readonly apiService = inject(ApiService)
  ngOnInit() {
   this.initializeApp()
  }
@@ -66,11 +68,21 @@ export class AppComponent {
   }
  }
  async openFriendChatModal(item: any) {
-  const data = { user_id: item["ref_id"], username: item["username"] }
+  const data = { _id: item["ref_id"], user_id: item["friend_id"], username: item["username"] }
   const modal = await this.modalCtrl.create({
    component: FriendChatPage,
    componentProps: { friendData: data }
   })
   await modal.present()
+ }
+
+ updateMsgStatus(id: any) {
+  const url = Constants.getApiUrl(Constants.UPDATE_MSG_URL)
+  const payload = { msg_id: id, message_status: 1 }
+  this.apiService.putApi(url, payload).subscribe({
+   next: (res: any) => {
+
+   }
+  })
  }
 }

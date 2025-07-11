@@ -31,6 +31,7 @@ export class Constants {
  static readonly CHAT_URL = "chat/"
  static readonly GET_FRIENDS_MSGS_URL = Constants.CHAT_URL + "details"
  static readonly SEND_MSG_URL = Constants.CHAT_URL + "send"
+ static readonly UPDATE_MSG_URL = Constants.CHAT_URL + "update"
  static readonly GROUPS_URL = "groups/"
  static readonly GROUPS_CREATE_URL = Constants.GROUPS_URL + "create"
  static readonly GROUPS_ADD_MEMBERS_URL = Constants.GROUPS_URL + "add_members"
