@@ -21,6 +21,7 @@ export class Utils {
   // await LSService.clear()
   await LSService.removeItem(Constants.LS_USER_DATA_KEY)
   await LSService.removeItem(Constants.LS_TOKEN_KEY)
+  await LSService.removeItem(Constants.LS_USER_DEVICE_ID)
  }
 
  // helper functions

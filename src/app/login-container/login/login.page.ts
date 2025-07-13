@@ -90,8 +90,10 @@ export class LoginPage {
  async onSuccessLogin(res: any) {
   const data = JSON.parse(JSON.stringify(res["data"] || {}))
   const token = res["token"] || ""
+  const device_id = res["device_id"] || ""
   await LSService.setItem(Constants.LS_USER_DATA_KEY, data)
   await LSService.setItem(Constants.LS_TOKEN_KEY, token)
+  if (device_id) await LSService.setItem(Constants.LS_USER_DEVICE_ID, device_id)
   this.toastService.showToastWithCloseButton(res["msg"], "success")
   this.clearForm()
   this.navigateToPage("/layout/home")

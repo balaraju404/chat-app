@@ -18,6 +18,8 @@ export class Constants {
  static readonly RESET_PASSWORD_URL = Constants.LOGIN_URL + "reset_password"
  static readonly SEND_OTP_URL = Constants.LOGIN_URL + "send_otp"
  static readonly VERIFY_OTP_URL = Constants.LOGIN_URL + "verify_otp"
+ static readonly DEVICE_TOKEN_URL = "device_token/"
+ static readonly DELETE_DEVICE_TOKEN_URL = Constants.DEVICE_TOKEN_URL + "delete"
  static readonly USERS_URL = "users/"
  static readonly USERS_UPDATE_URL = Constants.USERS_URL + "update"
  static readonly USERS_DEATILS_URL = Constants.USERS_URL + "details"
@@ -51,6 +53,7 @@ export class Constants {
  static readonly LS_TOKEN_KEY = "token"
  static readonly LS_USER_DATA_KEY = "login_user_data"
  static readonly LS_DEVICE_TOKEN_ID = "device_token_id"
+ static readonly LS_USER_DEVICE_ID = "user_device_id"
 
  // assets
  static readonly APP_ICON = "assets/images/app-icon.png"

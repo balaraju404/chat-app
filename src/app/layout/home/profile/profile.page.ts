@@ -30,7 +30,10 @@ export class ProfilePage {
  isEditing: boolean = false
  userdata: any = {}
 
- async ngOnInit() {
+ ionViewWillEnter() {
+  this.loadUserData()
+ }
+ async loadUserData() {
   this.userdata = await LSService.getItem(Constants.LS_USER_DATA_KEY)
  }
  toggleEdit() {
@@ -99,10 +102,29 @@ export class ProfilePage {
    }
   })
  }
+ async checkDeviceId() {
+  const device_id = await LSService.getItem(Constants.LS_USER_DEVICE_ID)
+  if (device_id) this.removeDeviceId(device_id)
+  else this.onLogout()
+ }
  async onLogout() {
   await Utils.clearLSonLogout()
   // this.router.navigate(["/login"])
   location.href = "/login"
+ }
+ removeDeviceId(device_id: any) {
+  const url = Constants.getApiUrl(Constants.DELETE_DEVICE_TOKEN_URL)
+  const payload = { device_token_id: device_id }
+  this.apiService.postApi(url, payload).subscribe({
+   next: (res: any) => {
+    if (res["status"]) {
+     this.onLogout()
+    }
+   }, error: err => {
+    const errMsg = Utils.getErrorMessage(err)
+    this.toastService.showToastWithCloseButton(errMsg, "danger")
+   }
+  })
  }
  dismissModal() {
   this.modalCtrl.dismiss()
