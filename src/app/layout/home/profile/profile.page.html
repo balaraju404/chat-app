@@ -1,21 +1,29 @@
-<ion-header>
+<ion-header class="profile-header">
  <ion-toolbar>
-  <ion-buttons slot="end">
+  <ion-buttons slot="start">
    <ion-button fill="clear" (click)="dismissModal()">
-    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
    </ion-button>
   </ion-buttons>
+
   <ion-title class="ion-text-center">My Profile</ion-title>
+
+  <!-- Empty buttons on end to balance -->
+  <ion-buttons slot="end">
+   <ion-button fill="clear" disabled style="opacity: 0;">
+    <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+   </ion-button>
+  </ion-buttons>
  </ion-toolbar>
 </ion-header>
 
 
-<ion-content class="ion-padding">
- <div class="profile-container ion-text-center">
-  <ion-icon name="person-circle-outline" size="large"></ion-icon>
+<ion-content class="ion-padding profile-content">
+ <div class="profile-avatar-wrapper">
+  <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
  </div>
 
- <ion-list>
+ <ion-list class="profile-form">
   <ion-item>
    <ion-label position="floating">Username</ion-label>
    <ion-input [(ngModel)]="userdata.username" [readonly]="!isEditing"></ion-input>
@@ -41,18 +49,21 @@
   </ion-item>
  </ion-list>
 
- <ion-grid>
-  <ion-row class="ion-justify-content-between ion-margin-top">
-   <ion-col size="6">
+ <ion-grid class="ion-margin-top button-grid">
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+   <ion-col size="5">
     <ion-button expand="block" color="primary" (click)="toggleEdit()">
+     <ion-icon name="create-outline" slot="start"></ion-icon>
      {{ isEditing ? 'Save' : 'Edit' }}
     </ion-button>
    </ion-col>
-   <ion-col size="6">
+   <ion-col size="5" class="button-gap">
     <ion-button expand="block" color="danger" (click)="onLogout()">
+     <ion-icon name="log-out-outline" slot="start"></ion-icon>
      Logout
     </ion-button>
    </ion-col>
   </ion-row>
  </ion-grid>
+
 </ion-content>

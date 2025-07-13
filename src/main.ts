@@ -16,7 +16,7 @@ import {
  accessibilityOutline, checkmarkCircleOutline, closeCircleOutline, maleOutline, femaleOutline, removeCircleOutline, sendOutline,
  arrowUndoOutline, people, chatbubbleOutline, personRemoveOutline, personOutline, paperPlaneOutline, arrowDownOutline,
  arrowBackOutline, chatbubbleEllipsesOutline, addOutline, ellipsisVertical, personAddOutline, trashOutline, checkmarkDoneOutline,
- logInOutline
+ logInOutline, logOutOutline, createOutline
 } from 'ionicons/icons';
 
 addIcons({
@@ -58,7 +58,9 @@ addIcons({
  'person-add-outline': personAddOutline,
  'trash-outline': trashOutline,
  'checkmark-done-outline': checkmarkDoneOutline,
- 'log-in-outline': logInOutline
+ 'log-in-outline': logInOutline,
+ 'log-out-outline': logOutOutline,
+ 'create-outline': createOutline
 });
 
 bootstrapApplication(AppComponent, {
