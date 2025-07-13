@@ -8,23 +8,21 @@
  <div class="login-container">
   <div class="login-content">
    <div class="login-header">
-    <p class="text-white">Login</p>
+    <p>Login</p>
    </div>
+
    <div class="login-form">
     <ion-row>
      <ion-col size="12">
-      <ion-input type="text" aria-label="User Email" color="success" placeholder="Enter user email"
-       [(ngModel)]="formPostdata['email']" (keydown.enter)="doLogin()"></ion-input>
+      <ion-input type="text" placeholder="Enter user email" [(ngModel)]="formPostdata.email"
+       [class.invalid]="showValidation && !formPostdata.email" (keydown.enter)="doLogin()"></ion-input>
      </ion-col>
-     <!-- <ion-col size="1" class="d-flex ion-justify-content-center ion-align-items-center">
-      <ion-icon name="person" class="text-white"></ion-icon>
-     </ion-col> -->
     </ion-row>
 
     <ion-row>
      <ion-col size="12">
-      <ion-input type="password" placeholder="Enter password" [(ngModel)]="formPostdata['password']"
-       (keydown.enter)="doLogin()">
+      <ion-input type="password" placeholder="Enter password" [(ngModel)]="formPostdata.password"
+       [class.invalid]="showValidation && !formPostdata.password" (keydown.enter)="doLogin()">
        <ion-input-password-toggle slot="end" color="light"></ion-input-password-toggle>
       </ion-input>
      </ion-col>
@@ -32,8 +30,8 @@
 
     <ion-row>
      <ion-col size="12">
-      <ion-button [disabled]="isLoading" size="small" expand="block" color="secondary" (click)="doLogin()">
-       <ion-icon slot="end" name="log-in"></ion-icon>
+      <ion-button [disabled]="isLoading" expand="block" color="secondary" (click)="doLogin()">
+       <ion-icon slot="start" name="log-in-outline"></ion-icon>
        Login
        <ion-spinner slot="end" *ngIf="isLoading"></ion-spinner>
       </ion-button>
@@ -42,17 +40,18 @@
 
     <ion-row>
      <ion-col size="12">
-      <p class="text-white">
+      <p>
        Create a new account?
        <span class="link" (click)="navigateToPage('/signup')">Sign Up</span>
       </p>
      </ion-col>
     </ion-row>
+
     <ion-row>
      <ion-col size="12">
-      <p class="text-white">
-       Click here to reset your password?
-       <span class="link" (click)="navigateToPage('/forgot-password')">Forgot Password</span>
+      <p>
+       Forgot your password?
+       <span class="link" (click)="navigateToPage('/forgot-password')">Reset Password</span>
       </p>
      </ion-col>
     </ion-row>

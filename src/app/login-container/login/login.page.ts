@@ -16,8 +16,10 @@ import { Utils } from "src/app/utils/utils.service"
  templateUrl: "./login.page.html",
  styleUrls: ["./login.page.scss"],
  standalone: true,
- imports: [CommonModule, FormsModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol,
-  IonInputPasswordToggle, IonButton, IonSpinner, IonInput, IonIcon]
+ imports: [
+  CommonModule, FormsModule, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonInputPasswordToggle, IonButton,
+  IonSpinner, IonInput, IonIcon
+ ]
 })
 export class LoginPage {
  private readonly apiService = inject(ApiService)
@@ -25,14 +27,18 @@ export class LoginPage {
  private readonly router = inject(Router)
 
  isLoading: boolean = false
+ showValidation: boolean = false
+
  formPostdata: any = {
   email: "",
   password: ""
  }
 
  constructor() {
-  this.router.events.subscribe(event => {
-   if (event instanceof NavigationStart && event.restoredState) this.checkUserData()
+  this.router.events.subscribe((event) => {
+   if (event instanceof NavigationStart && event.restoredState) {
+    this.checkUserData()
+   }
   })
  }
 
@@ -40,37 +46,48 @@ export class LoginPage {
   this.checkUserData()
   this.clearForm()
  }
+
  async checkUserData() {
   const userData = await LSService.getItem(Constants.LS_USER_DATA_KEY)
-  if (Object.keys(userData || {}).length) this.navigateToPage("/layout/home")
+  if (Object.keys(userData || {}).length)
+   this.navigateToPage("/layout/home")
  }
+
  doLogin() {
+  this.showValidation = true
+
   let msg = ""
-  const userMail = this.formPostdata["email"] || ""
+  const userMail = this.formPostdata["email"]?.trim() || ""
   const userPwd = this.formPostdata["password"] || ""
-  if (userMail.length == 0) {
+
+  if (!userMail) {
    msg = "Please enter user email"
   } else if (!Utils.isValidEmail(userMail)) {
    msg = "Please enter valid email"
+  } else if (!userPwd) {
+   msg = "Please enter password"
   }
   // else if (userPwd.length < 6) {
-  //  msg = "Password must be min 6 characters"
+  //   msg = "Password must be minimum 6 characters"
   // }
 
-  if (msg.length) {
+  if (msg) {
    this.toastService.showToastWithCloseButton(msg, "danger")
    return
   }
 
   this.checkUser()
  }
+
  async checkUser() {
   this.isLoading = true
-  const url = Constants.getApiUrl(Constants.LOGIN_URL)
 
+  const url = Constants.getApiUrl(Constants.LOGIN_URL)
   const payload = { ...this.formPostdata }
+
   const deviceToken = await LSService.getItem(Constants.LS_DEVICE_TOKEN_ID)
   if (deviceToken) payload["device_token"] = deviceToken
+
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
     this.isLoading = false
@@ -87,6 +104,7 @@ export class LoginPage {
    }
   })
  }
+
  async onSuccessLogin(res: any) {
   const data = JSON.parse(JSON.stringify(res["data"] || {}))
   const token = res["token"] || ""
@@ -98,10 +116,13 @@ export class LoginPage {
   this.clearForm()
   this.navigateToPage("/layout/home")
  }
+
  navigateToPage(path: string) {
   this.router.navigate([path], { replaceUrl: true })
  }
+
  clearForm() {
   this.formPostdata = { email: "", password: "" }
+  this.showValidation = false
  }
 }
