@@ -1,21 +1,21 @@
-import { Component, Input, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ApiService } from 'src/app/utils/api.service';
-import { ToastService } from 'src/app/utils/toast.service';
-import { Constants } from 'src/app/utils/constants.service';
-import { Utils } from 'src/app/utils/utils.service';
-import { LSService } from 'src/app/utils/ls-service.service';
+import { Component, Input, inject, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule } from "@angular/forms"
+import { ApiService } from "src/app/utils/api.service"
+import { ToastService } from "src/app/utils/toast.service"
+import { Constants } from "src/app/utils/constants.service"
+import { Utils } from "src/app/utils/utils.service"
+import { LSService } from "src/app/utils/ls-service.service"
 import {
  IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonAvatar, IonContent, IonRefresherContent, IonRefresher, IonFooter,
  IonItem, IonTextarea, ModalController
-} from "@ionic/angular/standalone";
-import { SocketService } from 'src/app/utils/socket.service';
+} from "@ionic/angular/standalone"
+import { SocketService } from "src/app/utils/socket.service"
 
 @Component({
- selector: 'app-friend-chat',
- templateUrl: './friend-chat.page.html',
- styleUrls: ['./friend-chat.page.scss'],
+ selector: "app-friend-chat",
+ templateUrl: "./friend-chat.page.html",
+ styleUrls: ["./friend-chat.page.scss"],
  standalone: true,
  imports: [IonItem, IonFooter, IonRefresher, IonRefresherContent, IonContent, IonAvatar, IonIcon, IonButton, IonButtons, IonTextarea,
   IonToolbar, IonHeader, CommonModule, FormsModule],
@@ -35,6 +35,8 @@ export class FriendChatPage {
  receiveMsg: any
  isSendingMsg: boolean = false
  foundUnread: boolean = false
+ skeletonArr: any[] = Array.from({ length: 8 })
+ isLoadingMessages: boolean = true
 
  ngOnInit() {
   this.initializeChat()
@@ -51,16 +53,21 @@ export class FriendChatPage {
    }
   })
  }
+
  getChatDetails(event: any = null) {
+  this.isLoadingMessages = true
   const payload = { friend_id: this.friendData["user_id"] }
   const url = Constants.getApiUrl(Constants.GET_FRIENDS_MSGS_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
+    this.isLoadingMessages = false
     const data = res["data"] || []
     this.dataModifier(data)
     this.scrollToBottom()
     if (event) event.target.complete()
-   }, error: (err) => {
+   },
+   error: (err) => {
+    this.isLoadingMessages = false
     const errMsg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(errMsg, "danger")
     if (event) event.target.complete()

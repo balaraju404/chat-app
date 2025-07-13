@@ -1,26 +1,26 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ApiService } from 'src/app/utils/api.service';
-import { ToastService } from 'src/app/utils/toast.service';
-import { LSService } from 'src/app/utils/ls-service.service';
-import { Constants } from 'src/app/utils/constants.service';
-import { Utils } from 'src/app/utils/utils.service';
-import { FriendChatPage } from './friend-chat/friend-chat.page';
+import { Component, inject } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule } from "@angular/forms"
+import { ApiService } from "src/app/utils/api.service"
+import { ToastService } from "src/app/utils/toast.service"
+import { LSService } from "src/app/utils/ls-service.service"
+import { Constants } from "src/app/utils/constants.service"
+import { Utils } from "src/app/utils/utils.service"
+import { FriendChatPage } from "./friend-chat/friend-chat.page"
 import {
  IonRefresher, IonRefresherContent, IonSearchbar, IonItem, IonContent, IonList, IonAvatar, IonIcon, IonLabel, IonBadge, IonNote,
- IonFab, IonFabButton, ModalController
-} from "@ionic/angular/standalone";
-import { FriendsListPage } from '../friends-list/friends-list.page';
-import { SocketService } from 'src/app/utils/socket.service';
+ IonFab, IonFabButton, ModalController, IonSkeletonText
+} from "@ionic/angular/standalone"
+import { FriendsListPage } from "../friends-list/friends-list.page"
+import { SocketService } from "src/app/utils/socket.service"
 
 @Component({
- selector: 'app-chat',
- templateUrl: './chat.page.html',
- styleUrls: ['./chat.page.scss'],
+ selector: "app-chat",
+ templateUrl: "./chat.page.html",
+ styleUrls: ["./chat.page.scss"],
  standalone: true,
  imports: [IonNote, IonBadge, IonLabel, IonIcon, IonAvatar, IonList, IonContent, IonItem, IonSearchbar, IonRefresherContent,
-  IonRefresher, IonFab, IonFabButton, CommonModule, FormsModule]
+  IonRefresher, IonFab, IonFabButton, CommonModule, FormsModule, IonSkeletonText]
 })
 export class ChatPage {
  private readonly apiService = inject(ApiService)
@@ -30,6 +30,8 @@ export class ChatPage {
  userData: any = {}
  allChatData: any[] = []
  filterData: any[] = []
+ skeletonArr: any[] = Array.from({ length: 6 })
+ isLoadingChats: boolean = true
 
  ionViewWillEnter() {
   this.callOnLoad()
@@ -44,16 +46,19 @@ export class ChatPage {
  }
 
  getRecentChatDetails(event: any = null, friend_id: any = "") {
+  this.isLoadingChats = true
   const payload: any = {}
   if (friend_id) payload["friend_id"] = friend_id
   const url = Constants.getApiUrl(Constants.DASHBOARD_CHATS_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
+    this.isLoadingChats = false
     const data = res["data"] || []
-    const flag = friend_id != ""
+    const flag = friend_id !== ""
     this.dataModifier(data, flag)
     if (event) event.target.complete()
    }, error: (err) => {
+    this.isLoadingChats = false
     const errMsg = Utils.getErrorMessage(err)
     this.toastService.showToastWithCloseButton(errMsg, "danger")
     if (event) event.target.complete()

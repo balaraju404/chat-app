@@ -1,17 +1,29 @@
-<ion-content [fullscreen]="true" class="ion-padding">
-
+<ion-content [fullscreen]="true">
  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
   <ion-refresher-content pullingIcon="arrow-down-outline" refreshingSpinner="crescent" pullingText="Pull to refresh"
-   refreshingText="Refreshing..."></ion-refresher-content>
+   refreshingText="Refreshing...">
+  </ion-refresher-content>
  </ion-refresher>
 
  <ion-searchbar placeholder="Search by username..." [debounce]="300" (ionInput)="onSearch($event)">
  </ion-searchbar>
 
  <ion-list class="chat-list">
+  @if (isLoadingChats) {
+  @for (_ of skeletonArr; track $index) {
+  <ion-item lines="none" class="chat-item skeleton-item">
+   <ion-avatar slot="start">
+    <ion-skeleton-text animated style="width: 40px; height: 40px; border-radius: 50%;"></ion-skeleton-text>
+   </ion-avatar>
+   <ion-label>
+    <h3><ion-skeleton-text animated style="width: 80%; height: 14px;"></ion-skeleton-text></h3>
+    <p><ion-skeleton-text animated style="width: 60%; height: 12px;"></ion-skeleton-text></p>
+   </ion-label>
+  </ion-item>
+  }
+  } @else {
   @for (chat of filterData; track $index) {
   <ion-item button (click)="openChatModal(chat)" class="chat-item" lines="none">
-
    <ion-avatar slot="start" class="chat-avatar">
     <ion-icon [name]="chat.user_profile" class="chat-avatar-icon"></ion-icon>
    </ion-avatar>
@@ -26,20 +38,20 @@
 
     <div class="chat-content-row">
      <p class="chat-msg">
-      {{(chat.last_message?.sender_id)==userData.user_id?'You: ':''}}{{ chat.last_message?.msg }}
+      {{ chat.last_message?.sender_id === userData.user_id ? 'You: ' : '' }}{{ chat.last_message?.msg }}
      </p>
      <ion-note class="chat-time" color="medium">
-      {{ chat.last_message?.created_at | date: chat["is_today"]?'hh:mm a':'dd MMM yy hh:mm a' }}
+      {{ chat.last_message?.created_at | date: chat["is_today"] ? 'hh:mm a' : 'dd MMM yy hh:mm a' }}
      </ion-note>
     </div>
    </ion-label>
-
   </ion-item>
   } @empty {
   <div class="no-data">
    <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
    <p>No recent chats found</p>
   </div>
+  }
   }
  </ion-list>
 
@@ -49,5 +61,4 @@
    <ion-icon name="add-outline"></ion-icon>
   </ion-fab-button>
  </ion-fab>
-
 </ion-content>

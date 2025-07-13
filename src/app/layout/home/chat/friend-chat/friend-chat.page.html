@@ -7,12 +7,14 @@
    </ion-button>
   </ion-buttons>
 
-  <ion-buttons slot="start" class="avatar-name-group">
-   <ion-avatar class="avatar-icon">
-    <ion-icon [name]="friendData.user_profile"></ion-icon>
-   </ion-avatar>
-   <div class="friend-name">{{ friendData.username }}</div>
-  </ion-buttons>
+  <ion-title class="chat-title">
+   <div class="avatar-name-wrapper">
+    <ion-avatar class="avatar-icon">
+     <ion-icon [name]="friendData.user_profile"></ion-icon>
+    </ion-avatar>
+    <div class="friend-name">{{ friendData.username }}</div>
+   </div>
+  </ion-title>
 
  </ion-toolbar>
 </ion-header>
@@ -27,6 +29,16 @@
  </ion-refresher>
 
  <div class="chat-container ion-padding">
+  @if (isLoadingMessages) {
+  @for (_ of skeletonArr; track $index; let i = $index) {
+  <div class="skeleton-wrapper" [ngClass]="i % 2 === 0 ? 'left' : 'right'">
+   <div class="skeleton-bubble">
+    <div class="skeleton-line medium"></div>
+    <div class="skeleton-line short"></div>
+   </div>
+  </div>
+  }
+  } @else {
   @for (chat of chatData; track $index) {
   @if (chat["show_unread"]) {
   <div class="unread-separator">Unread Messages</div>
@@ -65,9 +77,8 @@
   @empty {
   <div class="ion-text-center ion-padding-top">No messages yet</div>
   }
-
+  }
  </div>
-
 </ion-content>
 
 <ion-footer class="chat-footer no-gradient-footer" keyboard-attach>
