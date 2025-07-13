@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
  <ion-toolbar>
-  <ion-title>Login</ion-title>
+  <ion-title class="ion-padding-horizontal">Login</ion-title>
  </ion-toolbar>
 </ion-header>
 
@@ -45,6 +45,14 @@
       <p class="text-white">
        Create a new account?
        <span class="link" (click)="navigateToPage('/signup')">Sign Up</span>
+      </p>
+     </ion-col>
+    </ion-row>
+    <ion-row>
+     <ion-col size="12">
+      <p class="text-white">
+       Click here to reset your password?
+       <span class="link" (click)="navigateToPage('/forgot-password')">Forgot Password</span>
       </p>
      </ion-col>
     </ion-row>

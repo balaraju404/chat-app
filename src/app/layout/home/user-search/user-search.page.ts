@@ -94,8 +94,8 @@ export class UserSearchPage {
    }
   })
  }
- rejectRequest(item: any, flag: boolean = false) {
-  const payload: any = { _id: item["req_id"], friend_id: item["user_id"], flag: flag ? 0 : 1 }
+ rejectRequest(item: any, isWithdraw: number = 0) {
+  const payload: any = { _id: item["req_id"], friend_id: item["user_id"], isWithdraw: isWithdraw }
   const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {

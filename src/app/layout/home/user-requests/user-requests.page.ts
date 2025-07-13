@@ -103,15 +103,15 @@ export class UserRequestsPage {
    }
   })
  }
- rejectRequest(item: any, flag: boolean = false) {
-  const payload: any = { _id: item["_id"], friend_id: item["user_id"], flag: flag ? 0 : 1 }
+ rejectRequest(item: any, isWithdraw: number = 0) {
+  const payload: any = { _id: item["_id"], friend_id: item["user_id"], isWithdraw: isWithdraw }
   const url = Constants.getApiUrl(Constants.INVITE_DECLINE_URL)
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
     if (res["status"]) {
      const msg = res["msg"]
      this.toastService.showToastWithCloseButton(msg, "success")
-     if (flag) this.getSendedRequests()
+     if (isWithdraw == 1) this.getSendedRequests()
      else this.getReceivedRequests()
     } else {
      this.toastService.showToastWithCloseButton(res["msg"], "danger")
