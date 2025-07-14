@@ -64,6 +64,7 @@ export class AddMembersPage {
    next: (res: any) => {
     if (res["status"]) {
      this.isUpdated = true
+     this.newMembersIds = []
      this.getFriends()
     }
    }, error: (err) => {
