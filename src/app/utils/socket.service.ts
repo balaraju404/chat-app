@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 export class SocketService {
  private socket: Socket;
  static msgSubject = new Subject<any>()
+ static updateMsgStatusSubject = new Subject<any>()
  static grpMsgSubject = new Subject<any>()
 
  constructor() {
@@ -24,6 +25,9 @@ export class SocketService {
 
   this.socket.on('msg', (data) => {
    SocketService.msgSubject.next(data)
+  })
+  this.socket.on('update_msg_status', (data) => {
+   SocketService.updateMsgStatusSubject.next(data)
   })
 
   this.socket.on('group_msg', (data) => {

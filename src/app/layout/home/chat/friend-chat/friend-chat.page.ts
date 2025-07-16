@@ -52,6 +52,15 @@ export class FriendChatPage {
     this.chatData.push(data)
    }
   })
+
+  SocketService.updateMsgStatusSubject.subscribe((data) => {
+   console.log(data);
+   const id = data["_id"] || ""
+   const index = this.chatData.findIndex((item) => item["_id"] == id)
+   if (index != -1) {
+    this.chatData[index]["message_status"] = data["message_status"]
+   }
+  })
  }
 
  getChatDetails(event: any = null) {

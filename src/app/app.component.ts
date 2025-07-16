@@ -61,6 +61,8 @@ export class AppComponent {
 
   PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
    AlertService.showAlert("Notification", "Notification received: " + JSON.stringify(notification))
+   const data = notification.notification?.["data"] || ""
+   if (data) this.onNotificationReceived(data)
   })
 
   PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
@@ -68,6 +70,20 @@ export class AppComponent {
    const data = notification.notification?.["data"] || ""
    if (data) this.onClickNotification(data)
   })
+ }
+ onNotificationReceived(data: any) {
+  const type = Number(data["type"] || 0)
+  switch (type) {
+   case 1:
+    break
+   case 2:
+    this.updateMsgStatus(JSON.parse(data["data"]))
+    break
+   case 3:
+    break
+   case 4:
+    break
+  }
  }
  onClickNotification(data: any) {
   const type = Number(data["type"] || 0)
@@ -92,9 +108,9 @@ export class AppComponent {
   await modal.present()
  }
 
- updateMsgStatus(id: any) {
+ updateMsgStatus(data: any) {
   const url = Constants.getApiUrl(Constants.UPDATE_MSG_URL)
-  const payload = { msg_id: id, message_status: 1 }
+  const payload = { msg_id: data["ref_id"], user_id: data["sender_id"], message_status: 1 }
   this.apiService.putApi(url, payload).subscribe({
    next: (res: any) => {
 
