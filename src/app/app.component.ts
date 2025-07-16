@@ -7,6 +7,7 @@ import { Constants } from "./utils/constants.service"
 import { LSService } from "./utils/ls-service.service"
 import { FriendChatPage } from "./layout/home/chat/friend-chat/friend-chat.page"
 import { ApiService } from "./utils/api.service"
+import { FirebaseWebService } from "./utils/firebase-web.service"
 
 @Component({
  selector: "app-root",
@@ -16,43 +17,58 @@ import { ApiService } from "./utils/api.service"
 export class AppComponent {
  private readonly modalCtrl = inject(ModalController)
  private readonly apiService = inject(ApiService)
+ private firebaseWeb = inject(FirebaseWebService)
  ngOnInit() {
   this.initializeApp()
  }
 
  initializeApp() {
-  if (Capacitor.getPlatform() === 'android' || Capacitor.getPlatform() === 'ios') {
-   PushNotifications.requestPermissions().then(result => {
-    if (result.receive === "granted") {
-     PushNotifications.register()
-    } else {
-     AlertService.showAlert("Error", "Push permission not granted")
-    }
-   })
-
-   PushNotifications.addListener("registration", async (token: Token) => {
-    if (token?.value) await LSService.setItem(Constants.LS_DEVICE_TOKEN_ID, token.value)
-   })
-
-   PushNotifications.addListener("registrationError", (error: any) => {
-    AlertService.showAlert("Error", "Push registration error: " + JSON.stringify(error))
-   })
-
-   PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-    AlertService.showAlert("Notification", "Notification received: " + JSON.stringify(notification))
-   })
-
-   PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
-    AlertService.showAlert("Notification", "Notification action performed: " + JSON.stringify(notification))
-    const data = notification.notification?.["data"] || ""
-    if (data) this.onClickNotification(data)
-   })
+  if (Capacitor.getPlatform() === "web") {
+   this.intializeWebApp()
+  } else if (Capacitor.getPlatform() === "android" || Capacitor.getPlatform() === "ios") {
+   this.intializeMobileApp()
   } else {
-   console.log("Push Notifications not supported on web")
-   // Optional: Fallback to web-based notifications using the Web Notifications API
+   console.log("Push Notifications not supported on this platform")
   }
  }
+ intializeWebApp() {
+  this.firebaseWeb.requestPermissionAndToken().then(token => {
+   if (token) {
+    // Save token to DB (via your API service)
+    LSService.setItem(Constants.LS_DEVICE_TOKEN_ID, token)
+    // this.apiService.postApi(Constants.getApiUrl(Constants.SAVE_TOKEN_URL), { token }).subscribe()
+   }
+  })
 
+  this.firebaseWeb.listenToForegroundMessages()
+ }
+ intializeMobileApp() {
+  PushNotifications.requestPermissions().then(result => {
+   if (result.receive === "granted") {
+    PushNotifications.register()
+   } else {
+    AlertService.showAlert("Error", "Push permission not granted")
+   }
+  })
+
+  PushNotifications.addListener("registration", async (token: Token) => {
+   if (token?.value) await LSService.setItem(Constants.LS_DEVICE_TOKEN_ID, token.value)
+  })
+
+  PushNotifications.addListener("registrationError", (error: any) => {
+   AlertService.showAlert("Error", "Push registration error: " + JSON.stringify(error))
+  })
+
+  PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+   AlertService.showAlert("Notification", "Notification received: " + JSON.stringify(notification))
+  })
+
+  PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
+   AlertService.showAlert("Notification", "Notification action performed: " + JSON.stringify(notification))
+   const data = notification.notification?.["data"] || ""
+   if (data) this.onClickNotification(data)
+  })
+ }
  onClickNotification(data: any) {
   const type = Number(data["type"] || 0)
   switch (type) {

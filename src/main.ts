@@ -70,7 +70,7 @@ bootstrapApplication(AppComponent, {
   provideRouter(routes, withPreloading(PreloadAllModules)),
   provideHttpClient(withInterceptorsFromDi()),
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  provideServiceWorker('ngsw-worker.js', {
+  provideServiceWorker('firebase-messaging-sw.js', {
    enabled: !isDevMode(),
    registrationStrategy: 'registerWhenStable:30000'
   })
