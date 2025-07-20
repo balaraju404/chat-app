@@ -12,18 +12,27 @@
 <ion-content [fullscreen]="true" class="ion-padding create-group-page">
  <ion-card class="form-card">
   <ion-item lines="none" class="clean-item">
-   <ion-textarea placeholder="Enter your post ..."></ion-textarea>
+   <ion-textarea placeholder="Enter your post ..."  (ionInput)="onEnterPostContent($event)"></ion-textarea>
    <ion-icon (click)="openFriendModal()" name="people-outline"></ion-icon>
   </ion-item>
  </ion-card>
+ <ion-card class="form-card" *ngIf="taggedFriends.length > 0">
+  <ion-item lines="none" class="clean-item" style="display: flex; align-items: center; flex-wrap: wrap;">
+   <!-- <ion-label>Tagged Friends:</ion-label> -->
+   <span style="font-weight: 500; margin-right: 8px;">Tagged Friends:</span>
+   <ion-chip *ngFor="let friend of taggedFriends" color="medium">
+    {{ friend.username }}
+    <ion-icon name="arrow-undo-outline" (click)="removeTaggedFriend(friend)"></ion-icon>
+   </ion-chip>
+  </ion-item>
+ </ion-card>
+ <ion-grid>
+  <ion-row class="ion-justify-content-center ion-margin-top">
+   <ion-col size="auto" class="ion-text-center">
+    <ion-button color="primary" (click)="savePost()">
+     Create Post
+    </ion-button>
+   </ion-col>
+  </ion-row>
+ </ion-grid>
 </ion-content>
-
-<ion-grid>
- <ion-row class="ion-justify-content-center ion-margin-top">
-  <ion-col size="auto" class="ion-text-center">
-   <ion-button color="primary" (click)="savePost()">
-    Save Post
-   </ion-button>
-  </ion-col>
- </ion-row>
-</ion-grid>

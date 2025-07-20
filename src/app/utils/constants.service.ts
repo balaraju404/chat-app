@@ -49,6 +49,8 @@ export class Constants {
  static readonly DASHBOARD_URL = "dashboard/"
  static readonly DASHBOARD_CHATS_URL = Constants.DASHBOARD_URL + "chats"
  static readonly DASHBOARD_GROUPS_URL = Constants.DASHBOARD_URL + "groups"
+ static readonly POST_URL = "posts/";
+ static readonly POST_CREATE_URL = Constants.POST_URL + "create"
 
  static readonly LS_TOKEN_KEY = "token"
  static readonly LS_USER_DATA_KEY = "login_user_data"
