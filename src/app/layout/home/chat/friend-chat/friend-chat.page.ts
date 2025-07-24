@@ -37,6 +37,7 @@ export class FriendChatPage {
  foundUnread: boolean = false
  skeletonArr: any[] = Array.from({ length: 8 })
  isLoadingMessages: boolean = true
+ isIntialLoad: boolean = true
 
  ngOnInit() {
   this.initializeChat()
@@ -70,6 +71,7 @@ export class FriendChatPage {
   this.apiService.postApi(url, payload).subscribe({
    next: (res: any) => {
     this.isLoadingMessages = false
+    this.isIntialLoad = false
     const data = res["data"] || []
     this.dataModifier(data)
     this.scrollToBottom()
@@ -125,6 +127,7 @@ export class FriendChatPage {
  }
 
  private scrollToBottom() {
+  this.isIntialLoad = true
   setTimeout(() => {
    const el = document.getElementById("last-msg")
    if (el) el.scrollIntoView({ behavior: "smooth" })

@@ -29,7 +29,7 @@
  </ion-refresher>
 
  <div class="chat-container ion-padding">
-  @if (isLoadingMessages) {
+  @if (isLoadingMessages&&isIntialLoad) {
   @for (_ of skeletonArr; track $index; let i = $index) {
   <div class="skeleton-wrapper" [ngClass]="i % 2 === 0 ? 'left' : 'right'">
    <div class="skeleton-bubble">
